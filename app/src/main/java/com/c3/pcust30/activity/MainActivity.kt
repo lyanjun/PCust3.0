@@ -16,7 +16,7 @@ class MainActivity : NonSkidBaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        var anim = load.drawable as AnimationDrawable
+        val anim = load.drawable as AnimationDrawable
         anim.start()
     }
 }
