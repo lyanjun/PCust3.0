@@ -4,7 +4,7 @@ ext {
     versionName = '1.0'
     minSdkVersion = 19
     sdkVersion = 26
-    supportLibraryVersion = '26.0.0-beta1'
+    supportLibraryVersion = '26.1.0'//26.0.0-beta1
     latestRelease = 'latest.release'
     android = [
             // Sdk and tools(构建工具)
