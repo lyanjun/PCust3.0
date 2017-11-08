@@ -8,5 +8,5 @@ package com.c3.library.helper;
 
 public enum LoadStatus {
     //加载中、加载成功、加载失败
-    loading,success,failure
+    LOADING,SUCCESS,FAILURE
 }

@@ -1,11 +1,15 @@
 package com.c3.library.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.LayoutRes;
+import android.widget.TextView;
 
 import com.c3.library.R;
 import com.c3.library.constant.SceneType;
 import com.c3.library.view.CustomBodyView;
+import com.c3.library.view.CustomTitleView;
+import com.c3.library.view.IsTitleView;
 
 import me.yokeyword.fragmentation.SupportActivity;
 import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
@@ -18,8 +22,8 @@ import me.yokeyword.fragmentation.anim.FragmentAnimator;
  */
 
 public class NonSkidBaseActivity extends SupportActivity {
-    //设置默认的进出场动画类型
-    private int theSceneType = SceneType.DEFAULT_TYPE;
+    private int theSceneType;//设置默认的进出场动画类型
+    protected IsTitleView mTitleView;//标题栏
     /**
      * 设置Fragment进出场动画
      * @return
@@ -51,12 +55,53 @@ public class NonSkidBaseActivity extends SupportActivity {
      * @param bodyID
      */
     protected void setBodyView(@LayoutRes int bodyID){
-        CustomBodyView view = new CustomBodyView(this);
-//        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-//        setContentView(bodyID);
-//        view.setBackgroundColor(Color.BLACK);
-//        setContentView(view,layoutParams);
-        setContentView(view);
+        CustomBodyView bodyView = new CustomBodyView(this);
+        mTitleView = setTitleBarView();//设置标题栏
+        bodyView.initBodyView(bodyID)//添加布局
+                .initTitleView(mTitleView, setTitleBarViewHeight())//添加标题栏
+                .combination(setTitleBarShowType());//默认是添加标题栏的
+
+        mTitleView.getSelf().setBackgroundColor(Color.YELLOW);
+        TextView testText = new TextView(this);
+        testText.setText("测试");
+        testText.setTextColor(Color.RED);
+        mTitleView.initCenterView(testText);
+
+
+        setContentView(bodyView);//设置布局
+        theSceneType = setTheSceneType();
+    }
+
+    /**
+     * 设置默认的过场动画
+     * @return
+     */
+    protected int setTheSceneType() {
+        return SceneType.DEFAULT_TYPE;
+    }
+
+    /**
+     * 设置标题栏显示效果
+     * @return
+     */
+    protected CustomBodyView.TitleShowType setTitleBarShowType() {
+        return CustomBodyView.TitleShowType.ARRANGE;//默认布局效果
+    }
+
+    /**
+     * 设置标题栏高度
+     * @return
+     */
+    protected Integer setTitleBarViewHeight() {
+        return getResources().getDimensionPixelSize(R.dimen.dp_46);//默认标题栏高度
+    }
+
+    /**
+     * 设置标题栏
+     * @return
+     */
+    protected IsTitleView setTitleBarView() {
+        return new CustomTitleView(this);//默认标题栏效果
     }
 
     /**

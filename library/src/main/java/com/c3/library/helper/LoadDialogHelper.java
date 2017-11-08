@@ -45,13 +45,13 @@ public final class LoadDialogHelper {
      */
     public void onLoadStatus(LoadStatus loadStatus) {
         switch (loadStatus) {
-            case loading://下载中
+            case LOADING://下载中
                 customLoadDialog.onLoadingProgress();
                 break;
-            case success://下载成功
+            case SUCCESS://下载成功
                 customLoadDialog.onLoadingSuccess();
                 break;
-            case failure://下载失败
+            case FAILURE://下载失败
                 customLoadDialog.onLoadingFailure();
                 break;
         }
@@ -62,7 +62,7 @@ public final class LoadDialogHelper {
      */
     public void showDialog() {
         customLoadDialog.show();
-        onLoadStatus(LoadStatus.loading);
+        onLoadStatus(LoadStatus.LOADING);
     }
 
     /**
