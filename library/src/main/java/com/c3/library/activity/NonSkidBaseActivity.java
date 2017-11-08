@@ -1,9 +1,11 @@
 package com.c3.library.activity;
 
 import android.content.Intent;
+import android.support.annotation.LayoutRes;
 
 import com.c3.library.R;
 import com.c3.library.constant.SceneType;
+import com.c3.library.view.CustomBodyView;
 
 import me.yokeyword.fragmentation.SupportActivity;
 import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
@@ -45,6 +47,19 @@ public class NonSkidBaseActivity extends SupportActivity {
     }
 
     /**
+     * 设置布局
+     * @param bodyID
+     */
+    protected void setBodyView(@LayoutRes int bodyID){
+        CustomBodyView view = new CustomBodyView(this);
+//        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+//        setContentView(bodyID);
+//        view.setBackgroundColor(Color.BLACK);
+//        setContentView(view,layoutParams);
+        setContentView(view);
+    }
+
+    /**
      * 修改进出场动画
      * @param sceneType
      */
@@ -68,7 +83,7 @@ public class NonSkidBaseActivity extends SupportActivity {
      */
     private void setSceneType(int sceneType){
         if (sceneType == SceneType.CUSTOM_TYPE){
-            overridePendingTransition(R.anim.window_in, R.anim.window_out);
+            overridePendingTransition(R.anim.right_in, R.anim.right_out);
         }else {
             overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
         }

@@ -13,7 +13,9 @@ import com.orhanobut.logger.PrettyFormatStrategy
  * 创建日期： 2017/11/7
  */
 class InitHelper {
-
+    /**
+     * 伴生对象
+     */
     companion object {
         /**
          * 初始化

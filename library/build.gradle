@@ -26,6 +26,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "com.android.support:appcompat-v7:$library.support_v7"
+    implementation "com.android.support.constraint:constraint-layout:$library.constraintLayout"
     testImplementation "junit:junit:$library.junit"
     androidTestImplementation "com.android.support.test:runner:$library.runner"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$library.espressoCore"
