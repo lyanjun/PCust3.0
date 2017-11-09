@@ -1,6 +1,7 @@
 package com.c3.library.view;
 
 import android.view.View;
+import android.widget.RelativeLayout;
 
 /**
  * 标题栏操作类型
@@ -8,8 +9,9 @@ import android.view.View;
  */
 
 public interface IsTitleView {
+    int CENTER = RelativeLayout.CENTER_IN_PARENT;
+    int RIGHT = RelativeLayout.ALIGN_PARENT_RIGHT;
+    int LEFT = RelativeLayout.ALIGN_PARENT_LEFT;
     View getSelf();//获取引用对象
-    void initLeftView(View view);
-    void initRightView(View view);
-    void initCenterView(View view);
+    IsTitleView addChildView(IsTitleChildView view , int addSite);//添加子控件
 }

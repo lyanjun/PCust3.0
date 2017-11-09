@@ -1,9 +1,7 @@
 package com.c3.library.activity;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.annotation.LayoutRes;
-import android.widget.TextView;
 
 import com.c3.library.R;
 import com.c3.library.constant.SceneType;
@@ -21,7 +19,7 @@ import me.yokeyword.fragmentation.anim.FragmentAnimator;
  * 创建日期： 2017/11/7
  */
 
-public class NonSkidBaseActivity extends SupportActivity {
+public abstract class NonSkidBaseActivity extends SupportActivity {
     private int theSceneType;//设置默认的进出场动画类型
     protected IsTitleView mTitleView;//标题栏
     /**
@@ -58,16 +56,9 @@ public class NonSkidBaseActivity extends SupportActivity {
         CustomBodyView bodyView = new CustomBodyView(this);
         mTitleView = setTitleBarView();//设置标题栏
         bodyView.initBodyView(bodyID)//添加布局
+                .setTitleShowType(setTitleBarShowType())//默认是添加标题栏的
                 .initTitleView(mTitleView, setTitleBarViewHeight())//添加标题栏
-                .combination(setTitleBarShowType());//默认是添加标题栏的
-
-        mTitleView.getSelf().setBackgroundColor(Color.YELLOW);
-        TextView testText = new TextView(this);
-        testText.setText("测试");
-        testText.setTextColor(Color.RED);
-        mTitleView.initCenterView(testText);
-
-
+                .combination();//组合
         setContentView(bodyView);//设置布局
         theSceneType = setTheSceneType();
     }
@@ -93,7 +84,7 @@ public class NonSkidBaseActivity extends SupportActivity {
      * @return
      */
     protected Integer setTitleBarViewHeight() {
-        return getResources().getDimensionPixelSize(R.dimen.dp_46);//默认标题栏高度
+        return getResources().getDimensionPixelSize(R.dimen.dp_43);//默认标题栏高度
     }
 
     /**

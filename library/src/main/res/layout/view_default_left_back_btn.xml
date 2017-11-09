@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@id/default_back_btn"
+    android:layout_marginLeft="@dimen/dp_3"
+    android:layout_width="@dimen/dp_25"
+    android:layout_height="@dimen/dp_25"
+    tools:showIn="@layout/view_default_title_child_left_group"
+    tools:src="@drawable/default_back_icon_false"
+    tools:ignore="RtlHardcoded" />

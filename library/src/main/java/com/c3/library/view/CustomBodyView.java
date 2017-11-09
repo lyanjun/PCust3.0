@@ -1,12 +1,9 @@
 package com.c3.library.view;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.support.annotation.IntegerRes;
-import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.c3.library.R;
 
@@ -16,9 +13,10 @@ import com.c3.library.R;
  * 创建日期： 2017/11/8
  */
 
-public class CustomBodyView extends ConstraintLayout {
+public class CustomBodyView extends RelativeLayout {
 
     private View mBodyView, mTitleView;
+    private TitleShowType titleShowType;
 
     public CustomBodyView(Context context) {
         super(context, null);
@@ -30,6 +28,7 @@ public class CustomBodyView extends ConstraintLayout {
 
     public CustomBodyView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        inflate(context, R.layout.view_default_root_group, this);
     }
 
     /**
@@ -49,69 +48,81 @@ public class CustomBodyView extends ConstraintLayout {
      *
      * @param titleView
      */
-    public CustomBodyView initTitleView(IsTitleView titleView , Integer height) {
-        if (null == mTitleView) {
+    public CustomBodyView initTitleView(IsTitleView titleView, Integer height) {
+        if (null == mTitleView && titleShowType != TitleShowType.NONE) {
             mTitleView = titleView.getSelf();
-            mTitleView.setId(R.id.title_bar);//未标题栏设置标记
+            mTitleView.setId(R.id.mine_title_bar);//未标题栏设置标记
             mTitleView.setTag(height);
         }
         return this;
     }
 
-    public void combination(TitleShowType type) {
-        switch (type) {
+    /**
+     * 设置标题栏显示位置
+     *
+     * @param type
+     * @return
+     */
+    public CustomBodyView setTitleShowType(TitleShowType type) {
+        titleShowType = type;
+        return this;
+    }
+
+    /**
+     * 组合视图
+     */
+    public void combination() {
+        switch (titleShowType) {
             case ARRANGE:
-                addView(mBodyView,arrangeLayoutParams());
-                addView(mTitleView,titleLayoutParams());
+                addView(mBodyView, arrangeLayoutParams());
+                addView(mTitleView, titleLayoutParams());
                 break;
             case FLOATING:
-                addView(mBodyView,floatingLayoutParams());
-                addView(mTitleView,titleLayoutParams());
+                addView(mBodyView, floatingLayoutParams());
+                addView(mTitleView, titleLayoutParams());
                 break;
             case NONE:
                 mTitleView = null;
-                addView(mBodyView,floatingLayoutParams());
+                addView(mBodyView, floatingLayoutParams());
                 break;
         }
     }
 
     /**
      * 主体位置
+     *
      * @return
      */
     private LayoutParams arrangeLayoutParams() {
-        LayoutParams layoutParams = fixationExcludeLayoutParams();
-        layoutParams.topToBottom = R.id.title_bar;
-        return  layoutParams;
+        LayoutParams layoutParams = matchParentLayoutParams();
+        layoutParams.addRule(RelativeLayout.BELOW, mTitleView.getId());
+        return layoutParams;
     }
+
     /**
      * 主体位置
+     *
      * @return
      */
     private LayoutParams floatingLayoutParams() {
-        LayoutParams layoutParams = fixationExcludeLayoutParams();
-        layoutParams.topToTop = LayoutParams.PARENT_ID;
-        return layoutParams;
+        return matchParentLayoutParams();
     }
 
-    private LayoutParams fixationExcludeLayoutParams(){
-        LayoutParams layoutParams = new LayoutParams(0, 0);
-        layoutParams.bottomToBottom = LayoutParams.PARENT_ID;
-        layoutParams.leftToLeft = LayoutParams.PARENT_ID;
-        layoutParams.rightToRight = LayoutParams.PARENT_ID;
-        return layoutParams;
+
+    private LayoutParams matchParentLayoutParams() {
+        return new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
     }
+
     /**
      * 标题栏显示位置
+     *
      * @return
      */
     private LayoutParams titleLayoutParams() {
-        LayoutParams layoutParams = new LayoutParams(0, (Integer) mTitleView.getTag());
-        layoutParams.leftToLeft = LayoutParams.PARENT_ID;
-        layoutParams.rightToRight = LayoutParams.PARENT_ID;
-        return layoutParams;
+        return new LayoutParams(LayoutParams.MATCH_PARENT, (Integer) mTitleView.getTag());
     }
 
+    //排列、悬浮、不显示
     public enum TitleShowType {
         ARRANGE, FLOATING, NONE
     }

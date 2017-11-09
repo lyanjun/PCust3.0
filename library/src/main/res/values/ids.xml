@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="title_bar" type="id"/>
+    <item name="mine_title_bar" type="id"/>
+    <item name="default_back_btn" type="id"/>
+    <item name="default_title_text" type="id"/>
 </resources>
