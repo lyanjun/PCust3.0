@@ -12,7 +12,7 @@ import me.yokeyword.fragmentation_swipeback.core.SwipeBackActivityDelegate;
  * 创建日期： 2017/11/7
  */
 
-public class SlideBaseActivity extends NonSkidBaseActivity implements ISwipeBackActivity {
+public abstract class SlideBaseActivity extends NonSkidBaseActivity implements ISwipeBackActivity {
     final SwipeBackActivityDelegate mDelegate = new SwipeBackActivityDelegate(this);
 
     @Override

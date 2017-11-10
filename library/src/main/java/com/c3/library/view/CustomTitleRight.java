@@ -7,6 +7,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.c3.library.R;
+import com.c3.library.constant.TitleChildTag;
 
 /**
  * 作者： LYJ
@@ -31,11 +32,6 @@ public class CustomTitleRight extends CustomTitleChild implements View.OnClickLi
     @Override
     protected void initView(Context context) {
         inflate(context, R.layout.view_default_title_child_right_group,this);
-        findViewById(R.id.default_title_text).setOnClickListener(this);
-    }
-
-    @Override
-    public void onClick(View v) {
-
+        setViewOnclickListener(findViewById(R.id.default_title_text), TitleChildTag.RIGHT_BTN);
     }
 }

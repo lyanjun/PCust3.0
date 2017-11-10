@@ -4,10 +4,9 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.view.View;
-import android.widget.Toast;
 
 import com.c3.library.R;
+import com.c3.library.constant.TitleChildTag;
 
 /**
  * 作者： LYJ
@@ -15,7 +14,7 @@ import com.c3.library.R;
  * 创建日期： 2017/11/9
  */
 
-public class CustomTitleLeft extends CustomTitleChild implements View.OnClickListener {
+public class CustomTitleLeft extends CustomTitleChild {
 
     public CustomTitleLeft(@NonNull Context context) {
         super(context);
@@ -32,13 +31,6 @@ public class CustomTitleLeft extends CustomTitleChild implements View.OnClickLis
     @Override
     protected void initView(Context context) {
         inflate(context, R.layout.view_default_title_child_left_group, this);
-        findViewById(R.id.default_back_btn).setOnClickListener(this);
-    }
-
-    @Override
-    public void onClick(View v) {
-        if (v.getId() == R.id.default_back_btn) {
-            Toast.makeText(getContext(), "返回", Toast.LENGTH_SHORT).show();
-        }
+        setViewOnclickListener(findViewById(R.id.default_back_btn), TitleChildTag.BACK_BTN);
     }
 }

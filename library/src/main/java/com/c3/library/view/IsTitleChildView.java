@@ -18,4 +18,5 @@ public interface IsTitleChildView {
     IsTitleChildView setChildTextColorList(@ColorRes int textColorList);//设置文字颜色
     IsTitleChildView setChildButtonImage(@DrawableRes int drawableRes , int childIndex);//设置按钮的图片
     IsTitleChildView toChangeAllText();//通知发生变化
+    IsTitleChildView addOnChildClickListener(CustomTitleChild.OnChildClickListener onChildClickListener);
 }

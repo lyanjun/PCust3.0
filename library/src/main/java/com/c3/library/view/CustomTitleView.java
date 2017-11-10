@@ -52,6 +52,7 @@ public class CustomTitleView extends RelativeLayout implements IsTitleView {
         if (null != titleChildView){
             LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
             layoutParams.addRule(addSite);
+            titleChildView.getSelf().setTag(addSite);
             addView(titleChildView.getSelf(), layoutParams);
         }
         return this;

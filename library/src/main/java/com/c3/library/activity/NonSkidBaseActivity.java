@@ -61,7 +61,10 @@ public abstract class NonSkidBaseActivity extends SupportActivity {
                 .combination();//组合
         setContentView(bodyView);//设置布局
         theSceneType = setTheSceneType();
+        initSetting();//初始化设置
     }
+
+    protected abstract void initSetting();
 
     /**
      * 设置默认的过场动画

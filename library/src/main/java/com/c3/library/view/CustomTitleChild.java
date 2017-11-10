@@ -20,7 +20,7 @@ import android.widget.TextView;
  * 创建日期： 2017/11/9
  */
 
-public abstract class CustomTitleChild extends FrameLayout implements IsTitleChildView {
+public abstract class CustomTitleChild extends FrameLayout implements IsTitleChildView, View.OnClickListener {
     private static final int DEFAULT_TEXT_COLOR = 0xff000000;//默认字体颜色
     private static final int DEFAULT_TEXT_SIZE = 16;//默认字体大小
     private ViewGroup childGroup;//1级子控件，容器
@@ -148,5 +148,62 @@ public abstract class CustomTitleChild extends FrameLayout implements IsTitleChi
     @Override
     public View getSelf() {
         return this;
+    }
+
+    /**
+     * private int onclickTag;
+     */
+    private int onGroupChildClickTag;//回调识别标识
+    private OnChildClickListener onChildClickListener;
+
+    /**
+     * 回调接口
+     */
+    public interface OnChildClickListener {
+        //子控件标识可创建一个静态类，存放ID
+        void onChildClick(int parentTag, int childTag);
+    }
+
+    /**
+     * 添加监听
+     *
+     * @param onChildClickListener
+     * @return
+     */
+    @Override
+    public IsTitleChildView addOnChildClickListener(OnChildClickListener onChildClickListener) {
+        this.onChildClickListener = onChildClickListener;
+        return this;
+    }
+
+    /**
+     * 设置标识
+     */
+    public final void setGroupTag(int groupTag) {
+        this.onGroupChildClickTag = groupTag;
+    }
+
+    /**
+     * 点击事件
+     *
+     * @param v
+     */
+    @Override
+    public void onClick(View v) {
+        if (null != v.getTag() && null != onChildClickListener) {
+            onChildClickListener.onChildClick(onGroupChildClickTag, (Integer) v.getTag());
+        }
+    }
+
+    /**
+     * 给子控件设置点击事件
+     *
+     * @param v
+     * @param childTag
+     * @param <V>
+     */
+    protected <V extends View> void setViewOnclickListener(V v, int childTag) {
+        v.setTag(childTag);
+        v.setOnClickListener(this);
     }
 }
