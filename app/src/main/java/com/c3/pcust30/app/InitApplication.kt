@@ -18,5 +18,7 @@ class InitApplication : CustomApp(){
         super.onCreate()
         //初始化设置
         InitHelper.initApplicationContextSetting(this)
+        //开启EventBus加速
+//        EventBus.builder().addIndex(MyEventBusIndex()).installDefaultEventBus()
     }
 }

@@ -33,7 +33,7 @@ class MainActivity : NonSkidBaseActivity() {
         //右侧
         mTitleView.addChildView(rightView(),IsTitleView.RIGHT)
         //设置背景色
-//        mTitleView.self.setBackgroundColor(Color.RED)
+        mTitleView.self.setBackgroundColor(Color.GRAY)
         Logger.i("46dp = ${resources.getDimensionPixelSize(R.dimen.dp_46)}像素")
     }
 
@@ -42,4 +42,5 @@ class MainActivity : NonSkidBaseActivity() {
         return CustomTitleRight(this).setChildTextColorList(com.c3.library.R.color.defualt_text_btn_color_list)
                 .setChildText("测试" , 0).toChangeAllText()
     }
+
 }

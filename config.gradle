@@ -1,5 +1,6 @@
 ext {
     //配置相关信息
+    applicationId = 'com.c3.pcust30'
     versionCode = 1
     versionName = '1.0'
     minSdkVersion = 19
@@ -13,19 +14,20 @@ ext {
             compileSdkVersion: sdkVersion,
             versionCode      : versionCode,//版本号
             versionName      : versionName,//版本名称
+            applicationId    : applicationId
     ]
     //配置依赖库
     dependencies = [
             // App dependencies(添加依赖)
-            support_v7      : supportLibraryVersion,//支持库版
-            espressoCore    : '2.2.2',//测试类库
-            runner          : '0.5',//测试类库
-            constraintLayout: '1.0.2',//约束布局
-            junit           : '4.12',//测试库
-            joda_time       : '2.9.9',//时间操作
-            orhanobut       : '2.1.1',//日志
-            fragmentation   : '1.1.8',//fragment管理
-            eventbus        : '3.1.0-RC',//eventbus消息
-            eventbus_activity_scope : '1.1.0'//简化碎片之间的通信
+            support_v7             : supportLibraryVersion,//支持库版
+            espressoCore           : '2.2.2',//测试类库
+            runner                 : '0.5',//测试类库
+            constraintLayout       : '1.0.2',//约束布局
+            junit                  : '4.12',//测试库
+            joda_time              : '2.9.9',//时间操作
+            orhanobut              : '2.1.1',//日志
+            fragmentation          : '1.1.8',//fragment管理
+            eventbus               : '3.1.0',//eventbus消息
+            eventbus_activity_scope: '1.1.0'//简化碎片之间的通信
     ]
 }
