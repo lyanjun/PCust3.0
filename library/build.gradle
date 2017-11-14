@@ -36,4 +36,5 @@ dependencies {
     api "me.yokeyword:fragmentation-swipeback:$library.fragmentation"
     api "org.greenrobot:eventbus:$library.eventbus"
     api "me.yokeyword:eventbus-activity-scope:$library.eventbus_activity_scope"
+    api "com.github.GrenderG:Toasty:$library.toasty"
 }

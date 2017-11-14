@@ -1,15 +1,17 @@
 package com.c3.pcust30.base
 
 import android.annotation.SuppressLint
-import android.graphics.Color
 import android.widget.Toast
-import com.c3.library.activity.NonSkidBaseActivity
+import com.c3.library.activity.MineActivity
 import com.c3.library.constant.TitleChildTag
 import com.c3.library.helper.LoadDialogHelper
 import com.c3.library.view.*
 import com.c3.library.weight.load.CustomLoadDialog
 import com.c3.library.weight.load.impl.DefaultLoadingDialog
 import com.c3.pcust30.R
+import com.c3.pcust30.base.config.DEFAULT_TITLE_BACKGROUND_COLOR
+import com.c3.pcust30.base.config.DEFAULT_TITLE_TEXT_COLOR
+import com.c3.pcust30.base.config.DEFAULT_TITLE_TEXT_TITLE_SIZE
 
 /**
  * 作者： LYJ
@@ -17,14 +19,22 @@ import com.c3.pcust30.R
  * 创建日期： 2017/11/10
  */
 @SuppressLint("Registered")
-open class BaseActivity : NonSkidBaseActivity() , CustomTitleChild.OnChildClickListener{
-
+open class BaseActivity : MineActivity() , CustomTitleChild.OnChildClickListener{
+    //todo 在Fragment设置之后 需完成弹窗控制逻辑
     private val loadHelper = LoadDialogHelper()//用来管理加载等待弹窗
     override fun initSetting() {
         loadHelper.setCustomLoadDialog(setLoadingDialog())//设置加载等待弹窗
         mTitleView.addChildView(setTitleLeftChildView() , IsTitleView.LEFT)//添加标题栏到左侧
         mTitleView.addChildView(setTitleCenterChildView() , IsTitleView.CENTER)//添加标题到栏中间
         mTitleView.addChildView(setTitleRightChildView() , IsTitleView.RIGHT)//添加标题栏到右侧
+        setTitleBackGround()//设置标题栏的背景
+    }
+
+    /**
+     * 设为可重写，可以使子类避免
+     */
+    open fun setTitleBackGround(){
+        setTitleBackgroudColor(DEFAULT_TITLE_BACKGROUND_COLOR)//设置标题栏的背景颜色
     }
 
     /**
@@ -43,7 +53,8 @@ open class BaseActivity : NonSkidBaseActivity() , CustomTitleChild.OnChildClickL
      * 添加标题到栏中间
      */
     open fun setTitleCenterChildView(): IsTitleChildView? =
-            CustomTitleCenter(this).setChildTextColor(Color.WHITE).setChildTextSize(18)
+            CustomTitleCenter(this).setChildTextColor(DEFAULT_TITLE_TEXT_COLOR)
+                    .setChildTextSize(DEFAULT_TITLE_TEXT_TITLE_SIZE)
                 .setChildText(setTitleText(), 0).toChangeAllText()
 
     /**
@@ -60,4 +71,5 @@ open class BaseActivity : NonSkidBaseActivity() , CustomTitleChild.OnChildClickL
      * 设置加载等待弹窗
      */
     open fun setLoadingDialog(): CustomLoadDialog = DefaultLoadingDialog(this)
+
 }

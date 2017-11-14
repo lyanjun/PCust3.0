@@ -28,6 +28,7 @@ ext {
             orhanobut              : '2.1.1',//日志
             fragmentation          : '1.1.8',//fragment管理
             eventbus               : '3.1.0',//eventbus消息
-            eventbus_activity_scope: '1.1.0'//简化碎片之间的通信
+            eventbus_activity_scope: '1.1.0',//简化碎片之间的通信
+            toasty                 : '1.2.5'//toast效果
     ]
 }

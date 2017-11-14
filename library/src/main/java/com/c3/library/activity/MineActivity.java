@@ -1,7 +1,10 @@
 package com.c3.library.activity;
 
 import android.content.Intent;
+import android.support.annotation.ColorInt;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.LayoutRes;
+import android.support.v4.content.ContextCompat;
 
 import com.c3.library.R;
 import com.c3.library.constant.SceneType;
@@ -9,9 +12,9 @@ import com.c3.library.view.CustomBodyView;
 import com.c3.library.view.CustomTitleView;
 import com.c3.library.view.IsTitleView;
 
-import me.yokeyword.fragmentation.SupportActivity;
 import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
+import me.yokeyword.fragmentation_swipeback.SwipeBackActivity;
 
 /**
  * 作者： LYJ
@@ -19,7 +22,7 @@ import me.yokeyword.fragmentation.anim.FragmentAnimator;
  * 创建日期： 2017/11/7
  */
 
-public abstract class NonSkidBaseActivity extends SupportActivity {
+public abstract class MineActivity extends SwipeBackActivity {
     private int theSceneType;//设置默认的进出场动画类型
     protected IsTitleView mTitleView;//标题栏
     /**
@@ -126,5 +129,21 @@ public abstract class NonSkidBaseActivity extends SupportActivity {
         }else {
             overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
         }
+    }
+
+    /**
+     * 设置标题栏背景颜色
+     * @param color
+     */
+    protected void setTitleBackgroudColor(@ColorInt int color){
+        mTitleView.getSelf().setBackgroundColor(color);
+    }
+
+    /**
+     * 设置标题栏的背景
+     * @param drawable
+     */
+    protected void setTitleBackgroudDrawable(@DrawableRes int drawable){
+        mTitleView.getSelf().setBackground(ContextCompat.getDrawable(this, drawable));
     }
 }
