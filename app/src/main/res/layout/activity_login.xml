@@ -16,20 +16,59 @@
         app:layout_constraintRight_toRightOf="parent"
         tools:ignore="ContentDescription" />
     <!-- 输入用户名 -->
+    <ImageView
+        android:id="@+id/userCodeRight"
+        app:layout_constraintTop_toBottomOf="@id/bankLogo"
+        style="@style/LoginInputRightPlaceStyle"
+        tools:ignore="ContentDescription" />
+    <ImageView
+        android:id="@+id/userCodeLeft"
+        app:layout_constraintTop_toBottomOf="@id/bankLogo"
+        android:src="@drawable/pcust_input_usercode_icon"
+        tools:ignore="ContentDescription"
+        style="@style/LoginInputLeftPlaceStyle" />
     <com.xw.repo.XEditText
         android:id="@+id/inputUserCode"
         app:layout_constraintTop_toBottomOf="@+id/bankLogo"
-        android:drawableLeft="@drawable/pcust_input_usercode_icon"
+        app:layout_constraintLeft_toRightOf="@id/userCodeLeft"
+        app:layout_constraintRight_toLeftOf="@id/userCodeRight"
         android:hint="@string/input_hint_user_code"
         tools:ignore="RtlHardcoded"
-        style="@style/LoginInputStyle" />
+        style="@style/LoginInputStyle"/>
     <!-- 输入密码 -->
+    <ImageView
+        android:id="@+id/passWordRight"
+        app:layout_constraintTop_toBottomOf="@id/userCodeRight"
+        style="@style/LoginInputRightPlaceStyle"
+        android:layout_marginTop="@dimen/dp_10"
+        tools:ignore="ContentDescription" />
+    <ImageView
+        android:id="@+id/passWordLeft"
+        app:layout_constraintTop_toBottomOf="@id/userCodeLeft"
+        android:src="@drawable/pcust_input_password_icon"
+        tools:ignore="ContentDescription"
+        android:layout_marginTop="@dimen/dp_10"
+        style="@style/LoginInputLeftPlaceStyle" />
     <com.xw.repo.XEditText
         android:id="@+id/inputPassWord"
+        android:inputType="textPassword"
         android:layout_marginTop="@dimen/dp_10"
         app:layout_constraintTop_toBottomOf="@+id/inputUserCode"
-        android:drawableLeft="@drawable/pcust_input_password_icon"
+        app:layout_constraintRight_toLeftOf="@id/passWordRight"
+        app:layout_constraintLeft_toRightOf="@id/passWordLeft"
         android:hint="@string/input_hint_password"
         tools:ignore="RtlHardcoded"
         style="@style/LoginInputStyle" />
+    <!-- 忘记密码和手势登录 -->
+    <!-- 登录按钮 -->
+    <ImageView
+        android:id="@+id/loginBtn"
+        android:layout_width="@dimen/dp_80"
+        android:layout_height="@dimen/dp_80"
+        android:layout_marginTop="@dimen/dp_20"
+        app:layout_constraintTop_toBottomOf="@id/inputPassWord"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:src="@drawable/pcust_login_icon"
+        tools:ignore="ContentDescription" />
 </android.support.constraint.ConstraintLayout>

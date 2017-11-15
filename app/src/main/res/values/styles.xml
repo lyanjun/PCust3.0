@@ -7,17 +7,28 @@
          <item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
          <!--<item name="colorAccent">@color/colorAccent</item>-->
     </style>
-    <!-- 登录 -->
+    <!-- 登录输入框样式 -->
     <style name="LoginInputStyle">
         <item name="android:layout_width">@dimen/dp_0</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">@dimen/sp_16</item>
+        <item name="android:textSize">@dimen/sp_14</item>
         <item name="android:lines">1</item>
         <item name="android:background">@drawable/pcust_login_input_background</item>
-        <item name="android:drawablePadding">@dimen/dp_10</item>
         <item name="x_clearDrawable">@drawable/pcust_input_clear_icon</item>
-        <item name="layout_constraintLeft_toLeftOf">parent</item>
+    </style>
+    <!-- 输入框右侧占位（为了防止嵌套布局） -->
+    <style name="LoginInputRightPlaceStyle">
+        <item name="android:layout_width">@dimen/dp_10</item>
+        <item name="android:layout_height">@dimen/dp_43</item>
+        <item name="android:background">@color/white</item>
         <item name="layout_constraintRight_toRightOf">parent</item>
+    </style>
+    <!-- 输入框左侧占位（为了防止嵌套布局） -->
+    <style name="LoginInputLeftPlaceStyle">
+        <item name="android:background">@color/white</item>
+        <item name="android:layout_width">@dimen/dp_50</item>
+        <item name="android:layout_height">@dimen/dp_43</item>
+        <item name="android:scaleType">centerInside</item>
     </style>
 
 </resources>
