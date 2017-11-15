@@ -30,6 +30,10 @@ ext {
             eventbus               : '3.1.0',//eventbus消息
             eventbus_activity_scope: '1.1.0',//简化碎片之间的通信
             toasty                 : '1.2.5',//toast效果
-            xedittext                 : '2.0.5'//删除功能的输入框
+            xedittext              : '2.0.5',//删除功能的输入框
+            rxandroid              : '2.0.1',//rxandroid
+            rxjava                 : '2.1.5',//rxjava
+            retrofit               : '2.3.0',//网络请求框架
+            gosn                   : '2.8.2',//JSON解析工具
     ]
 }
