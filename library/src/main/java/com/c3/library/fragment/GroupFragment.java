@@ -44,6 +44,7 @@ public class GroupFragment extends SwipeBackFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //仅初始化视图一次
+        setSwipeBackEnable(false);
         return null == rootView ? rootView = inflater.inflate(R.layout.fragment_default_group, container, false) : rootView;
     }
 
@@ -70,7 +71,7 @@ public class GroupFragment extends SwipeBackFragment {
      *
      * @param savedInstanceState
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "JavaDoc"})
     @Override
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);

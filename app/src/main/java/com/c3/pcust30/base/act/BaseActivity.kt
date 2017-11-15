@@ -1,15 +1,15 @@
-package com.c3.pcust30.base
+package com.c3.pcust30.base.act
 
 import android.annotation.SuppressLint
-import android.widget.Toast
 import com.c3.library.activity.MineActivity
 import com.c3.library.constant.TitleChildTag
 import com.c3.library.helper.LoadDialogHelper
-import com.c3.library.view.*
+import com.c3.library.view.title.*
 import com.c3.library.weight.load.CustomLoadDialog
 import com.c3.library.weight.load.impl.DefaultLoadingDialog
+import com.c3.library.weight.toast.ShowHint
 import com.c3.pcust30.R
-import com.c3.pcust30.base.config.DEFAULT_TITLE_BACKGROUND_COLOR
+import com.c3.pcust30.base.config.DEFAULT_TITLE_BACKGROUND_DRAWABLE
 import com.c3.pcust30.base.config.DEFAULT_TITLE_TEXT_COLOR
 import com.c3.pcust30.base.config.DEFAULT_TITLE_TEXT_TITLE_SIZE
 
@@ -34,14 +34,14 @@ open class BaseActivity : MineActivity() , CustomTitleChild.OnChildClickListener
      * 设为可重写，可以使子类避免
      */
     open fun setTitleBackGround(){
-        setTitleBackgroudColor(DEFAULT_TITLE_BACKGROUND_COLOR)//设置标题栏的背景颜色
+        mTitleView.self.setBackgroundResource(DEFAULT_TITLE_BACKGROUND_DRAWABLE)
     }
 
     /**
      * 点击事件
      */
     override fun onChildClick(parentTag: Int, childTag: Int) {
-        if (TitleChildTag.BACK_BTN == childTag) Toast.makeText(this,"点击了返回", Toast.LENGTH_SHORT).show()
+        if (TitleChildTag.BACK_BTN == childTag) ShowHint.hint(this,"点击了返回")
     }
     /**
      * 添加标题栏到左侧
@@ -60,7 +60,7 @@ open class BaseActivity : MineActivity() , CustomTitleChild.OnChildClickListener
     /**
      * 设置标题
      */
-    open fun setTitleText(): CharSequence = resources.getString(R.string.app_name)
+    open fun setTitleText(): CharSequence = getString(R.string.app_name)
 
     /**
      * 添加标题栏到右侧

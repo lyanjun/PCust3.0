@@ -1,4 +1,4 @@
-package com.c3.library.view;
+package com.c3.library.view.title;
 
 import android.content.Context;
 import android.content.res.ColorStateList;

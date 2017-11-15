@@ -1,16 +1,13 @@
 package com.c3.library.activity;
 
 import android.content.Intent;
-import android.support.annotation.ColorInt;
-import android.support.annotation.DrawableRes;
 import android.support.annotation.LayoutRes;
-import android.support.v4.content.ContextCompat;
 
 import com.c3.library.R;
 import com.c3.library.constant.SceneType;
-import com.c3.library.view.CustomBodyView;
-import com.c3.library.view.CustomTitleView;
-import com.c3.library.view.IsTitleView;
+import com.c3.library.view.title.CustomBodyView;
+import com.c3.library.view.title.CustomTitleView;
+import com.c3.library.view.title.IsTitleView;
 
 import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
@@ -25,6 +22,8 @@ import me.yokeyword.fragmentation_swipeback.SwipeBackActivity;
 public abstract class MineActivity extends SwipeBackActivity {
     private int theSceneType;//设置默认的进出场动画类型
     protected IsTitleView mTitleView;//标题栏
+    private CustomBodyView.TitleShowType titleShowType;//标题栏摆放类型
+    private int titleBarHeight;//标题栏高度
     /**
      * 设置Fragment进出场动画
      * @return
@@ -59,8 +58,8 @@ public abstract class MineActivity extends SwipeBackActivity {
         CustomBodyView bodyView = new CustomBodyView(this);
         mTitleView = setTitleBarView();//设置标题栏
         bodyView.initBodyView(bodyID)//添加布局
-                .setTitleShowType(setTitleBarShowType())//默认是添加标题栏的
-                .initTitleView(mTitleView, setTitleBarViewHeight())//添加标题栏
+                .setTitleShowType(titleShowType = setTitleBarShowType())//默认是添加标题栏的
+                .initTitleView(mTitleView, titleBarHeight = setTitleBarViewHeight())//添加标题栏
                 .combination();//组合
         setContentView(bodyView);//设置布局
         theSceneType = setTheSceneType();
@@ -97,7 +96,7 @@ public abstract class MineActivity extends SwipeBackActivity {
      * 设置标题栏
      * @return
      */
-    protected IsTitleView setTitleBarView() {
+    public IsTitleView setTitleBarView() {
         return new CustomTitleView(this);//默认标题栏效果
     }
 
@@ -123,27 +122,18 @@ public abstract class MineActivity extends SwipeBackActivity {
      * 设置进出场动画
      * @param sceneType
      */
-    private void setSceneType(int sceneType){
+    public void setSceneType(int sceneType){
         if (sceneType == SceneType.CUSTOM_TYPE){
             overridePendingTransition(R.anim.right_in, R.anim.right_out);
         }else {
             overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
         }
     }
-
     /**
-     * 设置标题栏背景颜色
-     * @param color
+     * 获取标题栏的高度
+     * @return
      */
-    protected void setTitleBackgroudColor(@ColorInt int color){
-        mTitleView.getSelf().setBackgroundColor(color);
-    }
-
-    /**
-     * 设置标题栏的背景
-     * @param drawable
-     */
-    protected void setTitleBackgroudDrawable(@DrawableRes int drawable){
-        mTitleView.getSelf().setBackground(ContextCompat.getDrawable(this, drawable));
+    public int getTitleBarHeight() {
+        return titleBarHeight;
     }
 }

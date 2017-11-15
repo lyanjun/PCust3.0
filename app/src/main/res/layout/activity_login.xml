@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.c3.pcust30.activity.LoginActivity">
+    <!-- Logo图片 -->
+    <ImageView
+        android:id="@+id/bankLogo"
+        android:layout_width="@dimen/dp_200"
+        android:layout_height="wrap_content"
+        android:src="@drawable/pcust_bank_logo"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:ignore="ContentDescription" />
+    <!-- 输入用户名 -->
+    <com.xw.repo.XEditText
+        android:id="@+id/inputUserCode"
+        app:layout_constraintTop_toBottomOf="@+id/bankLogo"
+        android:drawableLeft="@drawable/pcust_input_usercode_icon"
+        android:hint="@string/input_hint_user_code"
+        tools:ignore="RtlHardcoded"
+        style="@style/LoginInputStyle" />
+    <!-- 输入密码 -->
+    <com.xw.repo.XEditText
+        android:id="@+id/inputPassWord"
+        android:layout_marginTop="@dimen/dp_10"
+        app:layout_constraintTop_toBottomOf="@+id/inputUserCode"
+        android:drawableLeft="@drawable/pcust_input_password_icon"
+        android:hint="@string/input_hint_password"
+        tools:ignore="RtlHardcoded"
+        style="@style/LoginInputStyle" />
+</android.support.constraint.ConstraintLayout>

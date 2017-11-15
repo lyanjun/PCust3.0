@@ -1,8 +1,10 @@
 package com.c3.pcust30.activity
 
 import android.os.Bundle
+import com.c3.library.view.title.CustomBodyView
 import com.c3.pcust30.R
-import com.c3.pcust30.base.BaseActivity
+import com.c3.pcust30.base.act.BaseActivity
+import com.c3.pcust30.fragment.TestFragment
 
 /**
  * 作者： LYJ
@@ -15,5 +17,10 @@ class MainActivity : BaseActivity(){
         super.onCreate(savedInstanceState)
         setBodyView(R.layout.activity_main)//设置根布局
         setSwipeBackEnable(false)//关闭滑动退出
+        supportFragmentManager.beginTransaction().add(R.id.home, TestFragment()).commit()
+    }
+
+    override fun setTitleBarShowType(): CustomBodyView.TitleShowType {
+        return CustomBodyView.TitleShowType.NONE
     }
 }

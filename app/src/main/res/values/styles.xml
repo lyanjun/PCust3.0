@@ -4,8 +4,20 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <!-- <item name="colorPrimary">@color/colorPrimary</item>
-         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-         <item name="colorAccent">@color/colorAccent</item>-->
+         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
+         <!--<item name="colorAccent">@color/colorAccent</item>-->
+    </style>
+    <!-- 登录 -->
+    <style name="LoginInputStyle">
+        <item name="android:layout_width">@dimen/dp_0</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/sp_16</item>
+        <item name="android:lines">1</item>
+        <item name="android:background">@drawable/pcust_login_input_background</item>
+        <item name="android:drawablePadding">@dimen/dp_10</item>
+        <item name="x_clearDrawable">@drawable/pcust_input_clear_icon</item>
+        <item name="layout_constraintLeft_toLeftOf">parent</item>
+        <item name="layout_constraintRight_toRightOf">parent</item>
     </style>
 
 </resources>

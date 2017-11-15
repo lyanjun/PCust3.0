@@ -1,4 +1,4 @@
-package com.c3.library.view;
+package com.c3.library.view.title;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -71,7 +71,7 @@ public class CustomBodyView extends RelativeLayout {
     /**
      * 组合视图
      */
-    public void combination() {
+    public CustomBodyView combination() {
         switch (titleShowType) {
             case ARRANGE:
                 addView(mBodyView, arrangeLayoutParams());
@@ -86,6 +86,7 @@ public class CustomBodyView extends RelativeLayout {
                 addView(mBodyView, floatingLayoutParams());
                 break;
         }
+        return this;
     }
 
     /**
