@@ -43,4 +43,6 @@ dependencies {
     api "com.squareup.retrofit2:retrofit:$library.retrofit"
     api "com.squareup.retrofit2:adapter-rxjava2:$library.retrofit"
     api "com.google.code.gson:gson:$library.gosn"
+    api "com.trello.rxlifecycle2:rxlifecycle-components:$library.rxlifecycle"
+    api "com.trello.rxlifecycle2:rxlifecycle-kotlin:$library.rxlifecycle"
 }

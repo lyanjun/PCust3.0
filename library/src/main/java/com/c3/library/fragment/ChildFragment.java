@@ -13,15 +13,13 @@ import com.c3.library.activity.MineActivity;
 import com.c3.library.view.title.CustomBodyView;
 import com.c3.library.view.title.IsTitleView;
 
-import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
-
 /**
  * 作者： LYJ
  * 功能： Fragment基类(可拓展)
  * 创建日期： 2017/11/15
  */
 
-public abstract class ChildFragment extends SwipeBackFragment {
+public abstract class ChildFragment extends BaseFragment {
     protected IsTitleView mTitleView;//标题栏
     private MineActivity mineActivity;//activity基类
     protected CustomBodyView mRootView;//根布局

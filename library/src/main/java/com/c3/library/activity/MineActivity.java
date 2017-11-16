@@ -11,7 +11,6 @@ import com.c3.library.view.title.IsTitleView;
 
 import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
-import me.yokeyword.fragmentation_swipeback.SwipeBackActivity;
 
 /**
  * 作者： LYJ
@@ -19,7 +18,7 @@ import me.yokeyword.fragmentation_swipeback.SwipeBackActivity;
  * 创建日期： 2017/11/7
  */
 
-public abstract class MineActivity extends SwipeBackActivity {
+public abstract class MineActivity extends BaseActivity {
     private int theSceneType;//设置默认的进出场动画类型
     protected IsTitleView mTitleView;//标题栏
     private CustomBodyView.TitleShowType titleShowType;//标题栏摆放类型

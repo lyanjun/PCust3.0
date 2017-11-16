@@ -8,14 +8,16 @@ import com.c3.library.utils.MD5Utils
 import com.c3.library.weight.toast.ShowHint
 import com.c3.pcust30.R
 import com.c3.pcust30.base.act.BaseActivity
-import com.c3.pcust30.bean.net.LOGIN_PASSWORD
-import com.c3.pcust30.bean.net.LOGIN_USER_CODE
-import com.c3.pcust30.bean.net.SERVICE_CODE
-import com.c3.pcust30.bean.net.getJson
+import com.c3.pcust30.bean.net.*
 import com.c3.pcust30.bean.net.rep.TradingRequest
+import com.c3.pcust30.bean.net.rsp.TradingResponse
+import com.c3.pcust30.bean.net.rsp.body.LoginRsp
 import com.c3.pcust30.http.config.LOGIN_TRADING_CODE
 import com.c3.pcust30.http.tool.TradingTool
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.orhanobut.logger.Logger
+import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.activity_login.*
 
 /**
@@ -24,9 +26,8 @@ import kotlinx.android.synthetic.main.activity_login.*
  * 创建日期： 2017/11/7
  */
 class LoginActivity : BaseActivity(), View.OnClickListener {
-
     /**
-     * 点击事件
+     * 点击事件(登录按钮，忘记密码，手势登录)
      */
     override fun onClick(v: View?) {
         when (v!!.id) {
@@ -39,21 +40,36 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
      * 登录请求
      */
     private fun login() {
+        loadHelper.showDialog()//展示加载弹窗
         val userCodeStr = inputUserCode.text.toString().trim()//用户账号
         var passwordStr = inputPassWord.text.toString().trim()//用户密码
         if (loginHintMessage(userCodeStr, getString(R.string.input_warn_user_code))) return
         if (loginHintMessage(passwordStr, getString(R.string.input_warn_password))) return
         //MD5加密
         passwordStr = MD5Utils.MD5Encode(passwordStr + userCodeStr)
-        Logger.i("账号：$userCodeStr\n密码：$passwordStr")
-        val tradingRequest = TradingRequest()
-        tradingRequest.addHeader(SERVICE_CODE,LOGIN_TRADING_CODE)//交易号
-                .addBody(LOGIN_USER_CODE , userCodeStr)//账号
-                .addBody(LOGIN_PASSWORD , passwordStr)//密码
-        Logger.t("json").w(getJson(tradingRequest))
-        TradingTool.commitTrading(getJson(tradingRequest)).subscribe({result ->
-            Logger.t("返回结果").i(result)
-        })
+        Logger.t(TAG).i("账号：$userCodeStr\n密码：$passwordStr")
+        val tradingJson = getJson(TradingRequest().addHeader(SERVICE_CODE, LOGIN_TRADING_CODE)//交易号
+                .addBody(LOGIN_USER_CODE, userCodeStr).addBody(LOGIN_PASSWORD, passwordStr))//账号,密码
+        Logger.t(TAG).w("登录请求Json：$tradingJson")//提交内容
+        //提交用户名密码
+        TradingTool.commitTrading(tradingJson).bindToLifecycle(this)
+                .doFinally { loadHelper.hideDialog() } //请求结束后关闭弹窗
+                .subscribe({ result -> getResponse(result) }, { error -> ShowHint.failure(this, error.message!!) })
+    }
+
+    /**
+     * 解析
+     */
+    override fun getResponse(result: String, tag: Int) {
+        Logger.t(TAG).i("返回Json$result")
+        Logger.t(TAG).json(result)//以JSON格式打印数据
+        val objType = object : TypeToken<TradingResponse<LoginRsp>>() {}.type//解析类型
+        val loginResponse = Gson().fromJson<TradingResponse<LoginRsp>>(result, objType)//解析结果
+        if (TextUtils.equals(TRADING_SUCCESS, loginResponse.header!!.rspCode!!)) {
+            ShowHint.success(this,loginResponse.header!!.rspMsg!!)
+        } else {
+            ShowHint.failure(this,loginResponse.header!!.rspMsg!!)
+        }
     }
 
     /**

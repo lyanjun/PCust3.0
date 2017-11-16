@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.c3.library.R;
 import com.c3.library.weight.load.CustomLoadDialog;
-import com.orhanobut.logger.Logger;
 
 
 /**
@@ -52,14 +51,12 @@ public class DefaultLoadingDialog extends CustomLoadDialog{
     @Override
     protected void onStart() {
         super.onStart();
-        Logger.i("start");
         animationDrawable.start();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Logger.i("stop");
         animationDrawable.stop();
     }
 
