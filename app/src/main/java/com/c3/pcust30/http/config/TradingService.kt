@@ -1,4 +1,4 @@
-package com.c3.pcust30.http
+package com.c3.pcust30.http.config
 
 import io.reactivex.Observable
 import retrofit2.http.POST

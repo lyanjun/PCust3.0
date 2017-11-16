@@ -5,4 +5,7 @@
     <!-- 输入提示文字 -->
     <string name="input_hint_user_code">请输入用户名</string>
     <string name="input_hint_password">请输入密码</string>
+    <!-- 提交登录的提示文字 -->
+    <string name="input_warn_user_code">账号不能为空！</string>
+    <string name="input_warn_password">密码不能为空！</string>
 </resources>
