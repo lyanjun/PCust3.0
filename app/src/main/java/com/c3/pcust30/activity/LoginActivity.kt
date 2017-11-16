@@ -45,11 +45,11 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
      * 登录请求
      */
     private fun login() {
-        loadHelper.showDialog()//展示加载弹窗
         val userCodeStr = inputUserCode.text.toString().trim()//用户账号
         var passwordStr = inputPassWord.text.toString().trim()//用户密码
         if (loginHintMessage(userCodeStr, getString(R.string.input_warn_user_code))) return
         if (loginHintMessage(passwordStr, getString(R.string.input_warn_password))) return
+        loadHelper.showDialog()//展示加载弹窗
         //MD5加密
         passwordStr = MD5Utils.MD5Encode(passwordStr + userCodeStr)
         Logger.t(TAG).i("账号：$userCodeStr\n密码：$passwordStr")
