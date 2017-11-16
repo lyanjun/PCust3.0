@@ -31,10 +31,9 @@ class InitHelper {
          */
         private fun initLogger(context: Context) {
             //设置日志输出的标记（使用项目名称），其他是使用默认设置
-            val formatStrategy = PrettyFormatStrategy.newBuilder()
-                    .tag(context.resources.getString(R.string.app_name)).build()
+            val formatStrategy = PrettyFormatStrategy.newBuilder().tag(context.resources.getString(R.string.app_name)).build()
             //设置日志大印状态
-            val logAdapter = object : AndroidLogAdapter(formatStrategy){
+            val logAdapter = object : AndroidLogAdapter(formatStrategy) {
                 override fun isLoggable(priority: Int, tag: String?): Boolean {
                     return BuildConfig.DEBUG
                 }
