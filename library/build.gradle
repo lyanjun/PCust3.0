@@ -17,10 +17,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    compileOptions{
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
 }
 
 dependencies {
@@ -45,4 +41,5 @@ dependencies {
     api "com.google.code.gson:gson:$library.gosn"
     api "com.trello.rxlifecycle2:rxlifecycle-components:$library.rxlifecycle"
     api "com.trello.rxlifecycle2:rxlifecycle-kotlin:$library.rxlifecycle"
+    api "com.orhanobut:hawk:$library.hawk"
 }
