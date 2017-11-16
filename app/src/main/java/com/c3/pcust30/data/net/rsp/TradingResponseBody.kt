@@ -1,4 +1,4 @@
-package com.c3.pcust30.bean.net.rsp
+package com.c3.pcust30.data.net.rsp
 
 /**
  * 作者： LYJ

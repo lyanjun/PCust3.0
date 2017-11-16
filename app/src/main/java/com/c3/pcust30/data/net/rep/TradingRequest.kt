@@ -1,4 +1,4 @@
-package com.c3.pcust30.bean.net.rep
+package com.c3.pcust30.data.net.rep
 
 @Suppress("MemberVisibilityCanPrivate")
 /**

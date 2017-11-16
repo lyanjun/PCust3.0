@@ -1,4 +1,4 @@
-package com.c3.pcust30.bean.net.rsp
+package com.c3.pcust30.data.net.rsp
 
 /**
  * 返回头部(验证信息用)

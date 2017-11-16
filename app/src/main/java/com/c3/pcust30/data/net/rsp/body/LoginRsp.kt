@@ -1,7 +1,7 @@
-package com.c3.pcust30.bean.net.rsp.body
+package com.c3.pcust30.data.net.rsp.body
 
-import com.c3.pcust30.bean.net.entity.WorkSignInfo
-import com.c3.pcust30.bean.net.rsp.TradingResponseBody
+import com.c3.pcust30.data.net.entity.WorkSignInfo
+import com.c3.pcust30.data.net.rsp.TradingResponseBody
 
 /**
  * 作者： LYJ

@@ -8,14 +8,17 @@ import com.c3.library.utils.MD5Utils
 import com.c3.library.weight.toast.ShowHint
 import com.c3.pcust30.R
 import com.c3.pcust30.base.act.BaseActivity
-import com.c3.pcust30.bean.net.*
-import com.c3.pcust30.bean.net.rep.TradingRequest
-import com.c3.pcust30.bean.net.rsp.TradingResponse
-import com.c3.pcust30.bean.net.rsp.body.LoginRsp
+import com.c3.pcust30.data.info.*
+import com.c3.pcust30.data.net.*
+import com.c3.pcust30.data.net.entity.WorkSignInfo
+import com.c3.pcust30.data.net.rep.TradingRequest
+import com.c3.pcust30.data.net.rsp.TradingResponse
+import com.c3.pcust30.data.net.rsp.body.LoginRsp
 import com.c3.pcust30.http.config.LOGIN_TRADING_CODE
 import com.c3.pcust30.http.tool.TradingTool
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.orhanobut.hawk.Hawk
 import com.orhanobut.logger.Logger
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.activity_login.*
@@ -26,6 +29,8 @@ import kotlinx.android.synthetic.main.activity_login.*
  * 创建日期： 2017/11/7
  */
 class LoginActivity : BaseActivity(), View.OnClickListener {
+
+    private var isFirstStart: Boolean = true //判断是否为第一次启动的标记
     /**
      * 点击事件(登录按钮，忘记密码，手势登录)
      */
@@ -66,10 +71,48 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         val objType = object : TypeToken<TradingResponse<LoginRsp>>() {}.type//解析类型
         val loginResponse = Gson().fromJson<TradingResponse<LoginRsp>>(result, objType)//解析结果
         if (TextUtils.equals(TRADING_SUCCESS, loginResponse.header!!.rspCode!!)) {
-            ShowHint.success(this,loginResponse.header!!.rspMsg!!)
+            ShowHint.success(this, loginResponse.header!!.rspMsg!!)
+            //将用户的信息储存到本地（作为免用户登陆的准备操作）
+            val userInfo = loginResponse.body!!.worksigninfo!!
+            isFirstStart = Hawk.get<Boolean>(IS_FIRST, true)
+            if (isFirstStart) {//判断是否为首次启动
+                //是首次启动则跳转到手势密码设置界面
+
+            } else {//非首次启动逻辑处理
+                when (userInfo.firstLogin) {
+                //是首次登陆
+                    FIRST_LOGIN_FALSE -> {
+                        //进入到密码重置界面（引发条件，初次启动后到设置手势密码设置之后返回首页后
+                        //在点击登陆按钮后则会跳转到该重置密码界面）
+                    }
+                //非首次登录
+                    FIRST_LOGIN_TRUE -> {
+                        //点击登陆按钮后直接跳转到主界面
+                    }
+                    else -> ShowHint.warn(this, userInfo.loginmsg!!)
+                }
+            }
+            saveUserInfoToLocation(userInfo)//保存此次登陆的数据信息
         } else {
-            ShowHint.failure(this,loginResponse.header!!.rspMsg!!)
+            ShowHint.failure(this, loginResponse.header!!.rspMsg!!)
         }
+    }
+
+    /**
+     * 保存用户信息
+     */
+    private fun saveUserInfoToLocation(userInfo: WorkSignInfo) {
+        Hawk.put(USER_ID, userInfo.userid!!)
+        Hawk.put(USER_CODE, userInfo.usercode!!)
+        Hawk.put(ORG_CODE, userInfo.orgcode!!)
+        Hawk.put(LOGIN_CODE, userInfo.logincode!!)
+        Hawk.put(LOGIN_MSG, userInfo.loginmsg!!)
+        Hawk.put(FIRST_LOGIN, userInfo.firstLogin!!)
+        Hawk.put(USER_NAME, userInfo.userName!!)
+        Hawk.put(ID_NO, userInfo.idno!!)
+        Hawk.put(ORG_NAME, userInfo.orgName!!)
+        Hawk.put(PHONE, userInfo.phone!!)
+        Hawk.put(IS_FIRST, false)//这个值只要是保存了，这个应用就不是首次打开了
     }
 
     /**

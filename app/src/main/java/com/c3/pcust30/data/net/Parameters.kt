@@ -1,4 +1,4 @@
-package com.c3.pcust30.bean.net
+package com.c3.pcust30.data.net
 
 import com.google.gson.Gson
 
