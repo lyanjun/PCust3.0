@@ -1,9 +1,12 @@
 package com.c3.pcust30.activity
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.KeyEvent
 import android.view.View
+import com.c3.library.constant.SceneType
 import com.c3.library.utils.MD5Utils
 import com.c3.library.weight.toast.ShowHint
 import com.c3.pcust30.R
@@ -16,6 +19,9 @@ import com.c3.pcust30.data.net.rsp.TradingResponse
 import com.c3.pcust30.data.net.rsp.body.LoginRsp
 import com.c3.pcust30.http.config.LOGIN_TRADING_CODE
 import com.c3.pcust30.http.tool.TradingTool
+import com.c3.pcust30.top.GESTURE_PASSWORD
+import com.c3.pcust30.top.GESTURE_SKIP_TYPE
+import com.c3.pcust30.top.USE_GESTURE_PASSWORD
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.orhanobut.hawk.Hawk
@@ -31,6 +37,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 class LoginActivity : BaseActivity(), View.OnClickListener {
 
     private var isFirstStart: Boolean = true //判断是否为第一次启动的标记
+    private var clickTime: Long = 0 //记录第一次点击的时间
     /**
      * 点击事件(登录按钮，忘记密码，手势登录)
      */
@@ -74,22 +81,32 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
             ShowHint.success(this, loginResponse.header!!.rspMsg!!)
             //将用户的信息储存到本地（作为免用户登陆的准备操作）
             val userInfo = loginResponse.body!!.worksigninfo!!
-            isFirstStart = Hawk.get<Boolean>(IS_FIRST, true)
+//            isFirstStart = Hawk.get<Boolean>(IS_FIRST, true)
             if (isFirstStart) {//判断是否为首次启动
-                //是首次启动则跳转到手势密码设置界面
-
+                //是首次启动则跳转到手势密码设置界面(首次启动后进入设置手势密码的界面)
+                val setGesturePasswordIntent = Intent(this, GesturePasswordActivity::class.java)
+//                setGesturePasswordIntent.putExtra(GESTURE_PASSWORD, SET_GESTURE_PASSWORD)//传入标识
+                setGesturePasswordIntent.putExtra(GESTURE_PASSWORD, USE_GESTURE_PASSWORD)//传入标识
+                setGesturePasswordIntent.putExtra(GESTURE_SKIP_TYPE,userInfo.firstLogin)//在手势登录页中跳转类型
+                startActivity(setGesturePasswordIntent, SceneType.CUSTOM_TYPE)//开启手势密码界面
             } else {//非首次启动逻辑处理
                 when (userInfo.firstLogin) {
                 //是首次登陆
                     FIRST_LOGIN_FALSE -> {
-                        //进入到密码重置界面（引发条件，初次启动后到设置手势密码设置之后返回首页后
-                        //在点击登陆按钮后则会跳转到该重置密码界面）
+                        //进入到密码重置界面（引发条件，初次启动后
+                        //到设置手势密码设置之后返回首页后再点击
+                        //登陆按钮后则会跳转到该重置密码界面）
+
                     }
                 //非首次登录
                     FIRST_LOGIN_TRUE -> {
                         //点击登陆按钮后直接跳转到主界面
                     }
-                    else -> ShowHint.warn(this, userInfo.loginmsg!!)
+                //后台数据有问题才会到这里
+                    else -> {
+                        ShowHint.warn(this, userInfo.loginmsg!!)
+                        return
+                    }
                 }
             }
             saveUserInfoToLocation(userInfo)//保存此次登陆的数据信息
@@ -148,4 +165,26 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
      * 设置没有返回键
      */
     override fun setTitleLeftChildView() = null
+
+    /**
+     * 退出当前界面
+     */
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if ((System.currentTimeMillis() - clickTime) > 2000) {
+                ShowHint.hint(this, "再按一次后退键退出程序")
+                clickTime = System.currentTimeMillis()
+            } else {
+                finish()
+                System.exit(0)
+            }
+            return true
+        }
+        return super.onKeyDown(keyCode, event)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        ShowHint.hint(this,"开始")
+    }
 }

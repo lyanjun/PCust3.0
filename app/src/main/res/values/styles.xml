@@ -7,6 +7,10 @@
          <item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
          <!--<item name="colorAccent">@color/colorAccent</item>-->
     </style>
+    <!-- 手势返回界面设置为背景透明 -->
+    <style name="AppSwipeBackTheme" parent="AppTheme">
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
     <!-- 登录输入框样式 -->
     <style name="LoginInputStyle">
         <item name="android:layout_width">@dimen/dp_0</item>
@@ -29,6 +33,13 @@
         <item name="android:layout_width">@dimen/dp_50</item>
         <item name="android:layout_height">@dimen/dp_43</item>
         <item name="android:scaleType">centerInside</item>
+    </style>
+    <!-- 红色字体自适应宽高，文字大小14sp -->
+    <style name="RedWrap14SpText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/red</item>
+        <item name="android:textSize">@dimen/sp_14</item>
     </style>
 
 </resources>

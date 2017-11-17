@@ -2,10 +2,23 @@
     <string name="app_name">新版本3</string>
     <!-- activity标题 -->
     <string name="act_title_login">登录</string>
+    <string name="act_title_gesture_set">手势登录</string>
+    <string name="act_title_gesture_use">设置手势登录密码</string>
     <!-- 输入提示文字 -->
     <string name="input_hint_user_code">请输入用户名</string>
     <string name="input_hint_password">请输入密码</string>
     <!-- 提交登录的提示文字 -->
     <string name="input_warn_user_code">账号不能为空！</string>
     <string name="input_warn_password">密码不能为空！</string>
+    <!-- 手势密码界面中使用的文字 -->
+    <string name="gesture_password_login">密码登录</string>
+    <string name="gesture_user_name">当前用户：%s</string>
+    <string name="gesture_hint_init_pwd">请输入初始密码</string>
+    <string name="gesture_hint_init_length">连接点至少四个</string>
+    <string name="gesture_hint_init_pwd_again">请再次输入初始密码</string>
+    <string name="gesture_hint_set_pwd_success">设置手势密码成功</string>
+    <string name="gesture_hint_verify_init_pwd_failure">两次手势不一致，请重新设置</string>
+    <string name="gesture_hint_verify_success">验证成功</string>
+    <string name="gesture_hint_verify_failure">手势密码不正确</string>
+
 </resources>

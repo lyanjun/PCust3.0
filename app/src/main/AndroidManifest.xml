@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.c3.pcust30">
-
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- 网络权限 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 震动权限 -->
+    <uses-permission android:name="android.permission.VIBRATE" />
     <application
         android:name=".app.InitApplication"
         android:allowBackup="true"
@@ -11,11 +13,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.MainActivity">
 
-        </activity>
+        <!-- 主界面 -->
+        <activity android:name=".activity.MainActivity"/>
         <!-- 登录界面 -->
-        <activity android:name=".activity.LoginActivity"
+        <activity
+            android:name=".activity.LoginActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,6 +26,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- 手势密码设置和解锁界面 -->
+        <activity android:name=".activity.GesturePasswordActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppSwipeBackTheme"/>
     </application>
 
 </manifest>

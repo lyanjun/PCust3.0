@@ -42,4 +42,5 @@ dependencies {
     api "com.trello.rxlifecycle2:rxlifecycle-components:$library.rxlifecycle"
     api "com.trello.rxlifecycle2:rxlifecycle-kotlin:$library.rxlifecycle"
     api "com.orhanobut:hawk:$library.hawk"
+    api "com.takwolf.android:lock9view:$library.lock9view"
 }
