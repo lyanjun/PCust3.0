@@ -8,6 +8,7 @@ import android.view.KeyEvent
 import android.view.View
 import com.c3.library.constant.SceneType
 import com.c3.library.utils.MD5Utils
+import com.c3.library.weight.hint.PromptManger
 import com.c3.library.weight.toast.ShowHint
 import com.c3.pcust30.R
 import com.c3.pcust30.base.act.BaseActivity
@@ -24,7 +25,6 @@ import com.c3.pcust30.top.GESTURE_SKIP_TYPE
 import com.c3.pcust30.top.USE_GESTURE_PASSWORD
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.hss01248.dialog.StyledDialog
 import com.orhanobut.hawk.Hawk
 import com.orhanobut.logger.Logger
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
@@ -45,12 +45,9 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v!!.id) {
 //            R.id.loginBtn -> login()//登录
-            R.id.loginBtn -> StyledDialog.buildIosAlert("",getString(R.string.gesture_hint_verify_success),null)
-                    .setBtnText("确认")
-                    .setMsgSize(16)
-                    .setWidthPercent(0.6f)
-                    .setHasShadow(false)
-                    .show()
+            R.id.loginBtn -> {
+                PromptManger.getInstance().hint("测试","提示")
+            }
             else -> ShowHint.failure(this, "错误")
         }
     }
