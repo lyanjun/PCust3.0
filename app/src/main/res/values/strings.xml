@@ -4,6 +4,7 @@
     <string name="act_title_login">登录</string>
     <string name="act_title_gesture_set">手势登录</string>
     <string name="act_title_gesture_use">设置手势登录密码</string>
+    <string name="act_title_reset_password">重置密码</string>
     <!-- 输入提示文字 -->
     <string name="input_hint_user_code">请输入用户名</string>
     <string name="input_hint_password">请输入密码</string>

@@ -1,11 +1,11 @@
 <resources>
 
-    <!-- Base application theme. -->
+    <!-- 界面风格 -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <!-- <item name="colorPrimary">@color/colorPrimary</item>
-         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
-         <!--<item name="colorAccent">@color/colorAccent</item>-->
+       <!-- <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>-->
+        <item name="android:windowBackground">@color/windowBackgroundColor</item>
     </style>
     <!-- 手势返回界面设置为背景透明 -->
     <style name="AppSwipeBackTheme" parent="AppTheme">

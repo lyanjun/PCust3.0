@@ -61,7 +61,7 @@ public class GroupFragment extends SwipeBackFragment {
             _mActivity.finish();
         } else {
             TOUCH_TIME = System.currentTimeMillis();
-            ShowHint.hint(_mActivity, "再按一次退出程序");
+            ShowHint.hint(_mActivity, getString(R.string.back_hint_text));
         }
         return true;
     }

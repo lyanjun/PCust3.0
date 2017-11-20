@@ -63,9 +63,11 @@ class GesturePasswordActivity : BaseActivity(), Lock9View.CallBack {
         } else {//使用手势密码登录
             if (TextUtils.equals(Hawk.get<String>(GESTURE_PASSWORD), password)) {
                 gestureHintTv.text = getString(R.string.gesture_hint_verify_success)
+                ShowHint.hint(this, getString(R.string.gesture_hint_verify_success))
                 //todo 登录验证成功 跳转到首页（主界面）
             }else{
                 gestureHintTv.text = getString(R.string.gesture_hint_verify_failure)
+                ShowHint.warn(this, getString(R.string.gesture_hint_verify_failure))
             }
         }
     }
@@ -105,10 +107,7 @@ class GesturePasswordActivity : BaseActivity(), Lock9View.CallBack {
     /**
      * 设置标题
      */
-    override fun setTitleText(): CharSequence =
-            if (isSetGesturePwd())
-                getString(R.string.act_title_gesture_set)
-            else getString(R.string.act_title_gesture_use)
+    override fun setTitleText(): CharSequence = if (isSetGesturePwd()) getString(R.string.act_title_gesture_set) else getString(R.string.act_title_gesture_use)
 
     /**
      * 判断功能状态

@@ -4,5 +4,8 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <!-- 使用到的颜色 -->
+    <!-- 界面背景 -->
+    <color name="windowBackgroundColor">#EFEFF4</color>
+    <!-- 手势连接线的颜色 -->
     <color name="gestureLockLine">#ACDCFB</color>
 </resources>

@@ -20,12 +20,14 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "com.android.support:appcompat-v7:$library.support_v7"
     implementation "com.android.support.constraint:constraint-layout:$library.constraintLayout"
     testImplementation "junit:junit:$library.junit"
     androidTestImplementation "com.android.support.test:runner:$library.runner"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$library.espressoCore"
+    api "com.android.support:design:$library.support_v7"
+    api "com.android.support:recyclerview-v7:$library.support_v7"
     api "joda-time:joda-time:$library.joda_time"
     api "com.orhanobut:logger:$library.orhanobut"
     api "me.yokeyword:fragmentation:$library.fragmentation"
@@ -43,4 +45,6 @@ dependencies {
     api "com.trello.rxlifecycle2:rxlifecycle-kotlin:$library.rxlifecycle"
     api "com.orhanobut:hawk:$library.hawk"
     api "com.takwolf.android:lock9view:$library.lock9view"
+    api "com.github.hss01248:DialogUtil:$library.dialogUtil"
+
 }

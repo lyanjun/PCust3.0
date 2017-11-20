@@ -3,6 +3,7 @@ package com.c3.pcust30.app.helper
 import android.content.Context
 import com.c3.pcust30.BuildConfig
 import com.c3.pcust30.R
+import com.hss01248.dialog.StyledDialog
 import com.orhanobut.hawk.Hawk
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
@@ -24,6 +25,7 @@ class InitHelper {
         fun initApplicationContextSetting(applicationContext: Context) {
             initLogger(applicationContext)//初始化日志设置
             Hawk.init(applicationContext).build()//初始化轻量级储存框架（以键值对形式）
+            StyledDialog.init(applicationContext)//设置弹窗工具类
         }
 
         /**

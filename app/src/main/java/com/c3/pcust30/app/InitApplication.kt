@@ -1,7 +1,12 @@
 package com.c3.pcust30.app
 
 import com.c3.library.app.CustomApp
+import com.c3.pcust30.app.helper.ActivityLifecycleCallbackImpl
 import com.c3.pcust30.app.helper.InitHelper
+
+
+
+
 
 
 /**
@@ -18,7 +23,10 @@ class InitApplication : CustomApp(){
         super.onCreate()
         //初始化设置
         InitHelper.initApplicationContextSetting(this)
+        //Activity的声明周期回调
+        registerActivityLifecycleCallbacks(ActivityLifecycleCallbackImpl())
         //开启EventBus加速
 //        EventBus.builder().addIndex(MyEventBusIndex()).installDefaultEventBus()
     }
+
 }

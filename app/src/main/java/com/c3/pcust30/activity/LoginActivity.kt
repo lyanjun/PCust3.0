@@ -24,6 +24,7 @@ import com.c3.pcust30.top.GESTURE_SKIP_TYPE
 import com.c3.pcust30.top.USE_GESTURE_PASSWORD
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.hss01248.dialog.StyledDialog
 import com.orhanobut.hawk.Hawk
 import com.orhanobut.logger.Logger
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
@@ -43,7 +44,13 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
      */
     override fun onClick(v: View?) {
         when (v!!.id) {
-            R.id.loginBtn -> login()//登录
+//            R.id.loginBtn -> login()//登录
+            R.id.loginBtn -> StyledDialog.buildIosAlert("",getString(R.string.gesture_hint_verify_success),null)
+                    .setBtnText("确认")
+                    .setMsgSize(16)
+                    .setWidthPercent(0.6f)
+                    .setHasShadow(false)
+                    .show()
             else -> ShowHint.failure(this, "错误")
         }
     }
@@ -87,7 +94,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                 val setGesturePasswordIntent = Intent(this, GesturePasswordActivity::class.java)
 //                setGesturePasswordIntent.putExtra(GESTURE_PASSWORD, SET_GESTURE_PASSWORD)//传入标识
                 setGesturePasswordIntent.putExtra(GESTURE_PASSWORD, USE_GESTURE_PASSWORD)//传入标识
-                setGesturePasswordIntent.putExtra(GESTURE_SKIP_TYPE,userInfo.firstLogin)//在手势登录页中跳转类型
+                setGesturePasswordIntent.putExtra(GESTURE_SKIP_TYPE, userInfo.firstLogin)//在手势登录页中跳转类型
                 startActivity(setGesturePasswordIntent, SceneType.CUSTOM_TYPE)//开启手势密码界面
             } else {//非首次启动逻辑处理
                 when (userInfo.firstLogin) {
@@ -172,7 +179,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if ((System.currentTimeMillis() - clickTime) > 2000) {
-                ShowHint.hint(this, "再按一次后退键退出程序")
+                ShowHint.hint(this, getString(com.c3.library.R.string.back_hint_text))
                 clickTime = System.currentTimeMillis()
             } else {
                 finish()
@@ -181,10 +188,5 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
             return true
         }
         return super.onKeyDown(keyCode, event)
-    }
-
-    override fun onStart() {
-        super.onStart()
-        ShowHint.hint(this,"开始")
     }
 }

@@ -6,6 +6,7 @@ import android.support.annotation.CheckResult;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.hss01248.dialog.ActivityStackManager;
 import com.trello.rxlifecycle2.LifecycleProvider;
 import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.trello.rxlifecycle2.RxLifecycle;
@@ -87,5 +88,20 @@ public class BaseActivity extends SwipeBackActivity implements LifecycleProvider
     protected void onDestroy() {
         lifecycleSubject.onNext(ActivityEvent.DESTROY);
         super.onDestroy();
+    }
+
+    /**
+     * 暂时不知道有J8用
+     */
+    @Override
+    public void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        ActivityStackManager.getInstance().setTopAttached(this);
+    }
+
+    @Override
+    public void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        ActivityStackManager.getInstance().removeTopAttached(this);
     }
 }
