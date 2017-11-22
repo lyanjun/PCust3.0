@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingRight="@dimen/dp_8"
+    android:paddingLeft="@dimen/dp_8"
+    android:gravity="center_vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/SingleLineInputItemStyleNoPadding">
+    <!-- 标题 -->
+    <include layout="@layout/view_vertical_title" />
+    <!-- 分割线 -->
+    <include layout="@layout/view_vertical_cut_off_with_padding" />
+    <!-- 文本输入域 -->
+    <com.xw.repo.XEditText
+        android:id="@+id/inputDomain"
+        android:width="@dimen/dp_0"
+        android:layout_weight="1"
+        tools:hint="请输入内容"
+        android:layout_marginTop="@dimen/dp_8"
+        android:layout_marginBottom="@dimen/dp_8"
+        app:x_clearDrawable="@drawable/pcust_input_clear_icon"
+        tools:ignore="InefficientWeight,RtlHardcoded"
+        android:inputType="text"
+        android:maxLength="4"
+        style="@style/InputWithDeleteStyle" />
+    <!-- 提示验证码 -->
+    <com.c3.library.view.VerifyCodeView
+        android:id="@+id/verifyCodeView"
+        android:layout_width="@dimen/dp_70"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/dp_8"
+        android:layout_marginTop="@dimen/dp_5"
+        android:layout_marginBottom="@dimen/dp_5"
+        app:codeTextSize="@dimen/sp_20"
+        app:codeBackground="#d4cdcd"
+        app:isContainChar="true"
+        app:codeLength="4"
+        app:linNum="5"
+        tools:ignore="RtlHardcoded" />
+</LinearLayout>

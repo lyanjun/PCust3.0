@@ -8,4 +8,9 @@
     <color name="windowBackgroundColor">#EFEFF4</color>
     <!-- 手势连接线的颜色 -->
     <color name="gestureLockLine">#ACDCFB</color>
+    <!-- 确认按钮的背景颜色 -->
+    <color name="submit_btn_compose_selector_false_color">#036AB2</color>
+    <color name="submit_btn_compose_selector_true_color">#035187</color>
+    <!-- 蓝色文字按钮的点击变化颜色 -->
+    <color name="text_btn_blue">#5072BE</color>
 </resources>

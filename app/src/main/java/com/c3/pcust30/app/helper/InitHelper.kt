@@ -1,6 +1,7 @@
 package com.c3.pcust30.app.helper
 
 import android.content.Context
+import com.c3.library.weight.hint.PromptTool
 import com.c3.pcust30.BuildConfig
 import com.c3.pcust30.R
 import com.hss01248.dialog.StyledDialog
@@ -26,6 +27,7 @@ class InitHelper {
             initLogger(applicationContext)//初始化日志设置
             Hawk.init(applicationContext).build()//初始化轻量级储存框架（以键值对形式）
             StyledDialog.init(applicationContext)//设置弹窗工具类
+            initHintDialogShowStyle(applicationContext)//弹窗效果
         }
 
         /**
@@ -42,6 +44,15 @@ class InitHelper {
             }
             //为日志增加配置
             Logger.addLogAdapter(logAdapter)
+        }
+        /**
+         * 配置弹窗效果
+         */
+        private fun initHintDialogShowStyle(context: Context){
+            PromptTool.config()//配置
+                    .setWidthPercent(0.7f)
+                    .setConfirmBtnTxt(context.getString(R.string.dialog_btn_confirm_txt))
+                    .setCancelBtnTxt(context.getString(R.string.dialog_btn_cancel_txt))
         }
     }
 }

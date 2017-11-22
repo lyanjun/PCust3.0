@@ -8,7 +8,6 @@ import android.view.KeyEvent
 import android.view.View
 import com.c3.library.constant.SceneType
 import com.c3.library.utils.MD5Utils
-import com.c3.library.weight.hint.PromptManger
 import com.c3.library.weight.toast.ShowHint
 import com.c3.pcust30.R
 import com.c3.pcust30.base.act.BaseActivity
@@ -22,7 +21,7 @@ import com.c3.pcust30.http.config.LOGIN_TRADING_CODE
 import com.c3.pcust30.http.tool.TradingTool
 import com.c3.pcust30.top.GESTURE_PASSWORD
 import com.c3.pcust30.top.GESTURE_SKIP_TYPE
-import com.c3.pcust30.top.USE_GESTURE_PASSWORD
+import com.c3.pcust30.top.SET_GESTURE_PASSWORD
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.orhanobut.hawk.Hawk
@@ -44,10 +43,9 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
      */
     override fun onClick(v: View?) {
         when (v!!.id) {
-//            R.id.loginBtn -> login()//登录
-            R.id.loginBtn -> {
-                PromptManger.getInstance().hint("测试","提示")
-            }
+            R.id.loginBtn -> login()//登录
+            R.id.forgetPwdBtn -> startActivityForResult(Intent(this, ForgetPasswordActivity::class.java)
+                    , 1000, SceneType.CUSTOM_TYPE)//忘记密码
             else -> ShowHint.failure(this, "错误")
         }
     }
@@ -63,6 +61,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         loadHelper.showDialog()//展示加载弹窗
         //MD5加密
         passwordStr = MD5Utils.MD5Encode(passwordStr + userCodeStr)
+        Hawk.put(USER_PASSWORD, passwordStr)//保存新密码
         Logger.t(TAG).i("账号：$userCodeStr\n密码：$passwordStr")
         val tradingJson = getJson(TradingRequest().addHeader(SERVICE_CODE, LOGIN_TRADING_CODE)//交易号
                 .addBody(LOGIN_USER_CODE, userCodeStr).addBody(LOGIN_PASSWORD, passwordStr))//账号,密码
@@ -77,43 +76,48 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
      * 解析
      */
     override fun getResponse(result: String, tag: Int) {
-        Logger.t(TAG).i("返回Json$result")
-        Logger.t(TAG).json(result)//以JSON格式打印数据
+        super.getResponse(result, tag)
         val objType = object : TypeToken<TradingResponse<LoginRsp>>() {}.type//解析类型
         val loginResponse = Gson().fromJson<TradingResponse<LoginRsp>>(result, objType)//解析结果
         if (TextUtils.equals(TRADING_SUCCESS, loginResponse.header!!.rspCode!!)) {
-            ShowHint.success(this, loginResponse.header!!.rspMsg!!)
-            //将用户的信息储存到本地（作为免用户登陆的准备操作）
-            val userInfo = loginResponse.body!!.worksigninfo!!
+            if (TextUtils.equals(LOGIN_SUCCESS, loginResponse.body!!.worksigninfo!!.logincode)) {
+                ShowHint.success(this, loginResponse.body!!.worksigninfo!!.loginmsg!!)
+                //将用户的信息储存到本地（作为免用户登陆的准备操作）
+                val userInfo = loginResponse.body!!.worksigninfo!!
 //            isFirstStart = Hawk.get<Boolean>(IS_FIRST, true)
-            if (isFirstStart) {//判断是否为首次启动
-                //是首次启动则跳转到手势密码设置界面(首次启动后进入设置手势密码的界面)
-                val setGesturePasswordIntent = Intent(this, GesturePasswordActivity::class.java)
-//                setGesturePasswordIntent.putExtra(GESTURE_PASSWORD, SET_GESTURE_PASSWORD)//传入标识
-                setGesturePasswordIntent.putExtra(GESTURE_PASSWORD, USE_GESTURE_PASSWORD)//传入标识
-                setGesturePasswordIntent.putExtra(GESTURE_SKIP_TYPE, userInfo.firstLogin)//在手势登录页中跳转类型
-                startActivity(setGesturePasswordIntent, SceneType.CUSTOM_TYPE)//开启手势密码界面
-            } else {//非首次启动逻辑处理
-                when (userInfo.firstLogin) {
-                //是首次登陆
-                    FIRST_LOGIN_FALSE -> {
-                        //进入到密码重置界面（引发条件，初次启动后
-                        //到设置手势密码设置之后返回首页后再点击
-                        //登陆按钮后则会跳转到该重置密码界面）
+                isFirstStart = true
+                if (isFirstStart) {//判断是否为首次启动
+                    //是首次启动则跳转到手势密码设置界面(首次启动后进入设置手势密码的界面)
+                    val setGesturePasswordIntent = Intent(this, GesturePasswordActivity::class.java)
+                    setGesturePasswordIntent.putExtra(GESTURE_PASSWORD, SET_GESTURE_PASSWORD)//传入标识
+//                setGesturePasswordIntent.putExtra(GESTURE_PASSWORD, USE_GESTURE_PASSWORD)//传入标识
+//                setGesturePasswordIntent.putExtra(GESTURE_SKIP_TYPE, userInfo.firstLogin)//在手势登录页中跳转类型
+                    setGesturePasswordIntent.putExtra(GESTURE_SKIP_TYPE, "0")//在手势登录页中跳转类型
+                    startActivity(setGesturePasswordIntent, SceneType.CUSTOM_TYPE)//开启手势密码界面
+                } else {//非首次启动逻辑处理
+                    when (userInfo.firstLogin) {
+                    //是首次登陆
+                        FIRST_LOGIN_FALSE -> {
+                            //进入到密码重置界面（引发条件，初次启动后
+                            //到设置手势密码设置之后返回首页后再点击
+                            //登陆按钮后则会跳转到该重置密码界面）
 
-                    }
-                //非首次登录
-                    FIRST_LOGIN_TRUE -> {
-                        //点击登陆按钮后直接跳转到主界面
-                    }
-                //后台数据有问题才会到这里
-                    else -> {
-                        ShowHint.warn(this, userInfo.loginmsg!!)
-                        return
+                        }
+                    //非首次登录
+                        FIRST_LOGIN_TRUE -> {
+                            //点击登陆按钮后直接跳转到主界面
+                        }
+                    //后台数据有问题才会到这里
+                        else -> {
+                            ShowHint.warn(this, userInfo.loginmsg!!)
+                            return
+                        }
                     }
                 }
+                saveUserInfoToLocation(userInfo)//保存此次登陆的数据信息
+            } else {
+                ShowHint.failure(this, loginResponse.body!!.worksigninfo!!.loginmsg!!)
             }
-            saveUserInfoToLocation(userInfo)//保存此次登陆的数据信息
         } else {
             ShowHint.failure(this, loginResponse.header!!.rspMsg!!)
         }
@@ -156,6 +160,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         setBodyView(R.layout.activity_login)//添加布局
         setSwipeBackEnable(false)//关闭滑动退出功能
         loginBtn.setOnClickListener(this)
+        forgetPwdBtn.setOnClickListener(this)
         inputUserCode.setText("111111")
         inputPassWord.setText("222222")
     }

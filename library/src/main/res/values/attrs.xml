@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 验证码控件的属性 -->
+    <declare-styleable name="VerifyCodeView">
+        <!-- 验证文字大小 -->
+        <attr name="codeTextSize" format="dimension" />
+        <!-- 验证码背景颜色 -->
+        <attr name="codeBackground" format="color" />
+        <!-- 验证码长度 -->
+        <attr name="codeLength" format="integer" />
+        <!-- 是否混合字符 -->
+        <attr name="isContainChar" format="boolean" />
+        <!-- 干扰点的数量 -->
+        <attr name="pointNum" format="integer" />
+        <!-- 干扰线的数量 -->
+        <attr name="linNum" format="integer" />
+    </declare-styleable>
+</resources>

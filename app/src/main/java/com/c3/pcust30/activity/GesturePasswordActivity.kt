@@ -1,13 +1,16 @@
 package com.c3.pcust30.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import com.c3.library.constant.SceneType
+import com.c3.library.weight.hint.listener.OnConfirmListener
 import com.c3.library.weight.toast.ShowHint
 import com.c3.pcust30.R
 import com.c3.pcust30.base.act.BaseActivity
 import com.c3.pcust30.data.info.USER_NAME
+import com.c3.pcust30.tools.hintWithConfirmBtn
 import com.c3.pcust30.top.*
 import com.orhanobut.hawk.Hawk
 import com.orhanobut.logger.Logger
@@ -29,7 +32,7 @@ class GesturePasswordActivity : BaseActivity(), Lock9View.CallBack {
     override fun onFinish(password: String?) {
         Logger.t(TAG).i("${if (isSetGesturePwd()) "设置" else "登录"}$password")
         if (isSetGesturePwd()) {//设置手势密码
-            if (null == firstSetGesturePwd) {
+            if (firstSetGesturePwd.isNullOrEmpty()) {
                 if (password!!.length < 4) {
                     ShowHint.warn(this, getString(R.string.gesture_hint_init_length))
                     return
@@ -40,21 +43,22 @@ class GesturePasswordActivity : BaseActivity(), Lock9View.CallBack {
             }
             //第二次录入手势密码
             if (TextUtils.equals(firstSetGesturePwd, password)) {
-                ShowHint.success(this, getString(R.string.gesture_hint_set_pwd_success))//提示
                 //设置手势密码成功
                 Hawk.put(GESTURE_PASSWORD, password)//保存手势密码(用来作为下次登录的验证信息)
                 Hawk.put(GESTURE_LOGIN_STATUS, true)//设置手势登录未开启状态
-                //todo 判断是修改（从主页开启该界面）还是设置（从登陆界面启动该界面）
-                when (gestureSkipType) {//判断跳转到哪个界面
-                //主界面
-                    GESTURE_SKIP_TO_MAIN -> {
-                        ShowHint.warn(this, "主界面")
+//                ShowHint.success(this, getString(R.string.gesture_hint_set_pwd_success))//提示
+                hintWithConfirmBtn(getString(R.string.gesture_hint_set_pwd_success), OnConfirmListener {
+                    //todo 判断是修改（从主页开启该界面）还是设置（从登陆界面启动该界面）
+                    when (gestureSkipType) {//判断跳转到哪个界面
+                        GESTURE_SKIP_TO_MAIN -> {//主界面
+                            ShowHint.warn(this, "主界面")
+                        }
+                        GESTURE_SKIP_TO_SET_PWD -> {//重置密码界面
+//                            ShowHint.warn(this, "重置密码界面")
+                            startActivity(Intent(this,ResetPasswordActivity::class.java), SceneType.CUSTOM_TYPE)
+                        }
                     }
-                //重置密码界面
-                    GESTURE_SKIP_TO_SET_PWD -> {
-                        ShowHint.warn(this, "重置密码界面")
-                    }
-                }
+                }).show().setCancelable(false)
             } else {
                 firstSetGesturePwd = null
                 gestureHintTv.text = getString(R.string.gesture_hint_init_pwd)
@@ -63,9 +67,10 @@ class GesturePasswordActivity : BaseActivity(), Lock9View.CallBack {
         } else {//使用手势密码登录
             if (TextUtils.equals(Hawk.get<String>(GESTURE_PASSWORD), password)) {
                 gestureHintTv.text = getString(R.string.gesture_hint_verify_success)
-                ShowHint.hint(this, getString(R.string.gesture_hint_verify_success))
-                //todo 登录验证成功 跳转到首页（主界面）
-            }else{
+                hintWithConfirmBtn(getString(R.string.gesture_hint_verify_success), OnConfirmListener {
+                    //fixme 登录验证成功 (点击确认键后)跳转到首页（主界面）
+                }).show().setCancelable(false)
+            } else {
                 gestureHintTv.text = getString(R.string.gesture_hint_verify_failure)
                 ShowHint.warn(this, getString(R.string.gesture_hint_verify_failure))
             }

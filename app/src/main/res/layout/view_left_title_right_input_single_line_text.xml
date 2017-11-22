@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/SingleLineInputItemStyle">
+    <!-- 标题 -->
+    <include layout="@layout/view_vertical_title" />
+    <!-- 分割线 -->
+    <include layout="@layout/view_vertical_cut_off" />
+    <!-- 文本输入域 -->
+    <com.xw.repo.XEditText
+        android:id="@+id/inputDomain"
+        tools:hint="请输入内容"
+        app:x_clearDrawable="@drawable/pcust_input_clear_icon"
+        tools:ignore="RtlHardcoded"
+        android:inputType="text"
+        style="@style/InputWithDeleteStyle" />
+</LinearLayout>

@@ -19,5 +19,6 @@ const val IS_FIRST = "Is_First"//以布尔值的方式储存启动状态
 //登录状态
 const val FIRST_LOGIN_FALSE = "-1"//非首次登录
 const val FIRST_LOGIN_TRUE = "0"//是首次登录
+const val USER_PASSWORD = "Password"//用户密码
 
 

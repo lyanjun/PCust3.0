@@ -1,25 +1,54 @@
 <resources>
     <string name="app_name">新版本3</string>
+    <!-- dialog -->
+    <string name="dialog_btn_confirm_txt">确定</string>
+    <string name="dialog_btn_cancel_txt">取消</string>
     <!-- activity标题 -->
     <string name="act_title_login">登录</string>
     <string name="act_title_gesture_set">手势登录</string>
     <string name="act_title_gesture_use">设置手势登录密码</string>
-    <string name="act_title_reset_password">重置密码</string>
+    <string name="act_title_reset_password">修改登录密码</string>
+    <string name="act_title_forget_password">重置密码</string>
     <!-- 输入提示文字 -->
     <string name="input_hint_user_code">请输入用户名</string>
     <string name="input_hint_password">请输入密码</string>
     <!-- 提交登录的提示文字 -->
     <string name="input_warn_user_code">账号不能为空！</string>
     <string name="input_warn_password">密码不能为空！</string>
+    <string name="login_forget_password_btn_txt">忘记密码</string>
     <!-- 手势密码界面中使用的文字 -->
     <string name="gesture_password_login">密码登录</string>
     <string name="gesture_user_name">当前用户：%s</string>
     <string name="gesture_hint_init_pwd">请输入初始密码</string>
-    <string name="gesture_hint_init_length">连接点至少四个</string>
+    <string name="gesture_hint_init_length">连接点至少四个！</string>
     <string name="gesture_hint_init_pwd_again">请再次输入初始密码</string>
     <string name="gesture_hint_set_pwd_success">设置手势密码成功</string>
-    <string name="gesture_hint_verify_init_pwd_failure">两次手势不一致，请重新设置</string>
+    <string name="gesture_hint_verify_init_pwd_failure">两次手势不一致，请重新设置！</string>
     <string name="gesture_hint_verify_success">验证成功</string>
-    <string name="gesture_hint_verify_failure">手势密码不正确</string>
-
+    <string name="gesture_hint_verify_failure">手势密码不正确！</string>
+    <!-- 重置登录密码界面使用的文字 -->
+    <string name="reset_pwd_input_old_title_txt">旧密码</string>
+    <string name="reset_pwd_input_new_title_txt">新密码</string>
+    <string name="reset_pwd_input_confirm_title_txt">确认密码</string>
+    <string name="reset_pwd_input_hint_old_title_txt">请输入旧密码</string>
+    <string name="reset_pwd_input_hint_new_title_txt">请输入新密码</string>
+    <string name="reset_pwd_input_hint_confirm_title_txt">请输入确认新密码</string>
+    <string name="new_password_null_is_error">旧密码不能为空！</string>
+    <string name="old_password_null_is_error">新密码不能为空！</string>
+    <string name="confirm_password_null_is_error">确认密码不能为空！</string>
+    <string name="new_and_old_should_different">新密码与旧密码不能相同！</string>
+    <string name="new_and_confirm_should_same">新密码与确认密码不一致！</string>
+    <string name="reset_confirm_btn_txt">确定</string>
+    <!-- 忘记密码界面使用的文字 -->
+    <string name="forget_commit_btn_txt">提交</string>
+    <string name="forget_input_user_code_txt">用户编码</string>
+    <string name="forget_input_user_password_txt">手机号</string>
+    <string name="forget_input_verify_code_txt">验证码</string>
+    <string name="forget_input_user_code_txt_hint">请输入用户编码</string>
+    <string name="forget_input_user_password_txt_hint">请输入手机号</string>
+    <string name="forget_input_verify_code_txt_hint">请输入验证码</string>
+    <string name="user_code_null_is_error">用户名不能为空！</string>
+    <string name="user_tel_null_is_error">手机号不能为空！</string>
+    <string name="verify_code_null_is_error">验证码不能为空！</string>
+    <string name="verify_code_check_failure">"验证码填写有误！</string>
 </resources>

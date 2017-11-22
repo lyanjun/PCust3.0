@@ -35,7 +35,15 @@
             android:name=".activity.GesturePasswordActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppSwipeBackTheme" />
-        <activity android:name=".activity.ResetPasswordActivity"></activity>
+        <!-- 重置密码界面 -->
+        <activity
+            android:name=".activity.ResetPasswordActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppSwipeBackTheme" />
+        <!-- 忘记密码界面 -->
+        <activity android:name=".activity.ForgetPasswordActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppSwipeBackTheme"/>
     </application>
 
 </manifest>

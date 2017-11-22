@@ -12,6 +12,7 @@ import com.c3.pcust30.R
 import com.c3.pcust30.base.config.DEFAULT_TITLE_BACKGROUND_DRAWABLE
 import com.c3.pcust30.base.config.DEFAULT_TITLE_TEXT_COLOR
 import com.c3.pcust30.base.config.DEFAULT_TITLE_TEXT_TITLE_SIZE
+import com.orhanobut.logger.Logger
 
 /**
  * 作者： LYJ
@@ -37,7 +38,10 @@ open class BaseActivity : MineActivity(), CustomTitleChild.OnChildClickListener 
     /**
      * 对请求返回的内容进行处理(解析和展示)
      */
-    open protected fun getResponse(result: String, tag: Int = 0) {}
+    open protected fun getResponse(result: String, tag: Int = 0) {
+        Logger.t(TAG).i("返回Json$result")
+        Logger.t(TAG).json(result)//以JSON格式打印数据
+    }
 
 
     /**

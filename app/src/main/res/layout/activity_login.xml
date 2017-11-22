@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
+    android:focusable="true"
     tools:context="com.c3.pcust30.activity.LoginActivity">
     <!-- Logo图片 -->
     <ImageView
@@ -60,13 +62,28 @@
         tools:ignore="RtlHardcoded"
         style="@style/LoginInputStyle" />
     <!-- 忘记密码和手势登录 -->
+    <!-- 忘记密码 -->
+    <TextView
+        android:id="@+id/forgetPwdBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login_forget_password_btn_txt"
+        android:layout_marginTop="@dimen/dp_16"
+        android:layout_marginLeft="@dimen/dp_16"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:textSize="@dimen/sp_15"
+        android:textColor="@color/pcust_text_btn_color_list"
+        app:layout_constraintTop_toBottomOf="@+id/inputPassWord"
+        android:clickable="true"
+        tools:ignore="RtlHardcoded" />
+    <!-- 手势登录 -->
     <!-- 登录按钮 -->
     <ImageView
         android:id="@+id/loginBtn"
         android:layout_width="@dimen/dp_80"
         android:layout_height="@dimen/dp_80"
         android:layout_marginTop="@dimen/dp_20"
-        app:layout_constraintTop_toBottomOf="@id/inputPassWord"
+        app:layout_constraintTop_toBottomOf="@id/forgetPwdBtn"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:src="@drawable/pcust_login_icon"

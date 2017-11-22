@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/inputTitle"
+    android:layout_width="@dimen/dp_100"
+    android:layout_height="wrap_content"
+    android:textColor="@color/black"
+    android:textSize="@dimen/sp_16"
+    tools:text="标题"
+    tools:showIn="@layout/view_left_title_right_input_single_line_password" />
