@@ -19,15 +19,16 @@ import com.c3.pcust30.data.net.rsp.TradingResponse
 import com.c3.pcust30.data.net.rsp.body.LoginRsp
 import com.c3.pcust30.http.config.LOGIN_TRADING_CODE
 import com.c3.pcust30.http.tool.TradingTool
-import com.c3.pcust30.top.GESTURE_PASSWORD
-import com.c3.pcust30.top.GESTURE_SKIP_TYPE
-import com.c3.pcust30.top.SET_GESTURE_PASSWORD
+import com.c3.pcust30.top.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.orhanobut.hawk.Hawk
 import com.orhanobut.logger.Logger
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_login.*
+import java.util.concurrent.TimeUnit
 
 /**
  * 作者： LYJ
@@ -54,8 +55,8 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
      * 登录请求
      */
     private fun login() {
-        val userCodeStr = inputUserCode.text.toString().trim()//用户账号
-        var passwordStr = inputPassWord.text.toString().trim()//用户密码
+        val userCodeStr = inputUserCode.trimmedString//用户账号
+        var passwordStr = inputPassWord.trimmedString//用户密码
         if (loginHintMessage(userCodeStr, getString(R.string.input_warn_user_code))) return
         if (loginHintMessage(passwordStr, getString(R.string.input_warn_password))) return
         loadHelper.showDialog()//展示加载弹窗
@@ -84,31 +85,27 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                 ShowHint.success(this, loginResponse.body!!.worksigninfo!!.loginmsg!!)
                 //将用户的信息储存到本地（作为免用户登陆的准备操作）
                 val userInfo = loginResponse.body!!.worksigninfo!!
-//            isFirstStart = Hawk.get<Boolean>(IS_FIRST, true)
-                isFirstStart = true
+                isFirstStart = Hawk.get<Boolean>(IS_FIRST, true)
+//                isFirstStart = true
                 if (isFirstStart) {//判断是否为首次启动
                     //是首次启动则跳转到手势密码设置界面(首次启动后进入设置手势密码的界面)
                     val setGesturePasswordIntent = Intent(this, GesturePasswordActivity::class.java)
                     setGesturePasswordIntent.putExtra(GESTURE_PASSWORD, SET_GESTURE_PASSWORD)//传入标识
 //                setGesturePasswordIntent.putExtra(GESTURE_PASSWORD, USE_GESTURE_PASSWORD)//传入标识
-//                setGesturePasswordIntent.putExtra(GESTURE_SKIP_TYPE, userInfo.firstLogin)//在手势登录页中跳转类型
-                    setGesturePasswordIntent.putExtra(GESTURE_SKIP_TYPE, "0")//在手势登录页中跳转类型
+                    setGesturePasswordIntent.putExtra(GESTURE_SKIP_TYPE, userInfo.firstLogin)//在手势登录页中跳转类型
+//                    setGesturePasswordIntent.putExtra(GESTURE_SKIP_TYPE, "0")//在手势登录页中跳转类型
                     startActivity(setGesturePasswordIntent, SceneType.CUSTOM_TYPE)//开启手势密码界面
                 } else {//非首次启动逻辑处理
                     when (userInfo.firstLogin) {
-                    //是首次登陆
-                        FIRST_LOGIN_FALSE -> {
-                            //进入到密码重置界面（引发条件，初次启动后
-                            //到设置手势密码设置之后返回首页后再点击
-                            //登陆按钮后则会跳转到该重置密码界面）
-
+                        FIRST_LOGIN_TRUE -> {//是首次登陆
+                            //进入到密码重置界面（引发条件，初次启动后 ,到设置手势密码设置之后返回首页后再点击 ,登陆按钮后则会跳转到该重置密码界面）
+                            startActivity(Intent(this, ResetPasswordActivity::class.java), SceneType.CUSTOM_TYPE)
                         }
-                    //非首次登录
-                        FIRST_LOGIN_TRUE -> {
+                        FIRST_LOGIN_FALSE -> {//非首次登录
                             //点击登陆按钮后直接跳转到主界面
+                            startActivity(Intent(this, MainActivity::class.java), SceneType.CUSTOM_TYPE)
                         }
-                    //后台数据有问题才会到这里
-                        else -> {
+                        else -> {//后台数据有问题才会到这里
                             ShowHint.warn(this, userInfo.loginmsg!!)
                             return
                         }
@@ -161,6 +158,18 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         setSwipeBackEnable(false)//关闭滑动退出功能
         loginBtn.setOnClickListener(this)
         forgetPwdBtn.setOnClickListener(this)
+        //判断手势登录是否开启
+        if (Hawk.get<Boolean>(GESTURE_LOGIN_STATUS, false)) {
+            loadHelper.showDialog()//显示加载弹窗
+            Observable.timer(2, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
+                    .doFinally { loadHelper.hideDialog() }
+                    .bindToLifecycle(this)
+                    .subscribe({
+                        val setGesturePasswordIntent = Intent(this, GesturePasswordActivity::class.java)
+                        setGesturePasswordIntent.putExtra(GESTURE_PASSWORD, USE_GESTURE_PASSWORD)//传入标识
+                        startActivity(setGesturePasswordIntent, SceneType.CUSTOM_TYPE)//开启手势密码界面
+                    })
+        }
         inputUserCode.setText("111111")
         inputPassWord.setText("222222")
     }

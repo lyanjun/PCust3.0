@@ -19,7 +19,8 @@
         <!-- 主界面 -->
         <activity
             android:name=".activity.MainActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppSwipeBackTheme"/>
         <!-- 登录界面 -->
         <activity
             android:name=".activity.LoginActivity"

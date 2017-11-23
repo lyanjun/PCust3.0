@@ -46,15 +46,13 @@ class GesturePasswordActivity : BaseActivity(), Lock9View.CallBack {
                 //设置手势密码成功
                 Hawk.put(GESTURE_PASSWORD, password)//保存手势密码(用来作为下次登录的验证信息)
                 Hawk.put(GESTURE_LOGIN_STATUS, true)//设置手势登录未开启状态
-//                ShowHint.success(this, getString(R.string.gesture_hint_set_pwd_success))//提示
                 hintWithConfirmBtn(getString(R.string.gesture_hint_set_pwd_success), OnConfirmListener {
                     //todo 判断是修改（从主页开启该界面）还是设置（从登陆界面启动该界面）
                     when (gestureSkipType) {//判断跳转到哪个界面
-                        GESTURE_SKIP_TO_MAIN -> {//主界面
-                            ShowHint.warn(this, "主界面")
+                        GESTURE_SKIP_TO_MAIN -> {//跳转到主界面
+                            startActivity(Intent(this,MainActivity::class.java), SceneType.CUSTOM_TYPE)
                         }
-                        GESTURE_SKIP_TO_SET_PWD -> {//重置密码界面
-//                            ShowHint.warn(this, "重置密码界面")
+                        GESTURE_SKIP_TO_SET_PWD -> {//跳转到重置密码界面
                             startActivity(Intent(this,ResetPasswordActivity::class.java), SceneType.CUSTOM_TYPE)
                         }
                     }
@@ -67,8 +65,8 @@ class GesturePasswordActivity : BaseActivity(), Lock9View.CallBack {
         } else {//使用手势密码登录
             if (TextUtils.equals(Hawk.get<String>(GESTURE_PASSWORD), password)) {
                 gestureHintTv.text = getString(R.string.gesture_hint_verify_success)
-                hintWithConfirmBtn(getString(R.string.gesture_hint_verify_success), OnConfirmListener {
-                    //fixme 登录验证成功 (点击确认键后)跳转到首页（主界面）
+                hintWithConfirmBtn(getString(R.string.gesture_hint_verify_title),getString(R.string.gesture_hint_verify_success), OnConfirmListener {
+                    startActivity(Intent(this,MainActivity::class.java), SceneType.CUSTOM_TYPE)
                 }).show().setCancelable(false)
             } else {
                 gestureHintTv.text = getString(R.string.gesture_hint_verify_failure)
@@ -103,11 +101,17 @@ class GesturePasswordActivity : BaseActivity(), Lock9View.CallBack {
     }
 
     /**
+     * 关闭界面
+     */
+    override fun finish() {
+        //todo 添加退出逻辑
+        ShowHint.warn(this,"back")
+        super.finish()
+    }
+    /**
      * 设置退出动画效果
      */
-    override fun setTheSceneType(): Int {
-        return SceneType.CUSTOM_TYPE
-    }
+    override fun setTheSceneType(): Int = SceneType.CUSTOM_TYPE
 
     /**
      * 设置标题

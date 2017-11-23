@@ -55,7 +55,7 @@ open class BaseActivity : MineActivity(), CustomTitleChild.OnChildClickListener 
      * 点击事件
      */
     override fun onChildClick(parentTag: Int, childTag: Int) {
-        if (TitleChildTag.BACK_BTN == childTag) ShowHint.hint(this, "点击了返回")
+        if (TitleChildTag.BACK_BTN == childTag) finish()
     }
 
     /**

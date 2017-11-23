@@ -12,9 +12,8 @@ import com.c3.pcust30.base.frag.BaseFragment
 
 class TestFragment : BaseFragment() {
 
-    override fun setFragmentView(): Int {
-        return R.layout.fragment_test
-    }
+    override fun setFragmentView(): Int = R.layout.fragment_test
 
     override fun setTitleLeftChildView(): IsTitleChildView? = null
+
 }

@@ -20,7 +20,5 @@ class MainActivity : BaseActivity(){
         supportFragmentManager.beginTransaction().add(R.id.home, TestFragment()).commit()
     }
 
-    override fun setTitleBarShowType(): CustomBodyView.TitleShowType {
-        return CustomBodyView.TitleShowType.NONE
-    }
+    override fun setTitleBarShowType(): CustomBodyView.TitleShowType = CustomBodyView.TitleShowType.NONE
 }

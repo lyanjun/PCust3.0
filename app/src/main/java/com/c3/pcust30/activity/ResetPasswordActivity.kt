@@ -1,5 +1,6 @@
 package com.c3.pcust30.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.KeyEvent
@@ -61,8 +62,8 @@ class ResetPasswordActivity : BaseActivity() {
      */
     private fun confirmChangePassword() {
         var oldPassword = oldPassWordLayout.inputDomain.trimmedString//旧密码
-        var newPassword = newPassWordLayout.inputDomain.text.toString()//新密码
-        val confirmPassword = confirmPassWordLayout.inputDomain.text.toString()//确认密码
+        var newPassword = newPassWordLayout.inputDomain.trimmedString//新密码
+        val confirmPassword = confirmPassWordLayout.inputDomain.trimmedString//确认密码
         if (TextUtils.isEmpty(oldPassword)) {
             ShowHint.warn(this, getString(R.string.new_password_null_is_error))
             return
@@ -114,8 +115,9 @@ class ResetPasswordActivity : BaseActivity() {
             //保存密码到本地
             Hawk.put(USER_PASSWORD, confirmPassWordLayout.inputDomain.text.toString())//保存新密码
             //修改密码成功,显示弹窗 点击确定跳转到主界面
-            hintWithConfirmBtn("修改密码成功！", OnConfirmListener {
-                ShowHint.hint(this, "跳转到主界面")
+            hintWithConfirmBtn(getString(R.string.reset_password_hint_title), getString(R.string.reset_password_hint_message), OnConfirmListener {
+                //跳转到主界面
+                startActivity(Intent(this, MainActivity::class.java), SceneType.CUSTOM_TYPE)
             }).show().setCancelable(false)
         } else {
             ShowHint.warn(this, resetResponse.header!!.rspMsg!!)

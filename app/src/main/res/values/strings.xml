@@ -24,7 +24,8 @@
     <string name="gesture_hint_init_pwd_again">请再次输入初始密码</string>
     <string name="gesture_hint_set_pwd_success">设置手势密码成功</string>
     <string name="gesture_hint_verify_init_pwd_failure">两次手势不一致，请重新设置！</string>
-    <string name="gesture_hint_verify_success">验证成功</string>
+    <string name="gesture_hint_verify_success">验证成功！</string>
+    <string name="gesture_hint_verify_title">手势密码验证</string>
     <string name="gesture_hint_verify_failure">手势密码不正确！</string>
     <!-- 重置登录密码界面使用的文字 -->
     <string name="reset_pwd_input_old_title_txt">旧密码</string>
@@ -39,6 +40,8 @@
     <string name="new_and_old_should_different">新密码与旧密码不能相同！</string>
     <string name="new_and_confirm_should_same">新密码与确认密码不一致！</string>
     <string name="reset_confirm_btn_txt">确定</string>
+    <string name="reset_password_hint_title">修改密码结果</string>
+    <string name="reset_password_hint_message">修改密码成功！</string>
     <!-- 忘记密码界面使用的文字 -->
     <string name="forget_commit_btn_txt">提交</string>
     <string name="forget_input_user_code_txt">用户编码</string>
