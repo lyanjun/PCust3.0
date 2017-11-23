@@ -29,6 +29,8 @@ public class PromptTool {
         return StyledDialog.buildIosAlert(null == title ? "":title, message, new OnlyConfirmListenerImpl(confirmListener))
                 .setHasShadow(config.isHasShadow())
                 .setWidthPercent(config.getWidthPercent())
-                .setBtnText(config.getConfirmBtnTxt());
+                .setBtnText(config.getConfirmBtnTxt())
+                .setMsgSize(config.getMessageTxtSize())
+                .setBtnSize(config.getBtnTxtSize());
     }
 }

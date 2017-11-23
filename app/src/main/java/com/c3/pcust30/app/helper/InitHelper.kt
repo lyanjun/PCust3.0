@@ -50,6 +50,8 @@ class InitHelper {
          */
         private fun initHintDialogShowStyle(context: Context){
             PromptTool.config()//配置
+                    .setBtnTxtSize(16)
+                    .setMessageTxtSize(15)
                     .setWidthPercent(0.7f)
                     .setConfirmBtnTxt(context.getString(R.string.dialog_btn_confirm_txt))
                     .setCancelBtnTxt(context.getString(R.string.dialog_btn_cancel_txt))

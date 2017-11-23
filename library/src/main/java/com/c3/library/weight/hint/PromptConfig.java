@@ -30,7 +30,27 @@ public class PromptConfig {
     private boolean hasShadow = false;//是否有阴影
     private float widthPercent = 0.9f;//设置弹窗宽度的百分比
     private CharSequence confirmBtnTxt = "confirm" , cancelBtnTxt = "cancel";//确定按钮和取消按钮的显示的文字
+    private int messageTxtSize = 14;//内容的字体大小
+    private int btnTxtSize = 14;//内容的字体大小
 
+
+    public int getMessageTxtSize() {
+        return messageTxtSize;
+    }
+
+    public PromptConfig setMessageTxtSize(int messageTxtSize) {
+        this.messageTxtSize = messageTxtSize;
+        return this;
+    }
+
+    public int getBtnTxtSize() {
+        return btnTxtSize;
+    }
+
+    public PromptConfig setBtnTxtSize(int btnTxtSize) {
+        this.btnTxtSize = btnTxtSize;
+        return this;
+    }
 
     CharSequence getConfirmBtnTxt() {
         return confirmBtnTxt;

@@ -1,17 +1,22 @@
 package com.c3.pcust30.activity
 
 import android.os.Bundle
+import android.text.Html
+import android.text.TextUtils
 import com.c3.library.constant.SceneType
+import com.c3.library.weight.hint.listener.OnConfirmListener
 import com.c3.library.weight.toast.ShowHint
 import com.c3.pcust30.R
 import com.c3.pcust30.base.act.BaseActivity
-import com.c3.pcust30.data.net.LOGIN_USER_NAME
-import com.c3.pcust30.data.net.LOGIN_USER_PHOME
-import com.c3.pcust30.data.net.SERVICE_CODE
-import com.c3.pcust30.data.net.getJson
+import com.c3.pcust30.data.net.*
 import com.c3.pcust30.data.net.rep.TradingRequest
+import com.c3.pcust30.data.net.rsp.TradingResponse
+import com.c3.pcust30.data.net.rsp.body.InitializePasswordRsp
 import com.c3.pcust30.http.config.FORGET_PASSWORD_TRADING_CODE
 import com.c3.pcust30.http.tool.TradingTool
+import com.c3.pcust30.tools.hintWithConfirmBtn
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.orhanobut.logger.Logger
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import kotlinx.android.synthetic.main.activity_forget_password.*
@@ -82,9 +87,21 @@ class ForgetPasswordActivity : BaseActivity() {
     /**
      * 处理请求结果
      */
+    @Suppress("DEPRECATION")
     override fun getResponse(result: String, tag: Int) {
         super.getResponse(result, tag)
-        //fixme 处理返回数据
+        val objType = object : TypeToken<TradingResponse<InitializePasswordRsp>>() {}.type//解析类型
+        val loginResponse = Gson().fromJson<TradingResponse<InitializePasswordRsp>>(result, objType)//解析结果
+        if (TextUtils.equals(TRADING_SUCCESS, loginResponse.header!!.rspCode)) {
+            hintWithConfirmBtn(getString(R.string.initialize_password_success_title),
+                    Html.fromHtml(String.format(getString(R.string.initialize_password_success),
+                            loginResponse.body!!.defaultpwd!!.defaultpwd)), OnConfirmListener {
+                setResult(RESULT_OK)//返回主界面
+                finish()//关闭界面
+            }).show()
+        } else {
+            ShowHint.warn(this, loginResponse.header!!.rspMsg!!)
+        }
     }
 
     /**

@@ -51,4 +51,6 @@
     <string name="user_tel_null_is_error">手机号不能为空！</string>
     <string name="verify_code_null_is_error">验证码不能为空！</string>
     <string name="verify_code_check_failure">"验证码填写有误！</string>
+    <string name="initialize_password_success"><![CDATA[初始密码:<font color = \'#ff0000\'>%s</font>请登录修改]]></string>
+    <string name="initialize_password_success_title">重置密码成功</string>
 </resources>
