@@ -1,6 +1,7 @@
 package com.c3.pcust30.fragment
 
 import com.c3.library.view.title.IsTitleChildView
+import com.c3.library.weight.toast.ShowHint
 import com.c3.pcust30.R
 import com.c3.pcust30.base.frag.BaseFragment
 
@@ -15,5 +16,12 @@ class TestFragment : BaseFragment() {
     override fun setFragmentView(): Int = R.layout.fragment_test
 
     override fun setTitleLeftChildView(): IsTitleChildView? = null
+
+    override fun onBackPressedSupport(): Boolean {
+        ShowHint.warn(mContext,"点击了返回键")
+        _mActivity.finish()
+        System.exit(0)
+        return true
+    }
 
 }

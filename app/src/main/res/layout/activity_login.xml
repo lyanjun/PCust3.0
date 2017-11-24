@@ -74,9 +74,21 @@
         android:textSize="@dimen/sp_15"
         android:textColor="@color/pcust_text_btn_color_list"
         app:layout_constraintTop_toBottomOf="@+id/inputPassWord"
-        android:clickable="true"
         tools:ignore="RtlHardcoded" />
     <!-- 手势登录 -->
+    <TextView
+        android:id="@+id/gestureLoginBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login_gesture_loginB_btn_txt"
+        android:layout_marginTop="@dimen/dp_16"
+        android:layout_marginRight="@dimen/dp_16"
+        app:layout_constraintRight_toRightOf="parent"
+        android:textSize="@dimen/sp_15"
+        android:visibility="gone"
+        android:textColor="@color/pcust_text_btn_color_red_list"
+        app:layout_constraintTop_toBottomOf="@+id/inputPassWord"
+        tools:ignore="RtlHardcoded" />
     <!-- 登录按钮 -->
     <ImageView
         android:id="@+id/loginBtn"

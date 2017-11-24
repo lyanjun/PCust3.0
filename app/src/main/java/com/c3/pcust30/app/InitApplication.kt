@@ -1,12 +1,10 @@
 package com.c3.pcust30.app
 
 import com.c3.library.app.CustomApp
+import com.c3.pcust30.MyEventBusIndex
 import com.c3.pcust30.app.helper.ActivityLifecycleCallbackImpl
 import com.c3.pcust30.app.helper.InitHelper
-
-
-
-
+import org.greenrobot.eventbus.EventBus
 
 
 /**
@@ -25,8 +23,8 @@ class InitApplication : CustomApp(){
         InitHelper.initApplicationContextSetting(this)
         //Activity的声明周期回调
         registerActivityLifecycleCallbacks(ActivityLifecycleCallbackImpl())
-        //开启EventBus加速
-//        EventBus.builder().addIndex(MyEventBusIndex()).installDefaultEventBus()
+        //开启EventBus加速(使用Subscribe注解即可解开封印)
+        EventBus.builder().addIndex(MyEventBusIndex()).installDefaultEventBus()
     }
 
 }

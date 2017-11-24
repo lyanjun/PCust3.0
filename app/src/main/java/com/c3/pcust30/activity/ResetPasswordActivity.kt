@@ -9,7 +9,9 @@ import com.c3.library.utils.MD5Utils
 import com.c3.library.weight.hint.listener.OnConfirmListener
 import com.c3.library.weight.toast.ShowHint
 import com.c3.pcust30.R
-import com.c3.pcust30.base.act.BaseActivity
+import com.c3.pcust30.data.event.receiver.OnFinishEventListener
+import com.c3.pcust30.base.act.EventActivity
+import com.c3.pcust30.data.event.MineEvents
 import com.c3.pcust30.data.info.ORG_CODE
 import com.c3.pcust30.data.info.USER_CODE
 import com.c3.pcust30.data.info.USER_PASSWORD
@@ -29,6 +31,8 @@ import kotlinx.android.synthetic.main.activity_reset_password.*
 import kotlinx.android.synthetic.main.view_confirm_btn.view.*
 import kotlinx.android.synthetic.main.view_left_title_right_input_single_line_password.view.*
 import kotlinx.android.synthetic.main.view_vertical_title.view.*
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 /**
  * 作者： LYJ
@@ -36,7 +40,7 @@ import kotlinx.android.synthetic.main.view_vertical_title.view.*
  *        修改确认后跳转到主界面，此界面由用户状态来决定是否显示
  * 创建日期： 2017/11/7
  */
-class ResetPasswordActivity : BaseActivity() {
+class ResetPasswordActivity : EventActivity() , OnFinishEventListener {
     private val userCode = Hawk.get<String>(USER_CODE)//用户编码
     private val orgCode = Hawk.get<String>(ORG_CODE)//组织编码
     /**
@@ -146,4 +150,10 @@ class ResetPasswordActivity : BaseActivity() {
         if (keyCode == KeyEvent.KEYCODE_BACK) return true
         return super.onKeyDown(keyCode, event)
     }
+
+    /**
+     * 接收指令关闭当前界面
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    override fun finishAtPresentView(event: MineEvents.FinishActivityEvent) = finish()
 }

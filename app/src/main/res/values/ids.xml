@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="mainHome" type="id"/><!-- 主界面替换布局的视图id-->
+    <item name="bottomBar" type="id"/><!-- 主界面的底部按钮栏的id -->
+</resources>

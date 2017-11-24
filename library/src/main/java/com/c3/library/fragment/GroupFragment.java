@@ -59,6 +59,7 @@ public class GroupFragment extends SwipeBackFragment {
             popChild();
         } else if (System.currentTimeMillis() - TOUCH_TIME < 2000) {
             _mActivity.finish();
+            System.exit(0);
         } else {
             TOUCH_TIME = System.currentTimeMillis();
             ShowHint.hint(_mActivity, getString(R.string.back_hint_text));

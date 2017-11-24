@@ -5,10 +5,13 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import com.c3.library.constant.SceneType
+import com.c3.library.view.title.IsTitleChildView
 import com.c3.library.weight.hint.listener.OnConfirmListener
 import com.c3.library.weight.toast.ShowHint
 import com.c3.pcust30.R
-import com.c3.pcust30.base.act.BaseActivity
+import com.c3.pcust30.data.event.receiver.OnFinishEventListener
+import com.c3.pcust30.base.act.EventActivity
+import com.c3.pcust30.data.event.MineEvents
 import com.c3.pcust30.data.info.USER_NAME
 import com.c3.pcust30.tools.hintWithConfirmBtn
 import com.c3.pcust30.top.*
@@ -16,13 +19,15 @@ import com.orhanobut.hawk.Hawk
 import com.orhanobut.logger.Logger
 import com.takwolf.android.lock9.Lock9View
 import kotlinx.android.synthetic.main.activity_gesture_password.*
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 /**
  * 作者： LYJ
  * 功能： 手势密码界面(设置和解锁都在这个界面中)
  * 创建日期： 2017/11/7
  */
-class GesturePasswordActivity : BaseActivity(), Lock9View.CallBack {
+class GesturePasswordActivity : EventActivity(), Lock9View.CallBack , OnFinishEventListener {
     private var gestureFunctionType: String? = null//用来区分功能的标识
     private var firstSetGesturePwd: String? = null//首次设置手势密码
     private var gestureSkipType: String? = null//跳转类型（判断跳转到那个界面）
@@ -80,14 +85,21 @@ class GesturePasswordActivity : BaseActivity(), Lock9View.CallBack {
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setBodyView(R.layout.activity_gesture_password)
         gestureFunctionType = intent.getStringExtra(GESTURE_PASSWORD)//当前界面功能判断标识
         gestureSkipType = intent.getStringExtra(GESTURE_SKIP_TYPE)//跳转界面标识符
+        setBodyView(R.layout.activity_gesture_password)//设置布局
         loginUserName.text = getString(R.string.gesture_user_name).format(Hawk.get<String>(USER_NAME))//设置显示用户名称
         gestureLockView.setCallBack(this)//手势监听
         setViewShowWithFunctionType()//根据功能初始化视图显示效果
     }
 
+    /**
+     * 判断释放后有返回键
+     */
+    override fun setTitleLeftChildView(): IsTitleChildView? {
+        if (isSetGesturePwd()) return null
+        return super.setTitleLeftChildView()
+    }
     /**
      * 根据功能初始化视图显示效果
      */
@@ -97,17 +109,10 @@ class GesturePasswordActivity : BaseActivity(), Lock9View.CallBack {
             gestureHintTv.text = getString(R.string.gesture_hint_init_pwd)
         } else {//使用手势密码登录
             backToLoginBtn.visibility = View.VISIBLE//显示返回登录页按钮
+            backToLoginBtn.setOnClickListener { finish() }//关闭当前界面
         }
     }
 
-    /**
-     * 关闭界面
-     */
-    override fun finish() {
-        //todo 添加退出逻辑
-        ShowHint.warn(this,"back")
-        super.finish()
-    }
     /**
      * 设置退出动画效果
      */
@@ -122,4 +127,10 @@ class GesturePasswordActivity : BaseActivity(), Lock9View.CallBack {
      * 判断功能状态
      */
     private fun isSetGesturePwd(): Boolean = TextUtils.equals(gestureFunctionType, SET_GESTURE_PASSWORD)
+
+    /**
+     * 接收指令关闭当前界面
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    override fun finishAtPresentView(event: MineEvents.FinishActivityEvent) = finish()
 }

@@ -1,6 +1,7 @@
 package com.c3.pcust30.activity
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
@@ -10,7 +11,9 @@ import com.c3.library.constant.SceneType
 import com.c3.library.utils.MD5Utils
 import com.c3.library.weight.toast.ShowHint
 import com.c3.pcust30.R
-import com.c3.pcust30.base.act.BaseActivity
+import com.c3.pcust30.base.act.EventActivity
+import com.c3.pcust30.data.event.MineEvents
+import com.c3.pcust30.data.event.receiver.OnFinishEventListener
 import com.c3.pcust30.data.info.*
 import com.c3.pcust30.data.net.*
 import com.c3.pcust30.data.net.entity.WorkSignInfo
@@ -28,6 +31,8 @@ import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_login.*
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import java.util.concurrent.TimeUnit
 
 /**
@@ -35,22 +40,30 @@ import java.util.concurrent.TimeUnit
  * 功能： 登录界面
  * 创建日期： 2017/11/7
  */
-class LoginActivity : BaseActivity(), View.OnClickListener {
+class LoginActivity : EventActivity(), View.OnClickListener, OnFinishEventListener {
 
     private var isFirstStart: Boolean = true //判断是否为第一次启动的标记
     private var clickTime: Long = 0 //记录第一次点击的时间
+    private var setGesturePasswordIntent:Intent? = null//跳转意图（手势登录）
     /**
      * 点击事件(登录按钮，忘记密码，手势登录)
      */
     override fun onClick(v: View?) {
         when (v!!.id) {
             R.id.loginBtn -> login()//登录
-            R.id.forgetPwdBtn -> startActivityForResult(Intent(this, ForgetPasswordActivity::class.java)
-                    , 1000, SceneType.CUSTOM_TYPE)//忘记密码
-            else -> ShowHint.failure(this, "错误")
+            R.id.forgetPwdBtn -> startActivityForResult(Intent(this, ForgetPasswordActivity::class.java),
+                    1000, SceneType.CUSTOM_TYPE)//忘记密码
+            R.id.gestureLoginBtn-> startActivity(setGesturePasswordIntent,SceneType.CUSTOM_TYPE)//手势登录
         }
     }
 
+    /**
+     * 返回
+     */
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 1000 && resultCode == Activity.RESULT_OK) gestureLoginBtn.visibility = View.GONE
+    }
     /**
      * 登录请求
      */
@@ -86,14 +99,11 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
                 //将用户的信息储存到本地（作为免用户登陆的准备操作）
                 val userInfo = loginResponse.body!!.worksigninfo!!
                 isFirstStart = Hawk.get<Boolean>(IS_FIRST, true)
-//                isFirstStart = true
                 if (isFirstStart) {//判断是否为首次启动
                     //是首次启动则跳转到手势密码设置界面(首次启动后进入设置手势密码的界面)
-                    val setGesturePasswordIntent = Intent(this, GesturePasswordActivity::class.java)
-                    setGesturePasswordIntent.putExtra(GESTURE_PASSWORD, SET_GESTURE_PASSWORD)//传入标识
-//                setGesturePasswordIntent.putExtra(GESTURE_PASSWORD, USE_GESTURE_PASSWORD)//传入标识
-                    setGesturePasswordIntent.putExtra(GESTURE_SKIP_TYPE, userInfo.firstLogin)//在手势登录页中跳转类型
-//                    setGesturePasswordIntent.putExtra(GESTURE_SKIP_TYPE, "0")//在手势登录页中跳转类型
+                    setGesturePasswordIntent = Intent(this, GesturePasswordActivity::class.java)
+                    setGesturePasswordIntent!!.putExtra(GESTURE_PASSWORD, SET_GESTURE_PASSWORD)//传入标识
+                    setGesturePasswordIntent!!.putExtra(GESTURE_SKIP_TYPE, userInfo.firstLogin)//在手势登录页中跳转类型
                     startActivity(setGesturePasswordIntent, SceneType.CUSTOM_TYPE)//开启手势密码界面
                 } else {//非首次启动逻辑处理
                     when (userInfo.firstLogin) {
@@ -156,20 +166,23 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setBodyView(R.layout.activity_login)//添加布局
         setSwipeBackEnable(false)//关闭滑动退出功能
-        loginBtn.setOnClickListener(this)
-        forgetPwdBtn.setOnClickListener(this)
-        //判断手势登录是否开启
+        loginBtn.setOnClickListener(this)//登录按钮
+        forgetPwdBtn.setOnClickListener(this)//忘记密码
+        //判断手势登录是否开启(此处手势登录按钮互相绑定)
         if (Hawk.get<Boolean>(GESTURE_LOGIN_STATUS, false)) {
+            gestureLoginBtn.visibility = View.VISIBLE//显示手势登录按钮
+            gestureLoginBtn.setOnClickListener(this)//手势登录
             loadHelper.showDialog()//显示加载弹窗
             Observable.timer(2, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
                     .doFinally { loadHelper.hideDialog() }
                     .bindToLifecycle(this)
                     .subscribe({
-                        val setGesturePasswordIntent = Intent(this, GesturePasswordActivity::class.java)
-                        setGesturePasswordIntent.putExtra(GESTURE_PASSWORD, USE_GESTURE_PASSWORD)//传入标识
+                        setGesturePasswordIntent = Intent(this, GesturePasswordActivity::class.java)
+                        setGesturePasswordIntent!!.putExtra(GESTURE_PASSWORD, USE_GESTURE_PASSWORD)//传入标识
                         startActivity(setGesturePasswordIntent, SceneType.CUSTOM_TYPE)//开启手势密码界面
                     })
         }
+        //todo 在最后需要检测出删除掉
         inputUserCode.setText("111111")
         inputPassWord.setText("222222")
     }
@@ -200,4 +213,11 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         }
         return super.onKeyDown(keyCode, event)
     }
+
+    /**
+     * 接收指令关闭当前界面
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    override fun finishAtPresentView(event: MineEvents.FinishActivityEvent) = finish()
+
 }
