@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@id/scrollGroup"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,6 +14,16 @@
         android:background="@color/white">
         <!-- 上 -->
         <include layout="@layout/fragment_home_page_top"/>
+        <!-- 月度客户排名信息 -->
+        <TextView
+            android:id="@+id/topRankHintMsg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="本月新增客户排名（距离上一名营销客户数量还差30名）"
+            android:gravity="center"
+            android:textSize="@dimen/sp_11"
+            android:layout_marginTop="@dimen/dp_3"
+            android:layout_marginBottom="@dimen/dp_3"/>
         <!-- 中 -->
         <!-- 下 -->
     </LinearLayout>

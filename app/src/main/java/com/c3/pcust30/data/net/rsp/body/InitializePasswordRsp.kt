@@ -1,6 +1,5 @@
 package com.c3.pcust30.data.net.rsp.body
 
-import com.c3.pcust30.data.net.entity.DefaultPwd
 import com.c3.pcust30.data.net.rsp.TradingResponseBody
 
 /**
@@ -10,4 +9,11 @@ import com.c3.pcust30.data.net.rsp.TradingResponseBody
  */
 class InitializePasswordRsp : TradingResponseBody {
     var defaultpwd: DefaultPwd? = null
+
+    /**
+     * 默认的初始化密码
+     */
+    class DefaultPwd {
+        var defaultpwd: String? = null
+    }
 }

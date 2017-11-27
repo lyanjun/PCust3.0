@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dp_160"
+    android:layout_height="wrap_content"
+    android:id="@+id/top"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/pcust_home_top_background"
     xmlns:tools="http://schemas.android.com/tools"
@@ -10,8 +11,8 @@
     <!-- 用户姓名 -->
     <TextView
         android:id="@+id/topUserName"
-        android:layout_width="@dimen/dp_80"
-        android:layout_height="@dimen/dp_80"
+        android:layout_width="@dimen/dp_70"
+        android:layout_height="@dimen/dp_70"
         tools:text="用户姓名"
         android:gravity="center"
         android:textColor="@color/black"
@@ -19,7 +20,7 @@
         android:padding="@dimen/dp_6"
         android:ellipsize="end"
         android:layout_marginLeft="@dimen/dp_30"
-        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_6"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:background="@drawable/pcust_home_top_user_image"
@@ -37,9 +38,87 @@
         android:textColor="@color/white"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginLeft="@dimen/dp_20"
-        android:layout_marginTop="@dimen/dp_5"
+        android:layout_marginTop="@dimen/dp_6"
         app:layout_constraintTop_toBottomOf="@id/topUserName"
         tools:ignore="RtlHardcoded" />
     <!-- 右侧 -->
+    <!-- 月度排名 -->
+    <TextView
+        android:id="@+id/topRankMonth"
+        app:layout_constraintTop_toTopOf="@id/topUserName"
+        app:layout_constraintLeft_toRightOf="@id/topUserName"
+        tools:text="本月度排名：5"
+        style="@style/UserWorkInfoTextStyle"/>
+    <!-- 年度排名 -->
+    <TextView
+        android:id="@+id/topRankYear"
+        app:layout_constraintTop_toBottomOf="@id/topRankMonth"
+        app:layout_constraintLeft_toRightOf="@id/topUserName"
+        android:layout_marginTop="@dimen/dp_6"
+        tools:text="本年度排名：5"
+        style="@style/UserWorkInfoTextStyle" />
+    <!-- 营销用户数量 -->
+    <TextView
+        android:id="@+id/topMakeCount"
+        app:layout_constraintTop_toBottomOf="@id/topRankYear"
+        app:layout_constraintLeft_toRightOf="@id/topUserName"
+        android:layout_marginTop="@dimen/dp_6"
+        tools:text="本月营销客户数量：55"
+        style="@style/UserWorkInfoTextStyle"/>
+    <!-- 投资用户数量 -->
+    <TextView
+        android:id="@+id/topInvestCount"
+        app:layout_constraintTop_toBottomOf="@id/topMakeCount"
+        app:layout_constraintLeft_toRightOf="@id/topUserName"
+        android:layout_marginTop="@dimen/dp_6"
+        tools:text="本月完成投资客户数量：550"
+        style="@style/UserWorkInfoTextStyle"/>
+    <!-- 最后统计时间 -->
+    <TextView
+        android:id="@+id/topLastTime"
+        app:layout_constraintTop_toBottomOf="@id/topInvestCount"
+        app:layout_constraintLeft_toRightOf="@id/topUserName"
+        android:layout_marginTop="@dimen/dp_6"
+        tools:text="统计截止时间：2015-05-25"
+        style="@style/UserWorkInfoTextStyle"/>
     <!-- 底部 -->
+    <LinearLayout
+        android:id="@+id/topTaskHintGroup"
+        android:layout_width="wrap_content"
+        android:minWidth="@dimen/dp_200"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/topLastTime"
+        android:layout_marginTop="@dimen/dp_6"
+        android:layout_height="@dimen/dp_25"
+        android:background="@drawable/home_top_message_background"
+        android:layout_marginBottom="@dimen/dp_6">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_1"
+            android:src="@drawable/home_top_message_icon"
+            tools:ignore="ContentDescription" />
+        <!-- 提示用户任务条数 -->
+        <TextView
+            android:id="@+id/topTaskHintTxt"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:layout_marginRight="@dimen/dp_5"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_gravity=""
+            tools:text="您有20条任务"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_13"
+            tools:ignore="InefficientWeight" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dp_1"
+            android:src="@drawable/home_top_message_arrow"
+            tools:ignore="ContentDescription" />
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>

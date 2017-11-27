@@ -64,6 +64,13 @@ abstract class BaseFragment : ChildFragment(), CustomTitleChild.OnChildClickList
         Logger.t(TAG).i("返回Json$result")
         Logger.t(TAG).json(result)//以JSON格式打印数据
     }
+
+    /**
+     * 设置返回结果集
+     */
+    protected fun setJsonRspArray(jsonRsp : Array<String>){
+        for (index in jsonRsp.indices) getResponse(jsonRsp[index],index)
+    }
     /**
      * 设置标题
      */

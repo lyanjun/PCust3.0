@@ -16,7 +16,6 @@ import com.c3.pcust30.data.event.MineEvents
 import com.c3.pcust30.data.event.receiver.OnFinishEventListener
 import com.c3.pcust30.data.info.*
 import com.c3.pcust30.data.net.*
-import com.c3.pcust30.data.net.entity.WorkSignInfo
 import com.c3.pcust30.data.net.rep.TradingRequest
 import com.c3.pcust30.data.net.rsp.TradingResponse
 import com.c3.pcust30.data.net.rsp.body.LoginRsp
@@ -133,7 +132,7 @@ class LoginActivity : EventActivity(), View.OnClickListener, OnFinishEventListen
     /**
      * 保存用户信息
      */
-    private fun saveUserInfoToLocation(userInfo: WorkSignInfo) {
+    private fun saveUserInfoToLocation(userInfo: LoginRsp.WorkSignInfo) {
         Hawk.put(USER_ID, userInfo.userid!!)
         Hawk.put(USER_CODE, userInfo.usercode!!)
         Hawk.put(ORG_CODE, userInfo.orgcode!!)
