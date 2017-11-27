@@ -40,6 +40,7 @@ class MainActivity : BaseActivity() {
                 .addItem(newItem(R.drawable.pcust_bottom_tab_manage_01,R.drawable.pcust_bottom_tab_manage_02,getString(R.string.main_bottom_tab_manage)))
                 .addItem(newItem(R.drawable.pcust_bottom_tab_add_01,R.drawable.pcust_bottom_tab_add_02,getString(R.string.main_bottom_tab_add)))
                 .build()
+
     }
 
     /**
