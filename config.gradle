@@ -39,6 +39,7 @@ ext {
             hawk                   : '2.0.1',//键值对储存框架
             lock9view              : '0.0.11',//九宫格手势解锁控件
             dialogUtil             : '1.2.5',//弹窗工具
-            bottom_tab             : '2.2.5'//底部选择栏
+            bottom_tab             : '2.2.5',//底部选择栏
+            overscroll             : '1.0.4'//惯性滑动
     ]
 }

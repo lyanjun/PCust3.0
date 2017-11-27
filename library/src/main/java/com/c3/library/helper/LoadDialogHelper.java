@@ -64,7 +64,14 @@ public final class LoadDialogHelper {
         customLoadDialog.show();
         onLoadStatus(LoadStatus.LOADING);
     }
-
+    /**
+     * 展示弹窗
+     */
+    public void showDialogWithDismissFirst() {
+        hideDialog();
+        customLoadDialog.show();
+        onLoadStatus(LoadStatus.LOADING);
+    }
     /**
      * 隐藏弹窗
      */

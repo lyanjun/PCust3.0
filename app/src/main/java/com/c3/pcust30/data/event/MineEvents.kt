@@ -7,6 +7,7 @@ package com.c3.pcust30.data.event
  */
 sealed class MineEvents{
     class FinishActivityEvent:MineEvents()//关闭界面的通知
+    class MainActivityLoadingState(var showLoading: Boolean) : MineEvents()//管理弹窗显示效果消息
 }
 
 

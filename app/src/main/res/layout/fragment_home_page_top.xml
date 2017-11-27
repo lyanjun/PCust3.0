@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_160"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/pcust_home_top_background"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="@layout/fragment_home_page">
+    <!-- 左侧 -->
+    <!-- 用户姓名 -->
+    <TextView
+        android:id="@+id/topUserName"
+        android:layout_width="@dimen/dp_80"
+        android:layout_height="@dimen/dp_80"
+        tools:text="用户姓名"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:singleLine="true"
+        android:padding="@dimen/dp_6"
+        android:ellipsize="end"
+        android:layout_marginLeft="@dimen/dp_30"
+        android:layout_marginTop="@dimen/dp_10"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/pcust_home_top_user_image"
+        tools:ignore="RtlHardcoded" />
+    <!-- 欢迎语 -->
+    <TextView
+        android:id="@+id/topCustomHint"
+        android:layout_width="@dimen/dp_100"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:ellipsize="start"
+        android:textSize="@dimen/sp_12"
+        tools:text="赵先生，您好"
+        android:gravity="center"
+        android:textColor="@color/white"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginTop="@dimen/dp_5"
+        app:layout_constraintTop_toBottomOf="@id/topUserName"
+        tools:ignore="RtlHardcoded" />
+    <!-- 右侧 -->
+    <!-- 底部 -->
+</android.support.constraint.ConstraintLayout>

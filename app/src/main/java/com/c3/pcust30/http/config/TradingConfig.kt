@@ -13,3 +13,7 @@ const val TRADING_ADDRESS = "SisPCust/frontlineServlet"//连接
 const val LOGIN_TRADING_CODE = "002032"//登录交易号(LoginActivity)
 const val RESET_PASSWORD_TRADING_CODE = "002033"//修改密码交易号(ResetPasswordActivity)
 const val FORGET_PASSWORD_TRADING_CODE = "002035"//忘记密码交易号(ForgetPasswordActivity)
+
+//进入到主界面之后的交易
+const val CUSTOM_INFO_TRADING_CODE = "720025";//首页统计和排名列表(HomePageFragment)
+const val CUSTOM_DATA_STATISTICS_TRADING_CODE = "720021"//客户经理月度客户数量趋势(HomePageFragment)

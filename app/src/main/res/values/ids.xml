@@ -2,4 +2,5 @@
 <resources>
     <item name="mainHome" type="id"/><!-- 主界面替换布局的视图id-->
     <item name="bottomBar" type="id"/><!-- 主界面的底部按钮栏的id -->
+    <item name="scrollGroup" type="id"/><!-- 可滑动的外部容器 -->
 </resources>

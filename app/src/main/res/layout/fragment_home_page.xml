@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@id/scrollGroup"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
-    <TextView
+    android:fillViewport="true"
+    android:scrollbars="none">
+    <!-- 布局部分 -->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="首页"
-        android:textSize="100sp"
-        android:textColor="@color/black"
-        android:gravity="center"/>
-</LinearLayout>
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/white">
+        <!-- 上 -->
+        <include layout="@layout/fragment_home_page_top"/>
+        <!-- 中 -->
+        <!-- 下 -->
+    </LinearLayout>
+</ScrollView>

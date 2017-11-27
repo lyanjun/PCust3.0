@@ -25,6 +25,11 @@ class TradingTool {
                 .getResultJson(RequestBody.create(JSON_TYPE, tradingJson)).compose(rxSchedulerHelper())
 
         /**
+         * 不带线程切换的请求
+         */
+        fun commitTradingNewThread(tradingJson: String): Observable<String> = TradingClient.service
+                .getResultJson(RequestBody.create(JSON_TYPE, tradingJson)).subscribeOn(Schedulers.io())
+        /**
          * 统一线程处理
          */
         private fun <T> rxSchedulerHelper(): ObservableTransformer<T, T> = ObservableTransformer { upstream ->

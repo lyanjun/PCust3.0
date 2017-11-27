@@ -9,6 +9,9 @@ import com.c3.pcust30.R
 import com.c3.pcust30.base.config.DEFAULT_TITLE_BACKGROUND_DRAWABLE
 import com.c3.pcust30.base.config.DEFAULT_TITLE_TEXT_COLOR
 import com.c3.pcust30.base.config.DEFAULT_TITLE_TEXT_TITLE_SIZE
+import com.c3.pcust30.data.event.MineEvents
+import com.orhanobut.logger.Logger
+import org.greenrobot.eventbus.EventBus
 
 /**
  * 作者： LYJ
@@ -16,6 +19,8 @@ import com.c3.pcust30.base.config.DEFAULT_TITLE_TEXT_TITLE_SIZE
  * 创建日期： 2017/11/15
  */
 abstract class BaseFragment : ChildFragment(), CustomTitleChild.OnChildClickListener{
+    @Suppress("LeakingThis", "PropertyName")
+    protected val TAG = this::class.java.simpleName!!//TAG
     /**
      * 初始化成员变量（设置控件和设置成员）
      */
@@ -52,7 +57,13 @@ abstract class BaseFragment : ChildFragment(), CustomTitleChild.OnChildClickList
             CustomTitleCenter(mContext).setChildTextColor(DEFAULT_TITLE_TEXT_COLOR)
                     .setChildTextSize(DEFAULT_TITLE_TEXT_TITLE_SIZE)
                     .setChildText(setTitleText(), 0).toChangeAllText()
-
+    /**
+     * 对请求返回的内容进行处理(解析和展示)
+     */
+    open protected fun getResponse(result: String, tag: Int = 0) {
+        Logger.t(TAG).i("返回Json$result")
+        Logger.t(TAG).json(result)//以JSON格式打印数据
+    }
     /**
      * 设置标题
      */
@@ -63,4 +74,16 @@ abstract class BaseFragment : ChildFragment(), CustomTitleChild.OnChildClickList
      */
     open fun setTitleRightChildView(): IsTitleChildView? = null
 
+    /**
+     * 通知挂在的activity开启等待弹窗
+     */
+    protected fun showLoading(){
+        EventBus.getDefault().post(MineEvents.MainActivityLoadingState(true))
+    }
+    /**
+     * 通知挂在的activity开启关闭弹窗
+     */
+    protected fun hideLoading(){
+        EventBus.getDefault().post(MineEvents.MainActivityLoadingState(false))
+    }
 }

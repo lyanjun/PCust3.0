@@ -47,4 +47,5 @@ dependencies {
     api "com.takwolf.android:lock9view:$library.lock9view"
     api "com.github.hss01248:DialogUtil:$library.dialogUtil"
     api "me.majiajie:pager-bottom-tab-strip:$library.bottom_tab"
+    api "me.everything:overscroll-decor-android:$library.overscroll"
 }
