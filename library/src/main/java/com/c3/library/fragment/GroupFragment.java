@@ -10,6 +10,7 @@ import com.c3.library.R;
 import com.c3.library.weight.toast.ShowHint;
 
 import me.yokeyword.fragmentation.ISupportFragment;
+import me.yokeyword.fragmentation.anim.DefaultNoAnimator;
 import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
 
 /**
@@ -43,8 +44,8 @@ public class GroupFragment extends SwipeBackFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        setFragmentAnimator(new DefaultNoAnimator());
         //仅初始化视图一次
-        setSwipeBackEnable(false);
         return null == rootView ? rootView = inflater.inflate(R.layout.fragment_default_group, container, false) : rootView;
     }
 

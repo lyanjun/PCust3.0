@@ -5,6 +5,11 @@ package com.c3.pcust30.top
  * 功能： 自定义标识
  * 创建日期： 2017/11/17
  */
+//代表主界面分级模块的常量
+const val FRAG_HOME = 0//首页
+const val FRAG_TASK = 1//待办任务
+const val FRAG_MANAGE = 2//客户管理
+const val FRAG_ADD = 3//增加
 //手势密码相关
 //关于手势登录
 const val GESTURE_LOGIN_STATUS = "GestureLoginStatus"//手势登录状态

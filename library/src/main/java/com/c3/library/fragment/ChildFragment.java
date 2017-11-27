@@ -47,13 +47,13 @@ public abstract class ChildFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return null == mRootView ?
+        return attachToSwipeBack(null == mRootView ?
                 mRootView = new CustomBodyView(getContext())
                         .initBodyView(setFragmentView())//添加布局
                         .setTitleShowType(setFragmentTitleShowType())//默认是添加标题栏的
                         .initTitleView(mTitleView = setTitleBarView(), mineActivity.getTitleBarHeight())//添加标题栏
                         .combination()//组合
-                : mRootView;
+                : mRootView);
     }
     /**
      * 在试图被创建的时候初始化相关操作

@@ -9,6 +9,11 @@
     <string name="act_title_gesture_use">设置手势登录密码</string>
     <string name="act_title_reset_password">修改登录密码</string>
     <string name="act_title_forget_password">重置密码</string>
+    <!-- fragment标题 -->
+    <string name="frag_title_home">首页</string>
+    <string name="frag_title_task">待办任务</string>
+    <string name="frag_title_manage">客户管理</string>
+    <string name="frag_title_add">新增客户</string>
     <!-- 输入提示文字 -->
     <string name="input_hint_user_code">请输入用户名</string>
     <string name="input_hint_password">请输入密码</string>
