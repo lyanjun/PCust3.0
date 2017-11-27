@@ -57,4 +57,9 @@
     <string name="verify_code_check_failure">"验证码填写有误！</string>
     <string name="initialize_password_success"><![CDATA[初始密码:<font color = \'#ff0000\'>%s</font>请登录修改]]></string>
     <string name="initialize_password_success_title">重置密码成功</string>
+    <!-- 主界面中使用到的文字 -->
+    <string name="main_bottom_tab_home">首页</string>
+    <string name="main_bottom_tab_task">待办任务</string>
+    <string name="main_bottom_tab_manage">客户管理</string>
+    <string name="main_bottom_tab_add">新增客户</string>
 </resources>

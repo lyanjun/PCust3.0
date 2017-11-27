@@ -10,12 +10,18 @@
         android:id="@id/mainHome"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/bottomBar"
-        tools:ignore="UnknownId" />
+        app:layout_constraintBottom_toTopOf="@id/bottomBar" />
     <!-- 底部切换按钮栏 -->
-    <include layout="@layout/view_bottom_bar_in_main" />
+    <me.majiajie.pagerbottomtabstrip.PageNavigationView
+        android:id="@id/bottomBar"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_52"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@drawable/pcust_bottom_bar_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mainHome"/>
 </android.support.constraint.ConstraintLayout>

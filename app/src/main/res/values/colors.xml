@@ -13,4 +13,7 @@
     <color name="submit_btn_compose_selector_true_color">#035187</color>
     <!-- 蓝色文字按钮的点击变化颜色 -->
     <color name="text_btn_blue">#5072BE</color>
+    <!-- 底部选择按钮的文字颜色 -->
+    <color name="bottom_tab_text_color_true">#4E8EF0</color>
+    <color name="bottom_tab_text_color_false">#4B4B4B</color>
 </resources>
