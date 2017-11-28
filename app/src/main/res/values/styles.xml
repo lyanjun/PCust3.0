@@ -72,4 +72,12 @@
         <item name="android:layout_marginLeft">@dimen/dp_40</item>
         <item name="android:textColor">@color/white</item>
     </style>
+    <!-- 首页排行榜文字的样式 -->
+    <style name="HomeRankListTextStyle">
+        <item name="android:layout_width">@dimen/dp_0</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/sp_13</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>

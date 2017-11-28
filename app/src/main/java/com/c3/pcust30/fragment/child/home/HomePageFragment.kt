@@ -9,6 +9,7 @@ import com.c3.library.utils.DataTools
 import com.c3.library.view.title.IsTitleChildView
 import com.c3.library.weight.toast.ShowHint
 import com.c3.pcust30.R
+import com.c3.pcust30.adapter.HomePageRankAdapter
 import com.c3.pcust30.base.frag.TopFragment
 import com.c3.pcust30.data.info.UserInfo
 import com.c3.pcust30.data.net.*
@@ -39,8 +40,6 @@ import me.everything.android.ui.overscroll.OverScrollDecoratorHelper
 import org.joda.time.DateTime
 import java.util.*
 import kotlin.collections.ArrayList
-
-
 
 
 /**
@@ -119,8 +118,9 @@ class HomePageFragment : TopFragment() {
                 val workResponse = Gson().fromJson<TradingResponse<UserWorkInfoRsp>>(result, objType)//解析结果
                 if (TextUtils.equals(TRADING_SUCCESS, workResponse.header!!.rspCode)) {
                     //显示用户基本统计信息
-                    showUserWorkInfo(workResponse.body?.dataInfo ?: UserWorkInfoRsp.DataInfo())
+                    showUserWorkInfo(workResponse.body!!.dataInfo ?: UserWorkInfoRsp.DataInfo())
                     //用户统计排行
+                    showUserRankList(workResponse.body!!.rangeRecView ?: ArrayList())
                 } else {
                     ShowHint.failure(mContext, workResponse.header!!.rspMsg!!)
                 }
@@ -200,6 +200,22 @@ class HomePageFragment : TopFragment() {
     }
 
     /**
+     * 显示排名数据列表
+     */
+    private fun showUserRankList(rankList: MutableList<UserWorkInfoRsp.RangeRecView>) {
+//        rankList.forEach { it.isSelf = "" }
+//        Logger.t(TAG).w("数据数量 : ${rankList.size}")
+//        val index = (0 until rankList.size).firstOrNull { !rankList[it].isSelf.isNullOrBlank() } ?: -1//计数器
+//        ShowHint.warn(mContext, "$index")
+//        if (index < 5) {
+////                rankList = rankList.subList(0,5)
+//            rankList.add(UserWorkInfoRsp.RangeRecView())
+//        }
+        bottomRankList.adapter = HomePageRankAdapter(rankList.subList(0,5))
+    }
+
+
+    /**
      * 根据结果显示信息
      */
     private fun isHasData(value: Int, hint: String): String = if (value != -1) value.toString() else hint
@@ -215,8 +231,8 @@ class HomePageFragment : TopFragment() {
         (0 until valuesY.size).mapTo(dataList) { Entry(it.toFloat() + 0.5f, valuesY[it].toFloat()) }
         val lineDataSet = LineDataSet(dataList, "每月客户营销数量")
         lineDataSet.axisDependency = YAxis.AxisDependency.LEFT
-        lineDataSet.setCircleColor(ContextCompat.getColor(mContext,R.color.home_line_chart_color))
-        lineDataSet.color = ContextCompat.getColor(mContext,R.color.home_line_chart_color)
+        lineDataSet.setCircleColor(ContextCompat.getColor(mContext, R.color.home_line_chart_color))
+        lineDataSet.color = ContextCompat.getColor(mContext, R.color.home_line_chart_color)
         lineDataSet.circleRadius = 4f
         lineDataSet.lineWidth = 2f
         lineData.addDataSet(lineDataSet)

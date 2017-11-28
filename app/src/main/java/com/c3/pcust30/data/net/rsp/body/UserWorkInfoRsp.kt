@@ -9,7 +9,7 @@ import com.c3.pcust30.data.net.rsp.TradingResponseBody
 class UserWorkInfoRsp : TradingResponseBody {
 
     var dataInfo: DataInfo? = null//用户任务信息
-    var rangeRecView: List<RangeRecView>? = null//用户排行列表
+    var rangeRecView: MutableList<RangeRecView>? = null//用户排行列表
 
     /**
      * 用户工作详情

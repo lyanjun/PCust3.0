@@ -18,4 +18,6 @@
     <color name="bottom_tab_text_color_false">#4B4B4B</color>
     <!-- 首页折线图折线的颜色 -->
     <color name="home_line_chart_color">#5274BC</color>
+    <!-- 首页排行字体的颜色(排名前三) -->
+    <color name="rank_top_text_color">#B16B28</color>
 </resources>
