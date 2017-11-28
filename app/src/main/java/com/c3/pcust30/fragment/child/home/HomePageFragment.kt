@@ -211,7 +211,6 @@ class HomePageFragment : TopFragment() {
         //运行到此处每个数据必然有值 设置显示数据
         middleLineChart.clear()
         val lineData = LineData()
-
         val dataList: MutableList<Entry> = ArrayList()
         (0 until valuesY.size).mapTo(dataList) { Entry(it.toFloat() + 0.5f, valuesY[it].toFloat()) }
         val lineDataSet = LineDataSet(dataList, "每月客户营销数量")
