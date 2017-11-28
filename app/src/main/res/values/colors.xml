@@ -16,4 +16,6 @@
     <!-- 底部选择按钮的文字颜色 -->
     <color name="bottom_tab_text_color_true">#4E8EF0</color>
     <color name="bottom_tab_text_color_false">#4B4B4B</color>
+    <!-- 首页折线图折线的颜色 -->
+    <color name="home_line_chart_color">#5274BC</color>
 </resources>

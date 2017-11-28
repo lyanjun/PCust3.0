@@ -48,4 +48,5 @@ dependencies {
     api "com.github.hss01248:DialogUtil:$library.dialogUtil"
     api "me.majiajie:pager-bottom-tab-strip:$library.bottom_tab"
     api "me.everything:overscroll-decor-android:$library.overscroll"
+    api "com.github.PhilJay:MPAndroidChart:$library.MPAndroidChart"
 }

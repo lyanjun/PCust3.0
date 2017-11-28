@@ -21,10 +21,20 @@
             android:layout_height="wrap_content"
             tools:text="本月新增客户排名（距离上一名营销客户数量还差30名）"
             android:gravity="center"
+            android:textColor="@color/black"
             android:textSize="@dimen/sp_11"
             android:layout_marginTop="@dimen/dp_3"
             android:layout_marginBottom="@dimen/dp_3"/>
         <!-- 中 -->
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/middleLineChart"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_0"
+            android:layout_weight="0.95"/>
         <!-- 下 -->
+        <com.c3.library.view.ScrollListView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_0"
+            android:layout_weight="1"/>
     </LinearLayout>
 </ScrollView>

@@ -98,6 +98,7 @@ class LoginActivity : EventActivity(), View.OnClickListener, OnFinishEventListen
                 //将用户的信息储存到本地（作为免用户登陆的准备操作）
                 val userInfo = loginResponse.body!!.worksigninfo!!
                 isFirstStart = Hawk.get<Boolean>(IS_FIRST, true)
+                saveUserInfoToLocation(userInfo)//保存此次登陆的数据信息
                 if (isFirstStart) {//判断是否为首次启动
                     //是首次启动则跳转到手势密码设置界面(首次启动后进入设置手势密码的界面)
                     setGesturePasswordIntent = Intent(this, GesturePasswordActivity::class.java)
@@ -120,7 +121,6 @@ class LoginActivity : EventActivity(), View.OnClickListener, OnFinishEventListen
                         }
                     }
                 }
-                saveUserInfoToLocation(userInfo)//保存此次登陆的数据信息
             } else {
                 ShowHint.failure(this, loginResponse.body!!.worksigninfo!!.loginmsg!!)
             }
