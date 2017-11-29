@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.text.Html
 import android.text.TextUtils
+import android.widget.LinearLayout
 import com.c3.library.utils.DataTools
 import com.c3.library.view.title.IsTitleChildView
 import com.c3.library.weight.toast.ShowHint
@@ -36,6 +37,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.BiFunction
 import kotlinx.android.synthetic.main.fragment_home_page.*
 import kotlinx.android.synthetic.main.fragment_home_page_top.*
+import kotlinx.android.synthetic.main.item_home_page_rank.view.*
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper
 import org.joda.time.DateTime
 import java.util.*
@@ -120,7 +122,7 @@ class HomePageFragment : TopFragment() {
                     //显示用户基本统计信息
                     showUserWorkInfo(workResponse.body!!.dataInfo ?: UserWorkInfoRsp.DataInfo())
                     //用户统计排行
-                    showUserRankList(workResponse.body!!.rangeRecView ?: ArrayList())
+                    showUserRankList(workResponse.body!!.rangeRecView ?: mutableListOf())
                 } else {
                     ShowHint.failure(mContext, workResponse.header!!.rspMsg!!)
                 }
@@ -202,16 +204,39 @@ class HomePageFragment : TopFragment() {
     /**
      * 显示排名数据列表
      */
-    private fun showUserRankList(rankList: MutableList<UserWorkInfoRsp.RangeRecView>) {
-//        rankList.forEach { it.isSelf = "" }
-//        Logger.t(TAG).w("数据数量 : ${rankList.size}")
-//        val index = (0 until rankList.size).firstOrNull { !rankList[it].isSelf.isNullOrBlank() } ?: -1//计数器
-//        ShowHint.warn(mContext, "$index")
-//        if (index < 5) {
-////                rankList = rankList.subList(0,5)
-//            rankList.add(UserWorkInfoRsp.RangeRecView())
-//        }
-        bottomRankList.adapter = HomePageRankAdapter(rankList.subList(0,5))
+    private fun showUserRankList(rankList: List<UserWorkInfoRsp.RangeRecView>) {
+        val rankData: MutableList<UserWorkInfoRsp.RangeRecView> = mutableListOf()//容器
+        //列表头部控件
+        val header = layoutInflater.inflate(R.layout.item_home_page_rank, bottomRankList, false)
+        header.rankTv.text = "排名"
+        header.nameTv.text = "姓名"
+        header.workTv.text = "业务量"
+
+        //使用最外层容器的高度减去除去列表项所有控件的高度的
+        val rankItemHeight = resources.getDimensionPixelOffset(R.dimen.dp_25)
+        val surplusHeight = scrollGroup.height - (top.height + middleLineChart.height + topRankHintMsg.height +
+                (topRankHintMsg.layoutParams as LinearLayout.LayoutParams).topMargin + rankItemHeight)//剩余高度
+        //当前列表项的高度(按照布局文件中设置的高度来估算)
+        val showRankCount = surplusHeight / rankItemHeight
+        val setItemHeight = surplusHeight / showRankCount//item高度
+        val setItemWidth = bottomRankList.width//item宽度
+        bottomRankList.addHeaderView(header)//添加头部
+        //设置数据
+        if (!rankList.isEmpty()) {
+            val index = (0 until rankList.size).firstOrNull { !rankList[it].isSelf.isNullOrBlank() } ?: -1//计数器
+            if (index in 0 until showRankCount) {
+                rankData.addAll(rankList.subList(0, showRankCount))
+            } else {
+                val mineRank = if (index == -1) {//不包括使用者
+                    UserWorkInfoRsp.RangeRecView(-1, "1")
+                } else {//包括使用者
+                    rankList[index]
+                }
+                rankData.addAll(rankList.subList(0, showRankCount - 1))
+                rankData.add(mineRank)
+            }
+        }
+        bottomRankList.adapter = HomePageRankAdapter(rankData, setItemWidth, setItemHeight)
     }
 
 
@@ -246,7 +271,7 @@ class HomePageFragment : TopFragment() {
         //设置Y轴
         middleLineChart.axisLeft.axisMinimum = 0f
         middleLineChart.data = lineData
-        middleLineChart.animateX(1000)
+        middleLineChart.animateX(500)
     }
 }
 

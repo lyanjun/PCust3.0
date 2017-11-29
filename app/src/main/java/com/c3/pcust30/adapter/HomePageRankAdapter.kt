@@ -1,6 +1,10 @@
 package com.c3.pcust30.adapter
 
-import android.content.Context
+/**
+ * 作者： LYJ
+ * 功能： 首页排行数据适配器
+ * 创建日期： 2017/11/28
+ */
 import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
@@ -11,13 +15,8 @@ import android.widget.TextView
 import com.c3.pcust30.R
 import com.c3.pcust30.data.net.rsp.body.UserWorkInfoRsp
 
-/**
- * 作者： LYJ
- * 功能： 首页排行数据适配器
- * 创建日期： 2017/11/28
- */
-
-class HomePageRankAdapter(private val rankList: List<UserWorkInfoRsp.RangeRecView>) : BaseAdapter() {
+class HomePageRankAdapter(private val rankList: List<UserWorkInfoRsp.RangeRecView>,
+                          private val itemWidth: Int, private val itemHeight: Int) : BaseAdapter() {
 
     override fun getCount(): Int = rankList.size
 
@@ -30,6 +29,9 @@ class HomePageRankAdapter(private val rankList: List<UserWorkInfoRsp.RangeRecVie
         val view: View?
         if (null == convertView) {
             view = LayoutInflater.from(parent.context).inflate(R.layout.item_home_page_rank, parent, false)
+            view.isEnabled = false
+            view.layoutParams.width = itemWidth
+            view.layoutParams.height = itemHeight
             holder = ViewHolder(view.findViewById(R.id.nameTv), view.findViewById(R.id.workTv),
                     view.findViewById(R.id.rankTv), view.findViewById(R.id.rankImg))
             view.tag = holder

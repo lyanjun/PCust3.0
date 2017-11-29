@@ -27,12 +27,12 @@ class UserWorkInfoRsp : TradingResponseBody {
 
     /**
      * 排名基本信息
+     * 排名
+     * 是否自己 1:是, 其他:否
      */
-    class RangeRecView {
+    class RangeRecView(var range: Int, var isSelf: String?) {
         var usercode: String? = null//用户编码
         var username: String? = null//用户姓名
-        var range: Int = 0//排名
         var custcount: Int = 0//用户数量
-        var isSelf: String? = null//是否自己 1:是, 其他:否
     }
 }
