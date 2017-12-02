@@ -1,6 +1,7 @@
 package com.c3.pcust30.data.net.rsp.body
 
 import com.c3.pcust30.data.net.rsp.TradingResponseBody
+import com.chad.library.adapter.base.entity.MultiItemEntity
 
 
 /**
@@ -37,7 +38,9 @@ class WaitDoTaskRsp : TradingResponseBody {
     /**
      * 待办任务详情
      */
-    class TaskInfo {
+    class TaskInfo : MultiItemEntity{
+        override fun getItemType(): Int = itemType!!
+        var itemType:Int? = 0
         var taskId: String? = null//环节ID
         var detailUrl: String? = null//进入流程连接需要手机端拼接成 json 格式
         var createTime: String? = null//申请时间

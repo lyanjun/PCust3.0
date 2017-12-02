@@ -1,10 +1,13 @@
 package com.c3.pcust30.fragment.child.task
 
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
+import android.view.ViewGroup
 import com.c3.library.view.title.IsTitleChildView
 import com.c3.library.weight.toast.ShowHint
 import com.c3.pcust30.R
+import com.c3.pcust30.adapter.WaitTaskDataAdapter
 import com.c3.pcust30.base.frag.TopFragment
 import com.c3.pcust30.data.info.UserInfo
 import com.c3.pcust30.data.net.*
@@ -17,6 +20,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.orhanobut.logger.Logger
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
+import kotlinx.android.synthetic.main.fragment_task_page.*
 
 /**
  * 作者： LYJ
@@ -28,6 +32,7 @@ class TaskPageFragment : TopFragment() {
     private val pageDataCount = "8"//每页请求的数据数量
     private var page: Int = 0//请求的页数
     private val taskDataList: MutableList<WaitDoTaskRsp.TaskInfo> = mutableListOf()//数据
+    private val taskAdapter: WaitTaskDataAdapter = WaitTaskDataAdapter(taskDataList)//数据适配器
     /**
      * 设置布局
      */
@@ -36,6 +41,16 @@ class TaskPageFragment : TopFragment() {
     override fun setTitleLeftChildView(): IsTitleChildView? = null
 
     override fun setTitleText(): CharSequence = getString(R.string.frag_title_task)
+    /**
+     * 初始化设置
+     */
+    override fun onViewCreatedInitMember(savedInstanceState: Bundle?) {
+        super.onViewCreatedInitMember(savedInstanceState)
+        taskAdapter.setEmptyView(R.layout.view_data_empty, swipe_target.parent as ViewGroup)
+        swipe_target.layoutManager = LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false)
+        swipe_target.setHasFixedSize(true)
+        swipe_target.adapter = taskAdapter//绑定适配器
+    }
 
     /**
      * 入场动画结束调用该方法
@@ -86,7 +101,24 @@ class TaskPageFragment : TopFragment() {
                     taskDataList.addAll(waitArray.body!!.taskInfo!!)
                 }
             }
-            ShowHint.hint(mContext,"解析后的数据数量 : ${taskDataList.size}")
+//            (0 until taskDataList.size step 2).map { taskDataList[it].taskName = "PMerctFollow" }
+//            (0 until taskDataList.size step 2).map { taskDataList[it].due = "" }
+            //根据任务名称设置显示类型
+            taskDataList.forEach {
+                when (it.taskName) {
+                    "PCustFollow" -> {//客户
+                        it.itemType = WaitTaskDataAdapter.C_TYPE
+                    }
+                    "PMerctFollow" -> {//商户
+                        it.itemType = WaitTaskDataAdapter.M_TYPE
+                    }
+                    else -> {
+                        ShowHint.failure(mContext,"当前数据有误，请联系后台")
+                    }
+                }
+            }
+            taskAdapter.notifyDataSetChanged()
+            ShowHint.hint(mContext, "解析后的数据数量 : ${taskDataList.size}")
         })
     }
 }

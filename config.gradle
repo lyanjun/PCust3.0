@@ -41,6 +41,7 @@ ext {
             dialogUtil             : '1.2.5',//弹窗工具
             bottom_tab             : '2.2.5',//底部选择栏
             overscroll             : '1.0.4',//惯性滑动
-            MPAndroidChart         : 'v3.0.2'//图标工具
+            MPAndroidChart         : 'v3.0.2',//图标工具
+            RecyclerViewAdapter    : '2.9.33'//RecyclerView适配器创建帮助工具
     ]
 }

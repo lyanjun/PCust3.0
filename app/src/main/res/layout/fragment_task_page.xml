@@ -2,13 +2,11 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/cyan">
-    <TextView
+    android:layout_height="match_parent">
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/swipe_target"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="任务"
-        android:textSize="100sp"
-        android:textColor="@color/black"
-        android:gravity="center"/>
+        android:overScrollMode="never">
+    </android.support.v7.widget.RecyclerView>
 </LinearLayout>

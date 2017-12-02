@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/TaskItemStyle">
+    <!-- 商户图标 -->
+    <ImageView
+        android:id="@+id/merIcon"
+        android:layout_width="@dimen/dp_60"
+        android:layout_height="@dimen/dp_60"
+        android:layout_marginLeft="@dimen/dp_5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/task_item_left_circle_background"
+        android:src="@drawable/task_item_left_circle_icon"
+        android:scaleType="centerInside"
+        tools:ignore="RtlHardcoded" />
+</android.support.constraint.ConstraintLayout>

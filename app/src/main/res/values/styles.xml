@@ -49,7 +49,7 @@
         <item name="android:focusable">true</item>
         <item name="android:focusableInTouchMode">true</item>
     </style>
-
+    <!-- 单行输入文本域的样式（带有内边距） -->
     <style name="SingleLineInputItemStyle" parent="SingleLineInputItemStyleNoPadding">
         <item name="android:padding">@dimen/dp_8</item>
     </style>
@@ -79,5 +79,24 @@
         <item name="android:gravity">center</item>
         <item name="android:textSize">@dimen/sp_13</item>
         <item name="android:textStyle">bold</item>
+    </style>
+    <!-- 列表item样式(适用于任务列表) -->
+    <style name="TaskItemStyle">
+        <item name="android:background">@color/white</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dp_80</item>
+        <item name="android:layout_marginTop">@dimen/dp_3</item>
+    </style>
+    <!-- item标题样式 -->
+    <style name="C_TaskTitleStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/sp_11</item>
+    </style>
+    <!-- item显示信息文本样式 -->
+    <style name="C_TaskLabelStyle" parent="C_TaskTitleStyle">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">end</item>
     </style>
 </resources>
