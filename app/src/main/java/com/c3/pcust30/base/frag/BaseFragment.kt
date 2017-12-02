@@ -10,6 +10,9 @@ import com.c3.pcust30.base.config.DEFAULT_TITLE_BACKGROUND_DRAWABLE
 import com.c3.pcust30.base.config.DEFAULT_TITLE_TEXT_COLOR
 import com.c3.pcust30.base.config.DEFAULT_TITLE_TEXT_TITLE_SIZE
 import com.c3.pcust30.data.event.MineEvents
+import com.c3.pcust30.data.net.ResultEntityHelper
+import com.c3.pcust30.data.net.rsp.TradingResponse
+import com.c3.pcust30.data.net.rsp.TradingResponseBody
 import com.orhanobut.logger.Logger
 import org.greenrobot.eventbus.EventBus
 
@@ -18,23 +21,25 @@ import org.greenrobot.eventbus.EventBus
  * 功能： Fragment抽象基类
  * 创建日期： 2017/11/15
  */
-abstract class BaseFragment : ChildFragment(), CustomTitleChild.OnChildClickListener{
+abstract class BaseFragment : ChildFragment(), CustomTitleChild.OnChildClickListener {
     @Suppress("LeakingThis", "PropertyName")
     protected val TAG = this::class.java.simpleName!!//TAG
+
     /**
      * 初始化成员变量（设置控件和设置成员）
      */
     //todo 加载等待弹窗关联（构思中）
     override fun onViewCreatedInitMember(savedInstanceState: Bundle?) {
-        mTitleView.addChildView(setTitleLeftChildView() , IsTitleView.LEFT)//添加标题栏到左侧
-        mTitleView.addChildView(setTitleCenterChildView() , IsTitleView.CENTER)//添加标题到栏中间
-        mTitleView.addChildView(setTitleRightChildView() , IsTitleView.RIGHT)//添加标题栏到右侧
+        mTitleView.addChildView(setTitleLeftChildView(), IsTitleView.LEFT)//添加标题栏到左侧
+        mTitleView.addChildView(setTitleCenterChildView(), IsTitleView.CENTER)//添加标题到栏中间
+        mTitleView.addChildView(setTitleRightChildView(), IsTitleView.RIGHT)//添加标题栏到右侧
         setTitleBackGround()//设置标题栏的背景
     }
+
     /**
      * 设为可重写，可以使子类避免
      */
-    open fun setTitleBackGround(){
+    open fun setTitleBackGround() {
         mTitleView.self.setBackgroundResource(DEFAULT_TITLE_BACKGROUND_DRAWABLE)
     }
 
@@ -42,14 +47,16 @@ abstract class BaseFragment : ChildFragment(), CustomTitleChild.OnChildClickList
      * 点击事件
      */
     override fun onChildClick(parentTag: Int, childTag: Int) {
-        if (TitleChildTag.BACK_BTN == childTag) ShowHint.hint(mContext,"点击了返回")
+        if (TitleChildTag.BACK_BTN == childTag) ShowHint.hint(mContext, "点击了返回")
     }
+
     /**
      * 添加标题栏到左侧
      */
     open fun setTitleLeftChildView(): IsTitleChildView?
             = CustomTitleLeft(mContext).addOnChildClickListener(this)
-            .setChildButtonImage(com.c3.library.R.drawable.default_back_icon,0)
+            .setChildButtonImage(com.c3.library.R.drawable.default_back_icon, 0)
+
     /**
      * 添加标题到栏中间
      */
@@ -57,20 +64,30 @@ abstract class BaseFragment : ChildFragment(), CustomTitleChild.OnChildClickList
             CustomTitleCenter(mContext).setChildTextColor(DEFAULT_TITLE_TEXT_COLOR)
                     .setChildTextSize(DEFAULT_TITLE_TEXT_TITLE_SIZE)
                     .setChildText(setTitleText(), 0).toChangeAllText()
+
     /**
      * 对请求返回的内容进行处理(解析和展示)
      */
     open protected fun getResponse(result: String, tag: Int = 0) {
         Logger.t(TAG).i("返回Json$result")
         Logger.t(TAG).json(result)//以JSON格式打印数据
+
+    }
+
+    /**
+     * 处理返回结果
+     */
+    protected fun <T : TradingResponseBody> getResultBody(bodyRsp: TradingResponse<T>, Result: ((bodyEntity: T) -> Unit)) {
+        ResultEntityHelper.resultBody(bodyRsp, { body -> Result.invoke(body) }, { error -> ShowHint.failure(mContext, error) })
     }
 
     /**
      * 设置返回结果集
      */
-    protected fun setJsonRspArray(jsonRsp : Array<String>){
-        for (index in jsonRsp.indices) getResponse(jsonRsp[index],index)
+    protected fun setJsonRspArray(jsonRsp: Array<String>) {
+        for (index in jsonRsp.indices) getResponse(jsonRsp[index], index)
     }
+
     /**
      * 设置标题
      */
@@ -84,13 +101,14 @@ abstract class BaseFragment : ChildFragment(), CustomTitleChild.OnChildClickList
     /**
      * 通知挂在的activity开启等待弹窗
      */
-    protected fun showLoading(){
+    protected fun showLoading() {
         EventBus.getDefault().post(MineEvents.MainActivityLoadingState(true))
     }
+
     /**
      * 通知挂在的activity开启关闭弹窗
      */
-    protected fun hideLoading(){
+    protected fun hideLoading() {
         EventBus.getDefault().post(MineEvents.MainActivityLoadingState(false))
     }
 }

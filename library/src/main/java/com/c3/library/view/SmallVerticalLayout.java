@@ -80,7 +80,6 @@ public class SmallVerticalLayout extends ViewGroup {
         for (int i = 0; i < s_childCount; i++) {
             View child = getChildAt(i);
             int nowChildHeight = child.getLayoutParams().height;
-            Log.w("header", nowChildHeight + "");
             child.layout(l, startHeight, r, startHeight + nowChildHeight);
             startHeight += nowChildHeight;
         }

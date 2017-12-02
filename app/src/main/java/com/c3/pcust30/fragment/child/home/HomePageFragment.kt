@@ -85,10 +85,7 @@ class HomePageFragment : TopFragment() {
                 .bindToLifecycle(this)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ jsonStrArray -> setJsonRspArray(jsonStrArray) },
-                        { error ->
-                            ShowHint.failure(mContext, error.message!!)
-                            Logger.i(error.message!!)
-                        })
+                        { error -> ShowHint.failure(mContext, error.message!!) })
         //显示用户名称 和 提示文字
         topUserName.text = UserInfo.userName
         topCustomHint.text = "${UserInfo.userName},您好"
@@ -118,21 +115,19 @@ class HomePageFragment : TopFragment() {
             0 -> {//用户基本统计信息
                 val objType = object : TypeToken<TradingResponse<UserWorkInfoRsp>>() {}.type//解析类型
                 val workResponse = Gson().fromJson<TradingResponse<UserWorkInfoRsp>>(result, objType)//解析结果
-                if (TextUtils.equals(TRADING_SUCCESS, workResponse.header!!.rspCode)) {
+                getResultBody(workResponse,{bodyEntity ->
                     //显示用户基本统计信息
-                    showUserWorkInfo(workResponse.body!!.dataInfo ?: UserWorkInfoRsp.DataInfo())
+                    showUserWorkInfo(bodyEntity.dataInfo ?: UserWorkInfoRsp.DataInfo())
                     //用户统计排行
-                    showUserRankList(workResponse.body!!.rangeRecView ?: mutableListOf())
-                } else {
-                    ShowHint.failure(mContext, workResponse.header!!.rspMsg!!)
-                }
+                    showUserRankList(bodyEntity.rangeRecView ?: mutableListOf())
+                })
             }
             1 -> {//用户折线统计信息
                 //分三步解析（数据很不规范，理论和实践差距总是很大）
                 var dataType = object : TypeToken<TradingResponse<UserWorkChartRsp>>() {}.type//解析类型
                 val chartRsp = Gson().fromJson<TradingResponse<UserWorkChartRsp>>(result, dataType)
-                if (TextUtils.equals(TRADING_SUCCESS, chartRsp.header!!.rspCode)) {
-                    val dataCount = chartRsp.body!!.stacount?.stacount
+                getResultBody(chartRsp,{bodyEntity ->
+                    val dataCount = bodyEntity.stacount?.stacount
                     val lineChartY: MutableList<Int> = ArrayList()//数量
                     val lineChartX: MutableList<String> = ArrayList()//横坐标
                     when (dataCount) {
@@ -166,9 +161,7 @@ class HomePageFragment : TopFragment() {
                         }
                     }
                     showLineChartData(lineChartY, lineChartX)//展示图表数据
-                } else {
-                    ShowHint.failure(mContext, chartRsp.header!!.rspMsg!!)
-                }
+                })
             }
         }
     }

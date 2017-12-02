@@ -1,5 +1,6 @@
 package com.c3.pcust30.data.net
 
+import android.text.TextUtils
 import com.google.gson.Gson
 
 /**
@@ -11,6 +12,8 @@ const val TRADING_SUCCESS = "000000" //交易执行成功
 const val LOGIN_SUCCESS = "000000" //登录成功
 //将对象生成json并返回字符串
 fun getJson(any: Any): String = Gson().toJson(any)
+//判断是否有数据
+fun dataIsNotNull(values: String?): Boolean = !values.isNullOrEmpty() && !values.equals("0") && !values.equals("-1")
 
 //header
 const val SERVICE_CODE = "serviceCode"//交易号
@@ -27,4 +30,9 @@ const val RESET_OLD_PASSWORD = "oldPwd"//旧密码
 const val RESET_NEW_PASSWORD = "newPwd"//新密码
 
 //忘记密码(重置密码)
-const val LOGIN_USER_PHOME = "phone"//登录用户的手机号
+const val LOGIN_USER_PHONE = "phone"//登录用户的手机号
+
+//代办任务列表
+const val TODAY_TASK_DATA_PAGE_NO = "pageNo"//页数
+const val TODAY_TASK_DATA_PAGE_SIZE = "pageSize"//条目
+

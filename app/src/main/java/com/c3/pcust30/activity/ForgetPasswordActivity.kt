@@ -72,7 +72,7 @@ class ForgetPasswordActivity : BaseActivity() {
             loadHelper.showDialog()//显示弹窗
             val tradingJson = getJson(TradingRequest().addHeader(SERVICE_CODE, FORGET_PASSWORD_TRADING_CODE)
                     .addBody(LOGIN_USER_NAME, inputUserCode)
-                    .addBody(LOGIN_USER_PHOME, inputUserTel))
+                    .addBody(LOGIN_USER_PHONE, inputUserTel))
             Logger.t(TAG).w("忘记密码重置请求Json：$tradingJson")//提交内容
             //提交请求
             TradingTool.commitTrading(tradingJson).bindToLifecycle(this)

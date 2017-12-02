@@ -18,3 +18,4 @@ const val FORGET_PASSWORD_TRADING_CODE = "002035"//忘记密码交易号(ForgetP
 //进入到主界面之后的交易
 const val CUSTOM_INFO_TRADING_CODE = "720025"//首页统计和排名列表(HomePageFragment)
 const val CUSTOM_DATA_STATISTICS_TRADING_CODE = "720021"//客户经理月度客户数量趋势(HomePageFragment)
+const val TASK_AGENTS_CODE = "720012"//待办任务列表(TaskPageFragment)
