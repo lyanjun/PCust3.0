@@ -207,11 +207,10 @@ class HomePageFragment : TopFragment() {
     private fun showUserRankList(rankList: List<UserWorkInfoRsp.RangeRecView>) {
         val rankData: MutableList<UserWorkInfoRsp.RangeRecView> = mutableListOf()//容器
         //列表头部控件
-        val header = layoutInflater.inflate(R.layout.item_home_page_rank, bottomRankList, false)
+        val header = bottomRankList.addHeadView(R.layout.item_home_page_rank)
         header.rankTv.text = "排名"
         header.nameTv.text = "姓名"
         header.workTv.text = "业务量"
-
         //使用最外层容器的高度减去除去列表项所有控件的高度的
         val rankItemHeight = resources.getDimensionPixelOffset(R.dimen.dp_25)
         val surplusHeight = scrollGroup.height - (top.height + middleLineChart.height + topRankHintMsg.height +
@@ -220,7 +219,6 @@ class HomePageFragment : TopFragment() {
         val showRankCount = surplusHeight / rankItemHeight
         val setItemHeight = surplusHeight / showRankCount//item高度
         val setItemWidth = bottomRankList.width//item宽度
-        bottomRankList.addHeaderView(header)//添加头部
         //设置数据
         if (!rankList.isEmpty()) {
             val index = (0 until rankList.size).firstOrNull { !rankList[it].isSelf.isNullOrBlank() } ?: -1//计数器
@@ -236,7 +234,7 @@ class HomePageFragment : TopFragment() {
                 rankData.add(mineRank)
             }
         }
-        bottomRankList.adapter = HomePageRankAdapter(rankData, setItemWidth, setItemHeight)
+        bottomRankList.setAdapter(HomePageRankAdapter(rankData, setItemWidth, setItemHeight))
     }
 
 

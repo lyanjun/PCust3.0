@@ -6,79 +6,68 @@ package com.c3.pcust30.adapter
  * 创建日期： 2017/11/28
  */
 import android.support.v4.content.ContextCompat
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import com.c3.library.view.adapter.SmallVerticalAdapter
 import com.c3.pcust30.R
 import com.c3.pcust30.data.net.rsp.body.UserWorkInfoRsp
 
-class HomePageRankAdapter(private val rankList: List<UserWorkInfoRsp.RangeRecView>,
-                          private val itemWidth: Int, private val itemHeight: Int) : BaseAdapter() {
+class HomePageRankAdapter(rankList: List<UserWorkInfoRsp.RangeRecView>, private val itemWidth: Int,
+                          private val itemHeight: Int) : SmallVerticalAdapter<UserWorkInfoRsp.RangeRecView>(rankList) {
+    /**
+     * 设置Item的布局
+     */
+    override fun layoutResID(): Int = R.layout.item_home_page_rank
 
-    override fun getCount(): Int = rankList.size
+    /**
+     * 设置itemView
+     */
+    override fun setItemView(itemView: View) {
+        itemView.layoutParams.width = itemWidth//指定宽度
+        itemView.layoutParams.height = itemHeight//指定高度
+    }
 
-    override fun getItem(position: Int): Any = rankList[position]
+    /**
+     * 设置显示的数据
+     */
+    override fun setItemChildView(itemView: View, position: Int, entity: UserWorkInfoRsp.RangeRecView) {
+        val name: TextView = itemView.findViewById(R.id.nameTv)//姓名
+        val workNum: TextView = itemView.findViewById(R.id.workTv)//业务量
+        val rankTv: TextView = itemView.findViewById(R.id.rankTv)//排名文字
+        val rankImg: ImageView = itemView.findViewById(R.id.rankImg)//排名图标
 
-    override fun getItemId(position: Int): Long = position.toLong()
-
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View? {
-        val holder: ViewHolder?
-        val view: View?
-        if (null == convertView) {
-            view = LayoutInflater.from(parent.context).inflate(R.layout.item_home_page_rank, parent, false)
-            view.isEnabled = false
-            view.layoutParams.width = itemWidth
-            view.layoutParams.height = itemHeight
-            holder = ViewHolder(view.findViewById(R.id.nameTv), view.findViewById(R.id.workTv),
-                    view.findViewById(R.id.rankTv), view.findViewById(R.id.rankImg))
-            view.tag = holder
-        } else {
-            view = convertView
-            holder = view.tag as ViewHolder
-        }
-        //展示数据
-        val rankEntity = rankList[position]
-        val rank = rankEntity.range//获取排名名次
-        val unTopColor = ContextCompat.getColor(parent.context, R.color.black)
-        val topColor = ContextCompat.getColor(parent.context, R.color.rank_top_text_color)
-        holder.rankTv.setTextColor(unTopColor)
+        val rank = entity.range//获取排名名次
+        val unTopColor = ContextCompat.getColor(itemView.context, R.color.black)
+        val topColor = ContextCompat.getColor(itemView.context, R.color.rank_top_text_color)
+        rankTv.setTextColor(unTopColor)
         when (rank) {
             1, 2, 3 -> {
-                val drawableRes = parent.context.resources
-                        .getIdentifier("home_rank$rank", "drawable", parent.context.packageName)
-                holder.rankImg.setImageResource(drawableRes)
-                setItemShow(topColor, holder, View.VISIBLE)
+                val drawableRes = itemView.context.resources
+                        .getIdentifier("home_rank$rank", "drawable", itemView.context.packageName)
+                rankImg.setImageResource(drawableRes)
+                setItemShow(topColor, name, workNum, rankTv, rankImg, View.VISIBLE)
             }
             else -> {
-                holder.rankTv.text = if (rank == -1) "未上榜" else rank.toString()
-                setItemShow(unTopColor, holder, View.INVISIBLE)
+                rankTv.text = if (rank == -1) "未上榜" else rank.toString()
+                setItemShow(unTopColor, name, workNum, rankTv, rankImg, View.INVISIBLE)
             }
         }
-        if (rankEntity.isSelf.isNullOrBlank()) {
-            holder.name.text = rankEntity.username//显示用户名
+        if (entity.isSelf.isNullOrBlank()) {
+            name.text = entity.username//显示用户名
         } else {
-            holder.name.text = "我"//显示用户名
+            name.text = "我"//显示用户名
         }
-        holder.workNum.text = rankEntity.custcount.toString()//显示任务量
-        return view
+        workNum.text = entity.custcount.toString()//显示任务量
     }
 
     /**
      * 设置Item显示的效果
      */
-    private fun setItemShow(textColor: Int, holder: ViewHolder, visible: Int) {
-        holder.rankImg.visibility = if (visible == View.VISIBLE) View.VISIBLE else View.INVISIBLE
-        holder.rankTv.visibility = if (visible == View.INVISIBLE) View.VISIBLE else View.INVISIBLE
-        holder.name.setTextColor(textColor)
-        holder.workNum.setTextColor(textColor)
+    private fun setItemShow(textColor: Int, name: TextView, workNum: TextView, rankTv: TextView, rankImg: ImageView, visible: Int) {
+        rankImg.visibility = if (visible == View.VISIBLE) View.VISIBLE else View.INVISIBLE
+        rankTv.visibility = if (visible == View.INVISIBLE) View.VISIBLE else View.INVISIBLE
+        name.setTextColor(textColor)
+        workNum.setTextColor(textColor)
     }
-
-    /**
-     * 复用类
-     */
-    private class ViewHolder(val name: TextView, val workNum: TextView,
-                             val rankTv: TextView, val rankImg: ImageView)
 }

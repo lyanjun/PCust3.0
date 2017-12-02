@@ -31,13 +31,10 @@
             android:layout_height="@dimen/dp_0"
             android:layout_weight="0.95"/>
         <!-- 下 -->
-        <com.c3.library.view.ScrollListView
+        <com.c3.library.view.SmallVerticalLayout
             android:id="@+id/bottomRankList"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_0"
-            android:layout_weight="1"
-            android:listSelector="@android:color/transparent"
-            android:divider="@null"
-            tools:listitem="@layout/item_home_page_rank"/>
+            android:layout_weight="1"/>
     </LinearLayout>
 </ScrollView>

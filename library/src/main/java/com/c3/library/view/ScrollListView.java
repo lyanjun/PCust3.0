@@ -5,7 +5,7 @@ import android.util.AttributeSet;
 import android.widget.ListView;
 
 /**
- * 用于ScrollView的嵌套
+ * 用于ScrollView的嵌套(失去复用性，可用于短列表)
  * Created by DELL on 2017/6/5.
  */
 
