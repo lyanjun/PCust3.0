@@ -57,5 +57,6 @@ object CircleColorUtils {
      */
     fun setCircleBackgroundColor(drawable: GradientDrawable) =
             drawable.setColor(Color.parseColor("#EF6C13"))
+
 }
 

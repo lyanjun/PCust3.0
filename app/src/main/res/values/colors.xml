@@ -20,4 +20,7 @@
     <color name="home_line_chart_color">#5274BC</color>
     <!-- 首页排行字体的颜色(排名前三) -->
     <color name="rank_top_text_color">#B16B28</color>
+    <!-- 简单的选项栏的圆形图标的背景颜色 -->
+    <color name="item_icon_bgd_color_c">#31A7BC</color>
+    <color name="item_icon_bgd_color_m">#EF6C13</color>
 </resources>

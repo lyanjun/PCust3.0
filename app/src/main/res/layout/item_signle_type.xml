@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_63"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white">
+    <!-- 分割线 -->
+    <ImageView
+        android:id="@+id/cutLine"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_3"
+        android:background="@color/windowBackgroundColor"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+    <!-- 左边的图标 -->
+    <ImageView
+        android:id="@+id/itemIcon"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="@dimen/dp_40"
+        android:background="@drawable/task_item_left_circle_background"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:scaleType="center"
+        app:layout_constraintBottom_toTopOf="@id/cutLine"
+        tools:ignore="RtlHardcoded" />
+    <!-- 栏目名称 -->
+    <TextView
+        android:id="@+id/itemLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="栏目名称"
+        android:textSize="@dimen/sp_16"
+        android:textColor="@color/black"
+        app:layout_constraintLeft_toRightOf="@id/itemIcon"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="@dimen/dp_10"
+        app:layout_constraintBottom_toTopOf="@id/cutLine"
+        tools:ignore="RtlHardcoded" />
+    <!-- 右箭头 -->
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/cutLine"
+        app:layout_constraintRight_toRightOf="parent"
+        android:src="@drawable/item_right_icon"
+        android:layout_marginRight="@dimen/dp_5"/>
+</android.support.constraint.ConstraintLayout>
