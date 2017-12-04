@@ -4,4 +4,5 @@
     <item name="bottomBar" type="id"/><!-- 主界面的底部按钮栏的id -->
     <item name="scrollGroup" type="id"/><!-- 可滑动的外部容器id -->
     <item name="singleItem" type="id"/><!-- 简单item的容器id -->
+    <item name="refreshGroup" type="id"/><!-- 刷新的容器id -->
 </resources>

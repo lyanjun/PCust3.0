@@ -50,4 +50,5 @@ dependencies {
     api "me.everything:overscroll-decor-android:$library.overscroll"
     api "com.github.PhilJay:MPAndroidChart:$library.MPAndroidChart"
     api "com.github.CymChad:BaseRecyclerViewAdapterHelper:$library.RecyclerViewAdapter"
+    api "com.scwang.smartrefresh:SmartRefreshLayout:$library.SmartRefreshLayout"
 }

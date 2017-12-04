@@ -1,9 +1,13 @@
 package com.c3.pcust30.app
 
 import com.c3.library.app.CustomApp
+import com.c3.library.utils.DynamicTimeFormat
 import com.c3.pcust30.MyEventBusIndex
 import com.c3.pcust30.app.helper.ActivityLifecycleCallbackImpl
 import com.c3.pcust30.app.helper.InitHelper
+import com.scwang.smartrefresh.layout.SmartRefreshLayout
+import com.scwang.smartrefresh.layout.footer.ClassicsFooter
+import com.scwang.smartrefresh.layout.header.ClassicsHeader
 import org.greenrobot.eventbus.EventBus
 
 
@@ -13,7 +17,17 @@ import org.greenrobot.eventbus.EventBus
  * 创建日期： 2017/11/7
  */
 
-class InitApplication : CustomApp(){
+class InitApplication : CustomApp() {
+    companion object {
+        init {
+            SmartRefreshLayout.setDefaultRefreshHeaderCreater { context, _ ->
+                ClassicsHeader(context).setTimeFormat(DynamicTimeFormat("更新于 %s"))
+            }
+            SmartRefreshLayout.setDefaultRefreshFooterCreater { context, _ ->
+                ClassicsFooter(context)
+            }
+        }
+    }
     /**
      * 初始化
      */
@@ -26,5 +40,4 @@ class InitApplication : CustomApp(){
         //开启EventBus加速(使用Subscribe注解即可解开封印)
         EventBus.builder().addIndex(MyEventBusIndex()).installDefaultEventBus()
     }
-
 }

@@ -46,6 +46,8 @@ class TaskPageFragment : TopFragment() {
      */
     override fun onViewCreatedInitMember(savedInstanceState: Bundle?) {
         super.onViewCreatedInitMember(savedInstanceState)
+        refreshGroup.finishRefresh(2000)
+        refreshGroup.finishLoadmore(2000)
         taskAdapter.setEmptyView(R.layout.view_data_empty, swipe_target.parent as ViewGroup)
         swipe_target.layoutManager = LinearLayoutManager(mContext)
         swipe_target.setHasFixedSize(true)
