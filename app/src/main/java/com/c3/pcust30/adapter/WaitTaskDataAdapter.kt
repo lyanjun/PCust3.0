@@ -41,18 +41,19 @@ class WaitTaskDataAdapter(taskData: List<WaitDoTaskRsp.TaskInfo>) :
                 val cusName = helper.getView<TextView>(R.id.cusName)
                 CircleColorUtils.setCircleBackgroundColor(item.custid, cusName.background as GradientDrawable)
                 cusName.text = item.custname
-                helper.setText(R.id.flow, item.processName)
-                helper.setText(R.id.phone, item.tel)
                 helper.setText(R.id.unknown, item.source)
-                helper.setText(R.id.date, item.deadline)
-                val stateIconRes = if (!item.due.isNullOrEmpty() && item.due.equals("1"))
-                    R.drawable.follow_task_state else 0
-                helper.setImageResource(R.id.taskStateIcon, stateIconRes)
             }
             M_TYPE -> {//商户
                 CircleColorUtils.setCircleBackgroundColor(helper.getView<ImageView>(R.id.merIcon)
                         .background as GradientDrawable)
+                helper.setText(R.id.merchants, item.gender)
             }
         }
+        helper.setText(R.id.flow, item.processName)
+        helper.setText(R.id.phone, item.tel)
+        helper.setText(R.id.date, item.deadline)
+        val stateIconRes = if (!item.due.isNullOrEmpty() && item.due.equals("1"))
+            R.drawable.follow_task_state else 0
+        helper.setImageResource(R.id.taskStateIcon, stateIconRes)
     }
 }

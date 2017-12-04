@@ -15,5 +15,112 @@
         android:background="@drawable/task_item_left_circle_background"
         android:src="@drawable/task_item_left_circle_icon"
         android:scaleType="centerInside"
+        tools:ignore="ContentDescription,RtlHardcoded" />
+    <!-- 图标向右的→ -->
+    <ImageView
+        android:id="@+id/rightIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/item_right_icon"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="@dimen/dp_5"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         tools:ignore="RtlHardcoded" />
+    <!-- 左边 -->
+    <TextView
+        android:id="@+id/title1"
+        android:text="流程:"
+        tools:ignore="HardcodedText,RtlHardcoded"
+        android:layout_marginLeft="@dimen/dp_10"
+        app:layout_constraintLeft_toRightOf="@id/merIcon"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/title2"
+        style="@style/C_TaskTitleStyle" />
+    <TextView
+        android:id="@+id/title2"
+        android:text="商户名称:"
+        tools:ignore="HardcodedText,RtlHardcoded"
+        android:layout_marginLeft="@dimen/dp_10"
+        app:layout_constraintLeft_toRightOf="@id/merIcon"
+        app:layout_constraintTop_toBottomOf="@+id/title1"
+        app:layout_constraintBottom_toTopOf="@+id/title3"
+        style="@style/C_TaskTitleStyle"/>
+    <TextView
+        android:id="@+id/title3"
+        android:text="联系方式:"
+        tools:ignore="HardcodedText,RtlHardcoded"
+        android:layout_marginLeft="@dimen/dp_10"
+        app:layout_constraintLeft_toRightOf="@id/merIcon"
+        app:layout_constraintTop_toBottomOf="@+id/title2"
+        app:layout_constraintBottom_toTopOf="@+id/title4"
+        style="@style/C_TaskTitleStyle"/>
+    <TextView
+        android:id="@+id/title4"
+        android:text="任务截止时间:"
+        tools:ignore="HardcodedText,RtlHardcoded"
+        android:layout_marginLeft="@dimen/dp_10"
+        app:layout_constraintLeft_toRightOf="@id/merIcon"
+        app:layout_constraintTop_toBottomOf="@+id/title3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        style="@style/C_TaskTitleStyle"/>
+    <!-- 右边 -->
+    <TextView
+        android:id="@+id/flow"
+        tools:text="流程:"
+        tools:ignore="HardcodedText,RtlHardcoded"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        app:layout_constraintRight_toLeftOf="@id/rightIcon"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/title2"
+        style="@style/C_TaskLabelStyle" />
+    <TextView
+        android:id="@+id/merchants"
+        tools:text="商户名称:"
+        tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:layout_width="@dimen/dp_0"
+        android:gravity="right"
+        android:paddingLeft="@dimen/dp_5"
+        android:singleLine="true"
+        android:ellipsize="end"
+        app:layout_constraintLeft_toRightOf="@id/title2"
+        app:layout_constraintRight_toLeftOf="@id/rightIcon"
+        app:layout_constraintTop_toBottomOf="@+id/title1"
+        app:layout_constraintBottom_toTopOf="@+id/title3"
+        style="@style/C_TaskLabelStyle"/>
+    <TextView
+        android:id="@+id/phone"
+        tools:text="联系方式:"
+        tools:ignore="HardcodedText,RtlHardcoded"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        app:layout_constraintRight_toLeftOf="@id/rightIcon"
+        app:layout_constraintTop_toBottomOf="@+id/title2"
+        app:layout_constraintBottom_toTopOf="@+id/title4"
+        style="@style/C_TaskLabelStyle"/>
+    <TextView
+        android:id="@+id/date"
+        tools:text="任务截止时间:"
+        tools:ignore="HardcodedText,RtlHardcoded"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        app:layout_constraintRight_toLeftOf="@id/rightIcon"
+        app:layout_constraintTop_toBottomOf="@+id/title3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        style="@style/C_TaskLabelStyle"/>
+    <!-- 任务状态 -->
+    <ImageView
+        android:id="@+id/taskStateIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_0"
+        tools:src="@drawable/follow_task_state"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_10"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
 </android.support.constraint.ConstraintLayout>
