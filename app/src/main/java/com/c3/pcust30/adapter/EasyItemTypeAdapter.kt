@@ -13,8 +13,14 @@ import com.c3.pcust30.data.bean.EasyModel
  * Created by Lyan on 17/12/3.
  */
 class EasyItemTypeAdapter(data: List<EasyModel>) : SmallVerticalAdapter<EasyModel>(data) {
+    /**
+     * 设置布局
+     */
     override fun layoutResID(): Int = R.layout.item_signle_type
 
+    /**
+     * 填充布局
+     */
     override fun setItemChildView(itemView: View, position: Int, entity: EasyModel) {
         val itemName = itemView.findViewById<TextView>(R.id.itemLabel)
         itemName.text = entity.name

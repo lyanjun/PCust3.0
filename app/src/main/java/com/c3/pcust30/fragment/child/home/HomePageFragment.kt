@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.text.Html
-import android.text.TextUtils
 import android.widget.LinearLayout
 import com.c3.library.utils.DataTools
 import com.c3.library.view.title.IsTitleChildView
@@ -12,6 +11,7 @@ import com.c3.library.weight.toast.ShowHint
 import com.c3.pcust30.R
 import com.c3.pcust30.adapter.HomePageRankAdapter
 import com.c3.pcust30.base.frag.TopFragment
+import com.c3.pcust30.data.event.MineEvents
 import com.c3.pcust30.data.info.UserInfo
 import com.c3.pcust30.data.net.*
 import com.c3.pcust30.data.net.rep.TradingRequest
@@ -30,7 +30,6 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.orhanobut.logger.Logger
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -39,6 +38,7 @@ import kotlinx.android.synthetic.main.fragment_home_page.*
 import kotlinx.android.synthetic.main.fragment_home_page_top.*
 import kotlinx.android.synthetic.main.item_home_page_rank.view.*
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper
+import org.greenrobot.eventbus.EventBus
 import org.joda.time.DateTime
 import java.util.*
 import kotlin.collections.ArrayList
@@ -96,6 +96,8 @@ class HomePageFragment : TopFragment() {
         middleLineChart.setTouchEnabled(false)
         middleLineChart.description.isEnabled = false
         middleLineChart.axisRight.isEnabled = false
+        //切换界面(切换到待办任务)
+        topTaskHintGroup.setOnClickListener { EventBus.getDefault().post(MineEvents.MainChangeModule(true)) }
     }
 
     /**
@@ -115,7 +117,7 @@ class HomePageFragment : TopFragment() {
             0 -> {//用户基本统计信息
                 val objType = object : TypeToken<TradingResponse<UserWorkInfoRsp>>() {}.type//解析类型
                 val workResponse = Gson().fromJson<TradingResponse<UserWorkInfoRsp>>(result, objType)//解析结果
-                getResultBody(workResponse,{bodyEntity ->
+                getResultBody(workResponse, { bodyEntity ->
                     //显示用户基本统计信息
                     showUserWorkInfo(bodyEntity.dataInfo ?: UserWorkInfoRsp.DataInfo())
                     //用户统计排行
@@ -126,7 +128,7 @@ class HomePageFragment : TopFragment() {
                 //分三步解析（数据很不规范，理论和实践差距总是很大）
                 var dataType = object : TypeToken<TradingResponse<UserWorkChartRsp>>() {}.type//解析类型
                 val chartRsp = Gson().fromJson<TradingResponse<UserWorkChartRsp>>(result, dataType)
-                getResultBody(chartRsp,{bodyEntity ->
+                getResultBody(chartRsp, { bodyEntity ->
                     val dataCount = bodyEntity.stacount?.stacount
                     val lineChartY: MutableList<Int> = ArrayList()//数量
                     val lineChartX: MutableList<String> = ArrayList()//横坐标

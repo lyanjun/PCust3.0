@@ -10,6 +10,10 @@ const val FRAG_HOME = 0//首页
 const val FRAG_TASK = 1//待办任务
 const val FRAG_MANAGE = 2//客户管理
 const val FRAG_ADD = 3//增加
+//刷新加载
+const val LOAD_NONE = 1//加载
+const val LOAD_MORE = 2//默认
+const val LOAD_REFRESH = 3//刷新
 //手势密码相关
 //关于手势登录
 const val GESTURE_LOGIN_STATUS = "GestureLoginStatus"//手势登录状态

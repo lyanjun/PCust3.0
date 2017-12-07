@@ -47,7 +47,7 @@ abstract class BaseFragment : ChildFragment(), CustomTitleChild.OnChildClickList
      * 点击事件
      */
     override fun onChildClick(parentTag: Int, childTag: Int) {
-        if (TitleChildTag.BACK_BTN == childTag) ShowHint.hint(mContext, "点击了返回")
+        if (TitleChildTag.BACK_BTN == childTag) pop()
     }
 
     /**

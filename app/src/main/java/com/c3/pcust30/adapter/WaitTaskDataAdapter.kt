@@ -1,5 +1,6 @@
 package com.c3.pcust30.adapter
 
+import android.annotation.SuppressLint
 import android.graphics.drawable.GradientDrawable
 import android.widget.ImageView
 import android.widget.TextView
@@ -35,12 +36,13 @@ class WaitTaskDataAdapter(taskData: List<WaitDoTaskRsp.TaskInfo>) :
     /**
      * 展示数据
      */
+    @SuppressLint("SetTextI18n")
     override fun convert(helper: BaseViewHolder, item: WaitDoTaskRsp.TaskInfo) {
         when (helper.itemViewType) {
             C_TYPE -> {//客户
                 val cusName = helper.getView<TextView>(R.id.cusName)
                 CircleColorUtils.setCircleBackgroundColor(item.custid, cusName.background as GradientDrawable)
-                cusName.text = item.custname
+                cusName.text = "${item.custname?.substring(0 until 1)}${item.gender}"
                 helper.setText(R.id.unknown, item.source)
             }
             M_TYPE -> {//商户

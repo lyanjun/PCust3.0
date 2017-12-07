@@ -1,9 +1,9 @@
 package com.c3.pcust30.fragment.child.manage
 
 import android.graphics.BitmapFactory
-import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
+import com.c3.library.view.adapter.SmallVerticalAdapter
 import com.c3.library.view.title.IsTitleChildView
 import com.c3.pcust30.R
 import com.c3.pcust30.adapter.EasyItemTypeAdapter
@@ -18,7 +18,7 @@ import me.everything.android.ui.overscroll.OverScrollDecoratorHelper
  * 创建日期： 2017/11/27
  */
 
-class ManagePageFragment : TopFragment() {
+class ManagePageFragment : TopFragment(), SmallVerticalAdapter.OnItemClickListener {
     private val items: MutableList<EasyModel> = mutableListOf()
     /**
      * 设置布局
@@ -38,7 +38,17 @@ class ManagePageFragment : TopFragment() {
                 ContextCompat.getColor(mContext, R.color.item_icon_bgd_color_c)))
         items.add(EasyModel("商户客户查询", BitmapFactory.decodeResource(resources, R.drawable.item_type_icon_merchant),
                 ContextCompat.getColor(mContext, R.color.item_icon_bgd_color_m)))
-        singleItem.setAdapter(EasyItemTypeAdapter(items))
+        singleItem.setAdapter(EasyItemTypeAdapter(items).setOnItemClickListener(this))
     }
 
+    /**
+     * item的点击事件
+     */
+    override fun onItemClick(position: Int) {
+        when (position) {
+            1 -> {//商户客户查询
+                start(MerchantManagementFragment())
+            }
+        }
+    }
 }

@@ -8,7 +8,7 @@ import com.c3.library.view.title.CustomBodyView
 import com.c3.pcust30.R
 import com.c3.pcust30.base.act.EventActivity
 import com.c3.pcust30.data.event.MineEvents
-import com.c3.pcust30.data.event.receiver.SetLoadingStateListener
+import com.c3.pcust30.data.event.receiver.OnEventListener
 import com.c3.pcust30.fragment.child.add.AddPageFragment
 import com.c3.pcust30.fragment.child.home.HomePageFragment
 import com.c3.pcust30.fragment.child.manage.ManagePageFragment
@@ -40,7 +40,7 @@ import java.util.concurrent.TimeUnit
  * 功能： 主界面
  * 创建日期： 2017/11/7
  */
-class MainActivity : EventActivity(), OnTabItemSelectedListener, SetLoadingStateListener {
+class MainActivity : EventActivity(), OnTabItemSelectedListener, OnEventListener {
     private val mFragments = SparseArray<GroupFragment>(4)//模块布局
     private var navigationController: NavigationController? = null//底部栏的控制器
     /**
@@ -105,9 +105,15 @@ class MainActivity : EventActivity(), OnTabItemSelectedListener, SetLoadingState
      * 设置加载弹窗显示的效果
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
-    override fun setLoadingDialogState(event: MineEvents.MainActivityLoadingState) {
-        //显示或隐藏弹窗
-        if (event.showLoading) loadHelper.showDialogWithDismissFirst() else loadHelper.hideDialog()
+    override fun onEventListener(event: MineEvents) {
+        when (event) {
+            is MineEvents.MainActivityLoadingState -> {//显示或隐藏弹窗
+                if (event.showLoading) loadHelper.showDialogWithDismissFirst() else loadHelper.hideDialog()
+            }
+            is MineEvents.MainChangeModule -> {//切换到待办任务界面
+                if (event.changeToTask) navigationController?.setSelect(1)
+            }
+        }
     }
 
     /**

@@ -15,14 +15,16 @@ import java.util.List;
  */
 
 public abstract class SmallVerticalAdapter<T> {
+
     private List<T> dataList;
     private LayoutInflater inflater;
+
 
     public SmallVerticalAdapter(List<T> dataList) {
         this.dataList = dataList;
     }
 
-    public int getItemCounts(){
+    public int getItemCounts() {
         return dataList.size();
     }
 
@@ -40,14 +42,37 @@ public abstract class SmallVerticalAdapter<T> {
 
     /**
      * 可在这里拓展添加点击事件
+     *
      * @param itemView
      */
-    protected void setItemView(@NonNull View itemView) {}
+    protected void setItemView(@NonNull View itemView) {
+    }
 
-    public void getItemView(@NonNull View itemView, int position) throws NullPointerException{
+    public void getItemView(@NonNull View itemView, final int position) throws NullPointerException {
+        if (null != onItemClickListener) {
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemClickListener.onItemClick(position);
+                }
+            });
+        }
         setItemChildView(itemView, position, dataList.get(position));
     }
 
-    protected abstract void setItemChildView(@NonNull View itemView, int position,@NonNull T entity);
+    protected abstract void setItemChildView(@NonNull View itemView, int position, @NonNull T entity);
 
+    /**
+     * 回调接口
+     */
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    private OnItemClickListener onItemClickListener;
+
+    public SmallVerticalAdapter setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+        return this;
+    }
 }

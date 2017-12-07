@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.scwang.smartrefresh.layout.SmartRefreshLayout
+<com.scwang.smartrefresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@id/refreshGroup"
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:srlEnableOverScrollBounce="false"
-    app:srlEnableAutoLoadmore="false">
+    app:srlEnableAutoLoadmore="false"
+    app:srlEnableOverScrollBounce="false">
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/swipe_target"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:overScrollMode="never">
-    </android.support.v7.widget.RecyclerView>
+        android:overScrollMode="never" />
 </com.scwang.smartrefresh.layout.SmartRefreshLayout>
