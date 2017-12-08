@@ -7,8 +7,8 @@ package com.c3.pcust30.http.config
 //交易连接地址
 // "http://119.23.18.110:8086/SisPCust/frontlineServlet"
 //const val TRADING_LOCATION = "http://119.23.18.110:48009/"//地址(永吉)
-//const val TRADING_LOCATION = "http://119.23.18.110:8086/"//地址(长农)
-const val TRADING_LOCATION = "http://10.15.4.5:8099/"//地址(王坤)
+const val TRADING_LOCATION = "http://119.23.18.110:8086/"//地址(长农)
+//const val TRADING_LOCATION = "http://10.15.4.5:8099/"//地址(王坤)
 const val TRADING_ADDRESS = "SisPCust/frontlineServlet"//连接
 
 //交易号(相当于当个接口,一个交易号相当于一个交易接口请求)

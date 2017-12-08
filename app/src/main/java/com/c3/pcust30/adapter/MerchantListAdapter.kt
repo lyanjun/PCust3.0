@@ -1,0 +1,44 @@
+package com.c3.pcust30.adapter
+
+import android.graphics.drawable.GradientDrawable
+import android.widget.ImageView
+import com.c3.pcust30.R
+import com.c3.pcust30.data.net.rsp.body.MerchantDataListRsp
+import com.c3.pcust30.tools.CircleColorUtils
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.BaseViewHolder
+
+/**
+ * 作者： LYJ
+ * 功能： 商户列表适配器
+ * 创建日期： 2017/12/8
+ */
+
+class MerchantListAdapter(layoutResId: Int, data: List<MerchantDataListRsp.MerchantInfo>?) : BaseQuickAdapter<MerchantDataListRsp.MerchantInfo, BaseViewHolder>(layoutResId, data) {
+    /**
+     * 设置内容
+     */
+    override fun convert(helper: BaseViewHolder, item: MerchantDataListRsp.MerchantInfo) {
+        CircleColorUtils.setCircleBackgroundColor(helper.getView<ImageView>(R.id.merIcon)
+                .background as GradientDrawable)
+        helper.setText(R.id.merchantName, item.name)
+        helper.setText(R.id.merchantTel, item.tel)
+        helper.setText(R.id.merchantPer, item.reception)
+        helper.setText(R.id.merchantState, item.status)
+        val stateIcon = helper.getView<ImageView>(R.id.taskStateIcon)
+        when (item.followstatus) {
+            "1" -> {
+                stateIcon.setImageResource(R.drawable.follow_green)
+            }
+            "2" -> {
+                stateIcon.setImageResource(R.drawable.follow_blue)
+            }
+            "3" -> {
+                stateIcon.setImageResource(R.drawable.follow_red)
+            }
+            else -> {
+                stateIcon.setImageResource(0)
+            }
+        }
+    }
+}
