@@ -30,7 +30,10 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.jakewharton.rxbinding2.view.RxView
+import com.trello.rxlifecycle2.android.FragmentEvent
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
+import com.trello.rxlifecycle2.kotlin.bindUntilEvent
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.BiFunction
@@ -41,6 +44,7 @@ import me.everything.android.ui.overscroll.OverScrollDecoratorHelper
 import org.greenrobot.eventbus.EventBus
 import org.joda.time.DateTime
 import java.util.*
+import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 
 
@@ -89,6 +93,9 @@ class HomePageFragment : TopFragment() {
         //显示用户名称 和 提示文字
         topUserName.text = UserInfo.userName
         topCustomHint.text = "${UserInfo.userName},您好"
+        RxView.clicks(topUserName).bindUntilEvent(this,FragmentEvent.PAUSE).
+                throttleFirst(2,TimeUnit.SECONDS)
+                .subscribe({ ShowHint.hint(mContext,"点击用户名!") })
         //设置折线图表的显示效果
         val legend = middleLineChart.legend
         legend.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT

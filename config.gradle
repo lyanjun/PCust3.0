@@ -33,6 +33,7 @@ ext {
             xedittext              : '2.0.5',//删除功能的输入框
             rxandroid              : '2.0.1',//rxandroid
             rxjava                 : '2.1.5',//rxjava
+            rxbinding              : '2.0.0',//rxbinding
             retrofit               : '2.3.0',//网络请求框架
             gosn                   : '2.8.2',//JSON解析工具
             rxlifecycle            : '2.2.1',//绑定声明周期（防止Rxjava内存泄漏）
