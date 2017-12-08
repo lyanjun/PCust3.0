@@ -126,18 +126,9 @@ class MerchantManagementFragment : BaseFragment(), OnRefreshListener, OnLoadmore
         val infoDataRsp = Gson().fromJson<TradingResponse<MerchantDataListRsp>>(result, infoDataType)//解析结果
         getResultBody(infoDataRsp, { bodyEntity ->
             val merCounts = bodyEntity.visitcount?.visitcount//商户数量
-            if (dataIsNotNull(merCounts)) {
-                if (tag == LOAD_REFRESH) {//刷新
-                    merChantList.clear()
-                    refreshGroup.resetNoMoreData()
-                }
-                showDateView(merCounts!!, result)
-            } else {
-                if (tag == LOAD_MORE) {
-                    --page
-                    refreshGroup.finishLoadmoreWithNoMoreData()
-                }
-            }
+            //加载数据
+            loadDataToListView(refreshGroup, merCounts, tag,
+                    { merChantList.clear() }, { showDateView(merCounts!!, result) }, { --page })
         })
     }
 

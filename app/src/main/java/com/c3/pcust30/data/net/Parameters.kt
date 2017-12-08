@@ -1,7 +1,9 @@
 package com.c3.pcust30.data.net
 
-import android.text.TextUtils
+import com.c3.pcust30.top.LOAD_MORE
+import com.c3.pcust30.top.LOAD_REFRESH
 import com.google.gson.Gson
+import com.scwang.smartrefresh.layout.api.RefreshLayout
 
 /**
  * 作者： LYJ
@@ -10,10 +12,35 @@ import com.google.gson.Gson
  */
 const val TRADING_SUCCESS = "000000" //交易执行成功
 const val LOGIN_SUCCESS = "000000" //登录成功
-//将对象生成json并返回字符串
+/**
+ * 将对象生成json并返回字符串
+ */
 fun getJson(any: Any): String = Gson().toJson(any)
-//判断是否有数据
+
+/**
+ * 判断是否有数据
+ */
 fun dataIsNotNull(values: String?): Boolean = !values.isNullOrEmpty() && !values.equals("0") && !values.equals("-1")
+
+/**
+ * 判断列表加载数据
+ */
+fun loadDataToListView(refreshLayout: RefreshLayout, dataCounts: String?, tag: Int, Refresh: (() -> Unit)?,
+                       LoadData: (() -> Unit)?, NoLoadMore: (() -> Unit)?, Error: (() -> Unit)? = null) {
+    if (dataIsNotNull(dataCounts)) {
+        if (tag == LOAD_REFRESH) {//刷新
+            Refresh?.invoke()
+            refreshLayout.resetNoMoreData()
+        }
+        LoadData?.invoke()
+    } else {
+        if (tag == LOAD_MORE) {
+            NoLoadMore?.invoke()
+            refreshLayout.finishLoadmoreWithNoMoreData()
+        }
+        Error?.invoke()
+    }
+}
 
 //header
 const val SERVICE_CODE = "serviceCode"//交易号

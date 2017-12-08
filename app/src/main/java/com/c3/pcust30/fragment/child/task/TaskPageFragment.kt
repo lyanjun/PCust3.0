@@ -113,19 +113,9 @@ class TaskPageFragment : TopFragment(), OnRefreshListener, OnLoadmoreListener {
         getResultBody(taskResponse, { bodyEntity ->
             //任务数量
             val taskCount = bodyEntity.taskCount?.taskCount
-            //在有任务的情况下
-            if (dataIsNotNull(taskCount)) {
-                if (tag == LOAD_REFRESH) {//刷新
-                    taskDataList.clear()
-                    refreshGroup.resetNoMoreData()
-                }
-                showDataOnView(taskCount, result)
-            } else {
-                if (tag == LOAD_MORE) {
-                    --page
-                    refreshGroup.finishLoadmoreWithNoMoreData()
-                }
-            }
+            //加载数据
+            loadDataToListView(refreshGroup, taskCount, tag,
+                    { taskDataList.clear() }, { showDataOnView(taskCount, result) }, { --page })
         })
     }
 
