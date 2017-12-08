@@ -46,6 +46,9 @@ class ManagePageFragment : TopFragment(), SmallVerticalAdapter.OnItemClickListen
      */
     override fun onItemClick(position: Int) {
         when (position) {
+            0 -> {//商户客户查询
+                start(ClientClassifyFragment())
+            }
             1 -> {//商户客户查询
                 start(MerchantManagementFragment())
             }

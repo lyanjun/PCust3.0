@@ -21,3 +21,7 @@ const val CUSTOM_INFO_TRADING_CODE = "720025"//首页统计和排名列表(HomeP
 const val CUSTOM_DATA_STATISTICS_TRADING_CODE = "720021"//客户经理月度客户数量趋势(HomePageFragment)
 const val TASK_AGENTS_CODE = "720012"//待办任务列表(TaskPageFragment)
 const val MERCHANT_DATA_LIST_CODE = "500502"//商户管理列表(MerchantManagementFragment)
+
+const val CLIENT_TYPE_CODE = "720424"//客户分类(ClientClassifyFragment)
+const val CLIENT_RATE_CODE = "720429"//客户评级(ClientClassifyFragment)
+const val CLIENT_lABEL_CODE = "720426"//客户标签(ClientClassifyFragment)

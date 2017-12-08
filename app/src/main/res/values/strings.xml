@@ -16,6 +16,7 @@
     <string name="frag_title_add">新增客户</string>
     <string name="frag_title_mer_manager">商户客户</string>
     <string name="frag_title_manager">客户管理</string>
+    <string name="frag_title_manager_client_class">客户分类</string>
     <!-- 输入提示文字 -->
     <string name="input_hint_user_code">请输入用户名</string>
     <string name="input_hint_password">请输入密码</string>

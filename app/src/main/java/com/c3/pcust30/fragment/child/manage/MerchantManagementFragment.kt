@@ -40,7 +40,7 @@ class MerchantManagementFragment : BaseFragment(), OnRefreshListener, OnLoadmore
 
     override fun setFragmentView(): Int = R.layout.fragment_merchant_management
 
-    override fun setTitleText(): CharSequence = resources.getString(R.string.frag_title_manager)
+    override fun setTitleText(): CharSequence = resources.getString(R.string.frag_title_mer_manager)
     /**
      * 初始化设置
      */

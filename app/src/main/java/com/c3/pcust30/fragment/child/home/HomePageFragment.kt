@@ -13,13 +13,12 @@ import com.c3.pcust30.adapter.HomePageRankAdapter
 import com.c3.pcust30.base.frag.TopFragment
 import com.c3.pcust30.data.event.MineEvents
 import com.c3.pcust30.data.info.UserInfo
-import com.c3.pcust30.data.net.*
-import com.c3.pcust30.data.net.rep.TradingRequest
 import com.c3.pcust30.data.net.rsp.TradingResponse
 import com.c3.pcust30.data.net.rsp.body.UserWorkChartRsp
 import com.c3.pcust30.data.net.rsp.body.UserWorkInfoRsp
 import com.c3.pcust30.http.config.CUSTOM_DATA_STATISTICS_TRADING_CODE
 import com.c3.pcust30.http.config.CUSTOM_INFO_TRADING_CODE
+import com.c3.pcust30.http.tool.RequestJsonUtils
 import com.c3.pcust30.http.tool.TradingTool
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
@@ -82,8 +81,8 @@ class HomePageFragment : TopFragment() {
         super.onEnterAnimationEnd(savedInstanceState)
         //进行网络请求请求(折线统计图和用户统计信息的数据请求)
         showLoading()//展示等待弹窗
-        Observable.zip(TradingTool.commitTradingNewThread(requestJsonWithUserOrg(CUSTOM_INFO_TRADING_CODE)),
-                TradingTool.commitTradingNewThread(requestJsonWithUserOrg(CUSTOM_DATA_STATISTICS_TRADING_CODE)),
+        Observable.zip(TradingTool.commitTradingNewThread(RequestJsonUtils.requestJsonWithUserOrg(CUSTOM_INFO_TRADING_CODE)),
+                TradingTool.commitTradingNewThread(RequestJsonUtils.requestJsonWithUserOrg(CUSTOM_DATA_STATISTICS_TRADING_CODE)),
                 BiFunction<String, String, Array<String>> { json1, json2 -> arrayOf(json1, json2) })
                 .doFinally { hideLoading() }
                 .bindToLifecycle(this)
@@ -106,14 +105,6 @@ class HomePageFragment : TopFragment() {
         //切换界面(切换到待办任务)
         topTaskHintGroup.setOnClickListener { EventBus.getDefault().post(MineEvents.MainChangeModule(true)) }
     }
-
-    /**
-     * 请求json数据
-     */
-    private fun requestJsonWithUserOrg(tradingCode: String) = getJson(TradingRequest()
-            .addHeader(SERVICE_CODE, tradingCode).addHeader(LOGIN_USER_NAME, UserInfo.userCode)
-            .addBody(LOGIN_USER_CODE, UserInfo.userCode).addBody(LOGIN_ORG_CODE, UserInfo.orgCode))
-
 
     /**
      * 处理返回结果
