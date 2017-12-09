@@ -37,7 +37,7 @@ import kotlinx.android.synthetic.main.fragment_task_page.*
 class TaskPageFragment : TopFragment(), OnRefreshListener, OnLoadmoreListener {
     private val pageDataCount = "8"//每页请求的数据数量
     private var page = 1//请求的页数
-    private val taskDataList: MutableList<WaitDoTaskRsp.TaskInfo> = mutableListOf()//数据
+    private val taskDataList: MutableList<WaitDoTaskRsp.TaskInfo> by lazy { mutableListOf<WaitDoTaskRsp.TaskInfo>() }//数据
     private val taskAdapter: WaitTaskDataAdapter by lazy { WaitTaskDataAdapter(taskDataList) }//数据适配器
     /**
      * 设置布局

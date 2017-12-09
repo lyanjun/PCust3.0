@@ -14,7 +14,8 @@ import com.chad.library.adapter.base.BaseViewHolder
  * 创建日期： 2017/12/8
  */
 
-class MerchantListAdapter(layoutResId: Int, data: List<MerchantDataListRsp.MerchantInfo>?) : BaseQuickAdapter<MerchantDataListRsp.MerchantInfo, BaseViewHolder>(layoutResId, data) {
+class MerchantListAdapter(data: List<MerchantDataListRsp.MerchantInfo>?) :
+        BaseQuickAdapter<MerchantDataListRsp.MerchantInfo, BaseViewHolder>(R.layout.item_merchant_detail, data) {
     /**
      * 设置内容
      */

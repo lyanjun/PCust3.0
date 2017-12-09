@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="@layout/fragment_merchant_management">
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout xmlns:tools="http://schemas.android.com/tools"
+        android:id="@id/refreshGroup"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srlEnableAutoLoadmore="false"
+        app:srlEnableOverScrollBounce="false"
+        tools:showIn="@layout/fragment_client_management">
+        <!-- 列表 -->
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/dataView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never" />
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+</merge>

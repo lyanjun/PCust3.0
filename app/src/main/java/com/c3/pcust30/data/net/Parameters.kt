@@ -42,6 +42,16 @@ fun loadDataToListView(refreshLayout: RefreshLayout, dataCounts: String?, tag: I
     }
 }
 
+/**
+ * 判断是否有数据
+ */
+@Suppress("SENSELESS_COMPARISON")
+fun <T> listIsNotNull(list: List<T>, IsNotNull: ((size: Int) -> Unit)) {
+    if (null != list && list.isNotEmpty()) {
+        IsNotNull.invoke(list.size)
+    }
+}
+
 //header
 const val SERVICE_CODE = "serviceCode"//交易号
 

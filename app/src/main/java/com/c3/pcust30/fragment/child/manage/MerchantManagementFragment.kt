@@ -24,7 +24,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
-import kotlinx.android.synthetic.main.fragment_merchant_management.*
+import kotlinx.android.synthetic.main.view_date_list_witn_search.*
 
 
 /**
@@ -35,8 +35,8 @@ import kotlinx.android.synthetic.main.fragment_merchant_management.*
 class MerchantManagementFragment : BaseFragment(), OnRefreshListener, OnLoadmoreListener {
     private val pageDataCount = "8"//每页请求的数据数量
     private var page = 1//请求的页数
-    private val merChantList: MutableList<MerchantDataListRsp.MerchantInfo> = mutableListOf()//数据
-    private val merChantAdapter: MerchantListAdapter by lazy { MerchantListAdapter(R.layout.item_merchant_detail, merChantList) }
+    private val merChantList: MutableList<MerchantDataListRsp.MerchantInfo> by lazy { mutableListOf<MerchantDataListRsp.MerchantInfo>() }//数据
+    private val merChantAdapter: MerchantListAdapter by lazy { MerchantListAdapter(merChantList) }
 
     override fun setFragmentView(): Int = R.layout.fragment_merchant_management
 
@@ -48,10 +48,10 @@ class MerchantManagementFragment : BaseFragment(), OnRefreshListener, OnLoadmore
         super.onViewCreatedInitMember(savedInstanceState)
         refreshGroup.setOnRefreshListener(this)
         refreshGroup.setOnLoadmoreListener(this)
-        merChantAdapter.setEmptyView(R.layout.view_data_empty, merChantView.parent as ViewGroup)
-        merChantView.layoutManager = LinearLayoutManager(mContext)
-        merChantView.setHasFixedSize(true)
-        merChantView.adapter = merChantAdapter//设置适配器
+        merChantAdapter.setEmptyView(R.layout.view_data_empty, dataView.parent as ViewGroup)
+        dataView.layoutManager = LinearLayoutManager(mContext)
+        dataView.setHasFixedSize(true)
+        dataView.adapter = merChantAdapter//设置适配器
     }
 
     /**
