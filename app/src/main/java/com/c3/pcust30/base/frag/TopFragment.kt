@@ -1,7 +1,6 @@
 package com.c3.pcust30.base.frag
 
 import android.os.Bundle
-import me.yokeyword.fragmentation.anim.DefaultNoAnimator
 
 /**
  * 作者： LYJ
@@ -9,10 +8,6 @@ import me.yokeyword.fragmentation.anim.DefaultNoAnimator
  * 创建日期： 2017/11/27
  */
 abstract class TopFragment : BaseFragment() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        fragmentAnimator = DefaultNoAnimator()
-    }
     /**
      * 初始化(默认不可滑动退出)
      */
