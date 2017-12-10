@@ -28,6 +28,7 @@ class InitApplication : CustomApp() {
             }
         }
     }
+
     /**
      * 初始化
      */
