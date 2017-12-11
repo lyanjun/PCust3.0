@@ -15,7 +15,6 @@ import com.c3.pcust30.data.net.rsp.body.InitializePasswordRsp
 import com.c3.pcust30.http.config.FORGET_PASSWORD_TRADING_CODE
 import com.c3.pcust30.http.tool.TradingTool
 import com.c3.pcust30.tools.hintWithConfirmBtn
-import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.orhanobut.logger.Logger
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
