@@ -23,7 +23,6 @@ import com.orhanobut.logger.Logger
 open class BaseActivity : MineActivity(), CustomTitleChild.OnChildClickListener {
     @Suppress("LeakingThis", "PropertyName")
     protected val TAG = this::class.java.simpleName!!//TAG
-    //todo 在Fragment设置之后 需完成弹窗控制逻辑
     @Suppress("MemberVisibilityCanPrivate")
     protected val loadHelper = LoadDialogHelper()//用来管理加载等待弹窗
 

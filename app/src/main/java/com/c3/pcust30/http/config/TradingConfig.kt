@@ -24,4 +24,6 @@ const val MERCHANT_DATA_LIST_CODE = "500502"//商户管理列表(MerchantManagem
 
 const val CLIENT_TYPE_CODE = "720424"//客户分类(ClientClassifyFragment)
 const val CLIENT_RATE_CODE = "720429"//客户评级(ClientClassifyFragment)
-const val CLIENT_lABEL_CODE = "720426"//客户标签(ClientClassifyFragment)
+const val CLIENT_LABEL_CODE = "720426"//客户标签(ClientClassifyFragment)
+const val CLIENT_DATA_LIST_CODE = "720700"//客户查询筛选结果(ClientManagementFragment)
+

@@ -40,7 +40,7 @@ import org.greenrobot.eventbus.ThreadMode
  *        修改确认后跳转到主界面，此界面由用户状态来决定是否显示
  * 创建日期： 2017/11/7
  */
-class ResetPasswordActivity : EventActivity() , OnFinishEventListener {
+class ResetPasswordActivity : EventActivity(), OnFinishEventListener {
     private val userCode = Hawk.get<String>(USER_CODE)//用户编码
     private val orgCode = Hawk.get<String>(ORG_CODE)//组织编码
     /**
@@ -113,8 +113,7 @@ class ResetPasswordActivity : EventActivity() , OnFinishEventListener {
      */
     override fun getResponse(result: String, tag: Int) {
         super.getResponse(result, tag)
-        val objType = object : TypeToken<TradingResponse<ResetPasswordRsp>>() {}.type//解析类型
-        val resetResponse = Gson().fromJson<TradingResponse<ResetPasswordRsp>>(result, objType)//解析结果
+        val resetResponse = getResultBodyWithHeader(result, object : TypeToken<TradingResponse<ResetPasswordRsp>>() {})//解析结果
         if (TextUtils.equals(resetResponse.header!!.rspCode, TRADING_SUCCESS)) {
             //保存密码到本地
             Hawk.put(USER_PASSWORD, confirmPassWordLayout.inputDomain.text.toString())//保存新密码

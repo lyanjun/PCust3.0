@@ -90,8 +90,7 @@ class ForgetPasswordActivity : BaseActivity() {
     @Suppress("DEPRECATION")
     override fun getResponse(result: String, tag: Int) {
         super.getResponse(result, tag)
-        val objType = object : TypeToken<TradingResponse<InitializePasswordRsp>>() {}.type//解析类型
-        val loginResponse = Gson().fromJson<TradingResponse<InitializePasswordRsp>>(result, objType)//解析结果
+        val loginResponse = getResultBodyWithHeader(result, object : TypeToken<TradingResponse<InitializePasswordRsp>>() {})//解析结果
         if (TextUtils.equals(TRADING_SUCCESS, loginResponse.header!!.rspCode)) {
             hintWithConfirmBtn(getString(R.string.initialize_password_success_title),
                     Html.fromHtml(String.format(getString(R.string.initialize_password_success),

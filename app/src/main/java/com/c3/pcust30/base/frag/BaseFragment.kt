@@ -28,7 +28,6 @@ abstract class BaseFragment : ChildFragment(), CustomTitleChild.OnChildClickList
     /**
      * 初始化成员变量（设置控件和设置成员）
      */
-    //todo 加载等待弹窗关联（构思中）
     override fun onViewCreatedInitMember(savedInstanceState: Bundle?) {
         mTitleView.addChildView(setTitleLeftChildView(), IsTitleView.LEFT)//添加标题栏到左侧
         mTitleView.addChildView(setTitleCenterChildView(), IsTitleView.CENTER)//添加标题到栏中间

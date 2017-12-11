@@ -43,7 +43,7 @@ class LoginActivity : EventActivity(), View.OnClickListener, OnFinishEventListen
 
     private var isFirstStart: Boolean = true //判断是否为第一次启动的标记
     private var clickTime: Long = 0 //记录第一次点击的时间
-    private var setGesturePasswordIntent:Intent? = null//跳转意图（手势登录）
+    private var setGesturePasswordIntent: Intent? = null//跳转意图（手势登录）
     /**
      * 点击事件(登录按钮，忘记密码，手势登录)
      */
@@ -52,7 +52,7 @@ class LoginActivity : EventActivity(), View.OnClickListener, OnFinishEventListen
             R.id.loginBtn -> login()//登录
             R.id.forgetPwdBtn -> startActivityForResult(Intent(this, ForgetPasswordActivity::class.java),
                     1000, SceneType.CUSTOM_TYPE)//忘记密码
-            R.id.gestureLoginBtn-> startActivity(setGesturePasswordIntent,SceneType.CUSTOM_TYPE)//手势登录
+            R.id.gestureLoginBtn -> startActivity(setGesturePasswordIntent, SceneType.CUSTOM_TYPE)//手势登录
         }
     }
 
@@ -63,6 +63,7 @@ class LoginActivity : EventActivity(), View.OnClickListener, OnFinishEventListen
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 1000 && resultCode == Activity.RESULT_OK) gestureLoginBtn.visibility = View.GONE
     }
+
     /**
      * 登录请求
      */
@@ -90,8 +91,7 @@ class LoginActivity : EventActivity(), View.OnClickListener, OnFinishEventListen
      */
     override fun getResponse(result: String, tag: Int) {
         super.getResponse(result, tag)
-        val objType = object : TypeToken<TradingResponse<LoginRsp>>() {}.type//解析类型
-        val loginResponse = Gson().fromJson<TradingResponse<LoginRsp>>(result, objType)//解析结果
+        val loginResponse = getResultBodyWithHeader(result, object : TypeToken<TradingResponse<LoginRsp>>() {})//解析结果
         if (TextUtils.equals(TRADING_SUCCESS, loginResponse.header!!.rspCode!!)) {
             if (TextUtils.equals(LOGIN_SUCCESS, loginResponse.body!!.worksigninfo!!.logincode)) {
                 ShowHint.success(this, loginResponse.body!!.worksigninfo!!.loginmsg!!)

@@ -2,25 +2,25 @@ package com.c3.pcust30.fragment.child.manage
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.text.TextUtils
 import android.view.ViewGroup
 import com.c3.library.weight.toast.ShowHint
 import com.c3.pcust30.R
 import com.c3.pcust30.adapter.ClientClassLevelAdapter
 import com.c3.pcust30.base.frag.BaseFragment
 import com.c3.pcust30.data.bean.ClientTypeModel
+import com.c3.pcust30.data.net.getResultBodyWithHeader
 import com.c3.pcust30.data.net.listIsNotNull
+import com.c3.pcust30.data.net.parseResult
 import com.c3.pcust30.data.net.rsp.TradingResponse
 import com.c3.pcust30.data.net.rsp.body.ClientClassLevelRsp
 import com.c3.pcust30.data.net.rsp.body.ClientClassRateRsp
 import com.c3.pcust30.data.net.rsp.body.ClientClassTypeRsp
+import com.c3.pcust30.http.config.CLIENT_LABEL_CODE
 import com.c3.pcust30.http.config.CLIENT_RATE_CODE
 import com.c3.pcust30.http.config.CLIENT_TYPE_CODE
-import com.c3.pcust30.http.config.CLIENT_lABEL_CODE
 import com.c3.pcust30.http.tool.RequestJsonUtils
 import com.c3.pcust30.http.tool.TradingTool
 import com.c3.pcust30.top.getDrawableResId
-import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
 import io.reactivex.Observable
@@ -46,11 +46,11 @@ class ClientClassifyFragment : BaseFragment() {
 
     override fun onViewCreatedInitMember(savedInstanceState: Bundle?) {
         super.onViewCreatedInitMember(savedInstanceState)
+        clientClassList.setHasFixedSize(true)
+        clientClassList.adapter = clientAdapter
+        clientClassList.layoutManager = LinearLayoutManager(mContext)
         clientAdapter.setEmptyView(R.layout.view_data_empty, clientClassList.parent as ViewGroup)
         clientAdapter.setOnItemChildClickListener { _, _, position -> setConditionsSelectClientDataList(clientTypes[position].t.type, clientTypes[position].t.flag) }
-        clientClassList.layoutManager = LinearLayoutManager(mContext)
-        clientClassList.adapter = clientAdapter
-        clientClassList.setHasFixedSize(true)
         OverScrollDecoratorHelper.setUpOverScroll(clientClassList, OverScrollDecoratorHelper.ORIENTATION_VERTICAL)
     }
 
@@ -77,11 +77,10 @@ class ClientClassifyFragment : BaseFragment() {
      * 下载分类数据
      */
     private fun downLoadClientClassifyData() {
-        var a = 1
         showLoading()//展示等待弹窗
         Observable.zip(TradingTool.commitTradingNewThread(RequestJsonUtils.requestJsonWithUserOrg(CLIENT_TYPE_CODE)),
                 TradingTool.commitTradingNewThread(RequestJsonUtils.requestJsonWithUserOrg(CLIENT_RATE_CODE)),
-                TradingTool.commitTradingNewThread(RequestJsonUtils.requestJsonWithUserOrg(CLIENT_lABEL_CODE, "num")),
+                TradingTool.commitTradingNewThread(RequestJsonUtils.requestJsonWithUserOrg(CLIENT_LABEL_CODE, "num")),
                 Function3<String, String, String, Array<String>> { t1, t2, t3 -> arrayOf(t1, t2, t3) })
                 .bindToLifecycle(this)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -99,8 +98,7 @@ class ClientClassifyFragment : BaseFragment() {
         super.getResponse(result, tag)
         when (tag) {
             0 -> {//客户分类
-                val objType = object : TypeToken<TradingResponse<ClientClassTypeRsp>>() {}.type//解析类型
-                val typeResponse = Gson().fromJson<TradingResponse<ClientClassTypeRsp>>(result, objType)//解析结果
+                val typeResponse = getResultBodyWithHeader(result, object : TypeToken<TradingResponse<ClientClassTypeRsp>>() {})//解析结果
                 getResultBody(typeResponse, { bodyEntity ->
                     val typeArray = bodyEntity.countView
                     listIsNotNull(typeArray!!, {
@@ -114,8 +112,7 @@ class ClientClassifyFragment : BaseFragment() {
                 })
             }
             1 -> {//客户评级
-                val objType = object : TypeToken<TradingResponse<ClientClassRateRsp>>() {}.type//解析类型
-                val rateResponse = Gson().fromJson<TradingResponse<ClientClassRateRsp>>(result, objType)//解析结果
+                val rateResponse = getResultBodyWithHeader(result, object : TypeToken<TradingResponse<ClientClassRateRsp>>() {})//解析结果
                 getResultBody(rateResponse, { bodyEntity ->
                     val rateArray = bodyEntity.effView
                     listIsNotNull(rateArray!!, {
@@ -128,20 +125,14 @@ class ClientClassifyFragment : BaseFragment() {
                 })
             }
             2 -> {//客户标签
-                var objType = object : TypeToken<TradingResponse<ClientClassLevelRsp>>() {}.type//解析类型
-                val levelResponse = Gson().fromJson<TradingResponse<ClientClassLevelRsp>>(result, objType)//解析结果
+                val levelResponse = getResultBodyWithHeader(result, object : TypeToken<TradingResponse<ClientClassLevelRsp>>() {})//解析结果
                 getResultBody(levelResponse, { bodyEntity ->
                     val labelCount = bodyEntity.viewsCount?.viewsCount//标签个数
                     val labelList: MutableList<ClientClassLevelRsp.LevelInfo> = mutableListOf()
-                    if (TextUtils.equals(labelCount, "1")) {
-                        objType = object : TypeToken<TradingResponse<ClientClassLevelRsp.LevelInfoEntity>>() {}.type//解析类型
-                        val levelEntity = Gson().fromJson<TradingResponse<ClientClassLevelRsp.LevelInfoEntity>>(result, objType)//解析结果
-                        labelList.add(levelEntity.body!!.pculabel!!)
-                    } else {
-                        objType = object : TypeToken<TradingResponse<ClientClassLevelRsp.LevelInfoArray>>() {}.type//解析类型
-                        val levelEntity = Gson().fromJson<TradingResponse<ClientClassLevelRsp.LevelInfoArray>>(result, objType)//解析结果
-                        labelList.addAll(levelEntity.body!!.pculabel!!)
-                    }
+                    parseResult(labelCount!!, result, object : TypeToken<TradingResponse<ClientClassLevelRsp.LevelInfoEntity>>() {},
+                            object : TypeToken<TradingResponse<ClientClassLevelRsp.LevelInfoArray>>() {},
+                            { entityBody -> labelList.add(entityBody.pculabel!!) },
+                            { arrayBody -> labelList.addAll(arrayBody.pculabel!!) })
                     listIsNotNull(labelList, {
                         clientTypes.add(ClientTypeModel(true, "标签分类"))
                         labelList.forEach {

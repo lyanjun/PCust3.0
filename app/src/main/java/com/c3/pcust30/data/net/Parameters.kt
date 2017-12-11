@@ -1,8 +1,12 @@
 package com.c3.pcust30.data.net
 
+import android.text.TextUtils
+import com.c3.pcust30.data.net.rsp.TradingResponse
+import com.c3.pcust30.data.net.rsp.TradingResponseBody
 import com.c3.pcust30.top.LOAD_MORE
 import com.c3.pcust30.top.LOAD_REFRESH
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 
 /**
@@ -52,6 +56,31 @@ fun <T> listIsNotNull(list: List<T>, IsNotNull: ((size: Int) -> Unit)) {
     }
 }
 
+/**
+ * 根据数量判断解析模式
+ */
+fun <E : TradingResponseBody, A : TradingResponseBody>
+        parseResult(dataCount: String, resultJson: String, entityType: TypeToken<TradingResponse<E>>,
+                    arrayType: TypeToken<TradingResponse<A>>, EntityBody: ((entityBody: E) -> Unit), ArrayBody: ((arrayBody: A) -> Unit)) {
+    if (TextUtils.equals(dataCount, "1")) {//按对象解析
+        EntityBody.invoke(getResultOnlyBody(resultJson, entityType))
+    } else {//按数组解析
+        ArrayBody.invoke(getResultOnlyBody(resultJson, arrayType))
+    }
+}
+
+/**
+ *  解析指定类型的数据
+ */
+fun <R : TradingResponseBody> getResultOnlyBody(resultJson: String, typeToken: TypeToken<TradingResponse<R>>): R =
+        Gson().fromJson<TradingResponse<R>>(resultJson, typeToken.type).body!!//解析结果
+
+/**
+ *  解析指定类型的数据(包含头部)
+ */
+fun <R : TradingResponseBody> getResultBodyWithHeader(resultJson: String, typeToken: TypeToken<TradingResponse<R>>): TradingResponse<R> =
+        Gson().fromJson<TradingResponse<R>>(resultJson, typeToken.type)//解析结果
+
 //header
 const val SERVICE_CODE = "serviceCode"//交易号
 
@@ -72,4 +101,7 @@ const val LOGIN_USER_PHONE = "phone"//登录用户的手机号
 //代办任务列表
 const val TODAY_TASK_DATA_PAGE_NO = "pageNo"//页数
 const val TODAY_TASK_DATA_PAGE_SIZE = "pageSize"//条目
+const val DEFAULT_PAGE_SIZE = "8"//默认每页数据的容量
+const val DEFAULT_PAGE_NUMBER = 1//默认请求的页数
+
 

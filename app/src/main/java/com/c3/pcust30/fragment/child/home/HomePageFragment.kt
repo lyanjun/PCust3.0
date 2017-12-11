@@ -13,6 +13,7 @@ import com.c3.pcust30.adapter.HomePageRankAdapter
 import com.c3.pcust30.base.frag.TopFragment
 import com.c3.pcust30.data.event.MineEvents
 import com.c3.pcust30.data.info.UserInfo
+import com.c3.pcust30.data.net.getResultBodyWithHeader
 import com.c3.pcust30.data.net.rsp.TradingResponse
 import com.c3.pcust30.data.net.rsp.body.UserWorkChartRsp
 import com.c3.pcust30.data.net.rsp.body.UserWorkInfoRsp
@@ -27,7 +28,6 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
-import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.jakewharton.rxbinding2.view.RxView
 import com.trello.rxlifecycle2.android.FragmentEvent
@@ -92,9 +92,9 @@ class HomePageFragment : TopFragment() {
         //显示用户名称 和 提示文字
         topUserName.text = UserInfo.userName
         topCustomHint.text = "${UserInfo.userName},您好"
-        RxView.clicks(topUserName).bindUntilEvent(this,FragmentEvent.PAUSE).
-                throttleFirst(2,TimeUnit.SECONDS)
-                .subscribe({ ShowHint.hint(mContext,"点击用户名!") })
+        RxView.clicks(topUserName).bindUntilEvent(this, FragmentEvent.PAUSE).
+                throttleFirst(2, TimeUnit.SECONDS)
+                .subscribe({ ShowHint.hint(mContext, "点击用户名!") })
         //设置折线图表的显示效果
         val legend = middleLineChart.legend
         legend.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
@@ -113,8 +113,7 @@ class HomePageFragment : TopFragment() {
         super.getResponse(result, tag)
         when (tag) {
             0 -> {//用户基本统计信息
-                val objType = object : TypeToken<TradingResponse<UserWorkInfoRsp>>() {}.type//解析类型
-                val workResponse = Gson().fromJson<TradingResponse<UserWorkInfoRsp>>(result, objType)//解析结果
+                val workResponse = getResultBodyWithHeader(result, object : TypeToken<TradingResponse<UserWorkInfoRsp>>() {})//解析结果
                 getResultBody(workResponse, { bodyEntity ->
                     //显示用户基本统计信息
                     showUserWorkInfo(bodyEntity.dataInfo ?: UserWorkInfoRsp.DataInfo())
@@ -124,8 +123,7 @@ class HomePageFragment : TopFragment() {
             }
             1 -> {//用户折线统计信息
                 //分三步解析（数据很不规范，理论和实践差距总是很大）
-                var dataType = object : TypeToken<TradingResponse<UserWorkChartRsp>>() {}.type//解析类型
-                val chartRsp = Gson().fromJson<TradingResponse<UserWorkChartRsp>>(result, dataType)
+                val chartRsp = getResultBodyWithHeader(result, object : TypeToken<TradingResponse<UserWorkChartRsp>>() {})//解析结果
                 getResultBody(chartRsp, { bodyEntity ->
                     val dataCount = bodyEntity.stacount?.stacount
                     val lineChartY: MutableList<Int> = ArrayList()//数量
@@ -134,8 +132,7 @@ class HomePageFragment : TopFragment() {
                         -1, 0, 1, null -> {
                             if (dataCount == 1) {
                                 //数据只有一条
-                                dataType = object : TypeToken<TradingResponse<UserWorkChartRsp.ChartEntityRsp>>() {}.type//解析类型
-                                val chartEntityRsp = Gson().fromJson<TradingResponse<UserWorkChartRsp.ChartEntityRsp>>(result, dataType)
+                                val chartEntityRsp = getResultBodyWithHeader(result, object : TypeToken<TradingResponse<UserWorkChartRsp.ChartEntityRsp>>() {})
                                 lineChartX.add(chartEntityRsp.body!!.pCustAcctCustCount!!.sdate!!)
                                 lineChartY.add(chartEntityRsp.body!!.pCustAcctCustCount!!.custcount)
                             } else {//无数据情况
@@ -146,8 +143,7 @@ class HomePageFragment : TopFragment() {
                             for (i in 0 until 6) lineChartY.add(0, 0)
                         }
                         else -> {//此处需要显示7条数据（不足七条补齐七条）
-                            dataType = object : TypeToken<TradingResponse<UserWorkChartRsp.ChartArrayRsp>>() {}.type//解析类型
-                            val chartArrayRsp = Gson().fromJson<TradingResponse<UserWorkChartRsp.ChartArrayRsp>>(result, dataType)
+                            val chartArrayRsp = getResultBodyWithHeader(result, object : TypeToken<TradingResponse<UserWorkChartRsp.ChartArrayRsp>>() {})
                             if (dataCount < 7) {
                                 chartArrayRsp.body!!.pCustAcctCustCount!!.forEach { lineChartX.add(it.sdate!!) }
                                 chartArrayRsp.body!!.pCustAcctCustCount!!.forEach { lineChartY.add(it.custcount) }
