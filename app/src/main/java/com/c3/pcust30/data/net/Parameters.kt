@@ -1,6 +1,5 @@
 package com.c3.pcust30.data.net
 
-import android.text.TextUtils
 import com.c3.pcust30.data.net.rsp.TradingResponse
 import com.c3.pcust30.data.net.rsp.TradingResponseBody
 import com.c3.pcust30.top.LOAD_MORE
@@ -24,14 +23,17 @@ fun getJson(any: Any): String = Gson().toJson(any)
 /**
  * 判断是否有数据
  */
-fun dataIsNotNull(values: String?): Boolean = !values.isNullOrEmpty() && !values.equals("0") && !values.equals("-1")
+fun dataIsNotNull(values: String?, Zero: ((isZero: Boolean) -> Unit)? = null): Boolean {
+    Zero?.invoke(values.equals("0"))
+    return !values.isNullOrEmpty() && !values.equals("-1")
+}
 
 /**
  * 判断列表加载数据
  */
 fun loadDataToListView(refreshLayout: RefreshLayout, dataCounts: String?, tag: Int, Refresh: (() -> Unit)?,
                        LoadData: (() -> Unit)?, NoLoadMore: (() -> Unit)?, Error: (() -> Unit)? = null) {
-    if (dataIsNotNull(dataCounts)) {
+    if (dataIsNotNull(dataCounts, { isZero -> if (isZero && tag == LOAD_MORE) refreshLayout.finishLoadmoreWithNoMoreData() })) {
         if (tag == LOAD_REFRESH) {//刷新
             Refresh?.invoke()
             refreshLayout.resetNoMoreData()
@@ -61,11 +63,12 @@ fun <T> listIsNotNull(list: List<T>, IsNotNull: ((size: Int) -> Unit)) {
  */
 fun <E : TradingResponseBody, A : TradingResponseBody>
         parseResult(dataCount: String, resultJson: String, entityType: TypeToken<TradingResponse<E>>,
-                    arrayType: TypeToken<TradingResponse<A>>, EntityBody: ((entityBody: E) -> Unit), ArrayBody: ((arrayBody: A) -> Unit)) {
-    if (TextUtils.equals(dataCount, "1")) {//按对象解析
-        EntityBody.invoke(getResultOnlyBody(resultJson, entityType))
-    } else {//按数组解析
-        ArrayBody.invoke(getResultOnlyBody(resultJson, arrayType))
+                    arrayType: TypeToken<TradingResponse<A>>, EntityBody: ((entityBody: E) -> Unit),
+                    ArrayBody: ((arrayBody: A) -> Unit), Zero: (() -> Unit)? = null) {
+    when (dataCount) {
+        "0" -> Zero?.invoke()//没有数据
+        "1" -> EntityBody.invoke(getResultOnlyBody(resultJson, entityType))//按对象解析
+        else -> ArrayBody.invoke(getResultOnlyBody(resultJson, arrayType))//按数组解析
     }
 }
 

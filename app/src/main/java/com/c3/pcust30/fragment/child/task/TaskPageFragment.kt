@@ -13,6 +13,7 @@ import com.c3.pcust30.data.net.rsp.TradingResponse
 import com.c3.pcust30.data.net.rsp.body.WaitDoTaskRsp
 import com.c3.pcust30.http.config.TASK_AGENTS_CODE
 import com.c3.pcust30.http.tool.TradingTool
+import com.c3.pcust30.top.bindDataWithSetShowType
 import com.google.gson.reflect.TypeToken
 import com.orhanobut.logger.Logger
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener

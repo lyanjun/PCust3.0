@@ -20,6 +20,7 @@ import com.c3.pcust30.http.config.CLIENT_RATE_CODE
 import com.c3.pcust30.http.config.CLIENT_TYPE_CODE
 import com.c3.pcust30.http.tool.RequestJsonUtils
 import com.c3.pcust30.http.tool.TradingTool
+import com.c3.pcust30.top.bindDataWithSetShowType
 import com.c3.pcust30.top.getDrawableResId
 import com.google.gson.reflect.TypeToken
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
@@ -46,10 +47,7 @@ class ClientClassifyFragment : BaseFragment() {
 
     override fun onViewCreatedInitMember(savedInstanceState: Bundle?) {
         super.onViewCreatedInitMember(savedInstanceState)
-        clientClassList.setHasFixedSize(true)
-        clientClassList.adapter = clientAdapter
-        clientClassList.layoutManager = LinearLayoutManager(mContext)
-        clientAdapter.setEmptyView(R.layout.view_data_empty, clientClassList.parent as ViewGroup)
+        bindDataWithSetShowType(clientClassList,LinearLayoutManager(mContext),clientAdapter)
         clientAdapter.setOnItemChildClickListener { _, _, position -> setConditionsSelectClientDataList(clientTypes[position].t.type, clientTypes[position].t.flag) }
         OverScrollDecoratorHelper.setUpOverScroll(clientClassList, OverScrollDecoratorHelper.ORIENTATION_VERTICAL)
     }

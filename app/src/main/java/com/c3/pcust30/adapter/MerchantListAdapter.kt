@@ -5,6 +5,7 @@ import android.widget.ImageView
 import com.c3.pcust30.R
 import com.c3.pcust30.data.net.rsp.body.MerchantDataListRsp
 import com.c3.pcust30.tools.CircleColorUtils
+import com.c3.pcust30.top.setItemStatusIcon
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 
@@ -26,20 +27,6 @@ class MerchantListAdapter(data: List<MerchantDataListRsp.MerchantInfo>?) :
         helper.setText(R.id.merchantTel, item.tel)
         helper.setText(R.id.merchantPer, item.reception)
         helper.setText(R.id.merchantState, item.status)
-        val stateIcon = helper.getView<ImageView>(R.id.taskStateIcon)
-        when (item.followstatus) {
-            "1" -> {
-                stateIcon.setImageResource(R.drawable.follow_green)
-            }
-            "2" -> {
-                stateIcon.setImageResource(R.drawable.follow_blue)
-            }
-            "3" -> {
-                stateIcon.setImageResource(R.drawable.follow_red)
-            }
-            else -> {
-                stateIcon.setImageResource(0)
-            }
-        }
+        setItemStatusIcon(helper.getView(R.id.taskStateIcon), item.followstatus ?: "")
     }
 }
