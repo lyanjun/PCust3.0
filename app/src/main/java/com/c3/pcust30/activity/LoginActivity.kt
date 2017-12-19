@@ -113,7 +113,7 @@ class LoginActivity : EventActivity(), View.OnClickListener, OnFinishEventListen
                         }
                         FIRST_LOGIN_FALSE -> {//非首次登录
                             //点击登陆按钮后直接跳转到主界面
-                            startActivity(Intent(this, MainActivity::class.java), SceneType.CUSTOM_TYPE)
+                            startActivity(Intent(this, MainActivity::class.java), SceneType.NONE_TYPE)
                         }
                         else -> {//后台数据有问题才会到这里
                             ShowHint.warn(this, userInfo.loginmsg!!)

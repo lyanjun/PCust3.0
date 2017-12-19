@@ -61,6 +61,7 @@ class ClientManagementFragment : LoadRefreshListFragment() {
      */
     override fun getDataFromServer(loadType: Int, loadPage: Int) {
         super.getDataFromServer(loadType, loadPage)
+        showLoading()//展示弹窗
         val requestJson: String?
         val requestBody = TradingRequest()
                 .addHeader(LOGIN_USER_NAME, UserInfo.userCode)

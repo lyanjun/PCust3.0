@@ -6,6 +6,7 @@ package com.c3.library.constant;
  */
 
 public interface SceneType {
+    int NONE_TYPE = 0;//右进
     int CUSTOM_TYPE = 1;//自定义场景切换
     int DEFAULT_TYPE = 2;//默认场景切换
 }

@@ -55,7 +55,7 @@ class GesturePasswordActivity : EventActivity(), Lock9View.CallBack , OnFinishEv
                     //todo 判断是修改（从主页开启该界面）还是设置（从登陆界面启动该界面）
                     when (gestureSkipType) {//判断跳转到哪个界面
                         GESTURE_SKIP_TO_MAIN -> {//跳转到主界面
-                            startActivity(Intent(this,MainActivity::class.java), SceneType.CUSTOM_TYPE)
+                            startActivity(Intent(this,MainActivity::class.java), SceneType.NONE_TYPE)
                         }
                         GESTURE_SKIP_TO_SET_PWD -> {//跳转到重置密码界面
                             startActivity(Intent(this,ResetPasswordActivity::class.java), SceneType.CUSTOM_TYPE)
@@ -71,7 +71,7 @@ class GesturePasswordActivity : EventActivity(), Lock9View.CallBack , OnFinishEv
             if (TextUtils.equals(Hawk.get<String>(GESTURE_PASSWORD), password)) {
                 gestureHintTv.text = getString(R.string.gesture_hint_verify_success)
                 hintWithConfirmBtn(getString(R.string.gesture_hint_verify_title),getString(R.string.gesture_hint_verify_success), OnConfirmListener {
-                    startActivity(Intent(this,MainActivity::class.java), SceneType.CUSTOM_TYPE)
+                    startActivity(Intent(this,MainActivity::class.java), SceneType.NONE_TYPE)
                 }).show().setCancelable(false)
             } else {
                 gestureHintTv.text = getString(R.string.gesture_hint_verify_failure)

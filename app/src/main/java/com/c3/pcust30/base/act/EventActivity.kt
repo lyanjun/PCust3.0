@@ -10,7 +10,7 @@ import org.greenrobot.eventbus.EventBus
  * 功能： 接收消息的界面
  * 创建日期： 2017/11/24
  */
-open class EventActivity : BaseActivity(){
+open class EventActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,4 +21,6 @@ open class EventActivity : BaseActivity(){
         EventBus.getDefault().unregister(this)//反注册
         super.onDestroy()
     }
+
+    override fun afterFinishAnimation(): Boolean = false
 }

@@ -9,6 +9,7 @@ import com.c3.library.view.title.CustomBodyView;
 import com.c3.library.view.title.CustomTitleView;
 import com.c3.library.view.title.IsTitleView;
 
+import kotlin.TuplesKt;
 import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
 
@@ -113,10 +114,18 @@ public abstract class MineActivity extends BaseActivity {
     @Override
     public void finish() {
         super.finish();
-        setSceneType(theSceneType);
+        if (afterFinishAnimation()){
+            setSceneType(theSceneType);
+        }
     }
 
-
+    /**
+     * 是否开启退出动画
+     * @return
+     */
+    protected boolean afterFinishAnimation(){
+        return true;
+    }
     /**
      * 设置进出场动画
      * @param sceneType
@@ -124,8 +133,10 @@ public abstract class MineActivity extends BaseActivity {
     public void setSceneType(int sceneType){
         if (sceneType == SceneType.CUSTOM_TYPE){
             overridePendingTransition(R.anim.right_in, R.anim.right_out);
-        }else {
+        }else if (sceneType == SceneType.DEFAULT_TYPE){
             overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+        }else {
+            overridePendingTransition(0, 0);
         }
     }
     /**

@@ -120,7 +120,7 @@ class ResetPasswordActivity : EventActivity(), OnFinishEventListener {
             //修改密码成功,显示弹窗 点击确定跳转到主界面
             hintWithConfirmBtn(getString(R.string.reset_password_hint_title), getString(R.string.reset_password_hint_message), OnConfirmListener {
                 //跳转到主界面
-                startActivity(Intent(this, MainActivity::class.java), SceneType.CUSTOM_TYPE)
+                startActivity(Intent(this, MainActivity::class.java), SceneType.NONE_TYPE)
             }).show().setCancelable(false)
         } else {
             ShowHint.warn(this, resetResponse.header!!.rspMsg!!)
