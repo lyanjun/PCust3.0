@@ -2,6 +2,8 @@ package com.c3.pcust30.fragment.child.manage
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.view.View
+import com.c3.library.weight.toast.ShowHint
 import com.c3.pcust30.R
 import com.c3.pcust30.adapter.MerchantListAdapter
 import com.c3.pcust30.base.frag.LoadRefreshListFragment
@@ -13,6 +15,7 @@ import com.c3.pcust30.data.net.rsp.body.MerchantDataListRsp
 import com.c3.pcust30.http.config.MERCHANT_DATA_LIST_CODE
 import com.c3.pcust30.http.tool.TradingTool
 import com.c3.pcust30.top.bindDataWithSetShowType
+import com.chad.library.adapter.base.BaseQuickAdapter
 import com.google.gson.reflect.TypeToken
 import com.orhanobut.logger.Logger
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener
@@ -26,7 +29,8 @@ import kotlinx.android.synthetic.main.view_date_list_with_search.*
  * 功能： 商户管理界面
  * 创建日期： 2017/12/5
  */
-class MerchantManagementFragment : LoadRefreshListFragment(), OnRefreshListener, OnLoadmoreListener {
+class MerchantManagementFragment : LoadRefreshListFragment(), OnRefreshListener, OnLoadmoreListener,BaseQuickAdapter.OnItemClickListener {
+
 
     private val merChantList: MutableList<MerchantDataListRsp.MerchantInfo> by lazy { mutableListOf<MerchantDataListRsp.MerchantInfo>() }//数据
     private val merChantAdapter: MerchantListAdapter by lazy { MerchantListAdapter(merChantList) }
@@ -41,8 +45,15 @@ class MerchantManagementFragment : LoadRefreshListFragment(), OnRefreshListener,
         super.onViewCreatedInitMember(savedInstanceState)
         bindRefreshWithLoadMoreListener(refreshGroup)//设置监听
         bindDataWithSetShowType(dataView, LinearLayoutManager(mContext), merChantAdapter)//绑定数据
+        merChantAdapter.onItemClickListener = this//item点击事件
     }
 
+    /**
+     * item点击事件
+     */
+    override fun onItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
+        ShowHint.hint(mContext,"$position")
+    }
     /**
      * 动画结束后
      */

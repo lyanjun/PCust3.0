@@ -45,4 +45,9 @@ abstract class LoadRefreshListFragment : BaseFragment(), OnRefreshListener, OnLo
         mRefreshLayout.setOnRefreshListener(this)
         mRefreshLayout.setOnLoadmoreListener(this)
     }
+
+    /**
+     * 刷新页面数据
+     */
+    override fun onRefreshView() = getDataFromServer(LOAD_REFRESH)
 }

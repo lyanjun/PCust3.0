@@ -2,7 +2,9 @@ package com.c3.pcust30.fragment.child.task
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.view.View
 import com.c3.library.view.title.IsTitleChildView
+import com.c3.library.weight.toast.ShowHint
 import com.c3.pcust30.R
 import com.c3.pcust30.adapter.WaitTaskDataAdapter
 import com.c3.pcust30.base.frag.LoadRefreshListFragment
@@ -14,6 +16,7 @@ import com.c3.pcust30.data.net.rsp.body.WaitDoTaskRsp
 import com.c3.pcust30.http.config.TASK_AGENTS_CODE
 import com.c3.pcust30.http.tool.TradingTool
 import com.c3.pcust30.top.bindDataWithSetShowType
+import com.chad.library.adapter.base.BaseQuickAdapter
 import com.google.gson.reflect.TypeToken
 import com.orhanobut.logger.Logger
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener
@@ -27,7 +30,7 @@ import kotlinx.android.synthetic.main.fragment_task_page.*
  * 创建日期： 2017/11/27
  */
 
-class TaskPageFragment : LoadRefreshListFragment(), OnRefreshListener, OnLoadmoreListener {
+class TaskPageFragment : LoadRefreshListFragment(), OnRefreshListener, OnLoadmoreListener ,BaseQuickAdapter.OnItemClickListener{
     private val taskDataList: MutableList<WaitDoTaskRsp.TaskInfo> by lazy { mutableListOf<WaitDoTaskRsp.TaskInfo>() }//数据
     private val taskAdapter: WaitTaskDataAdapter by lazy { WaitTaskDataAdapter(taskDataList) }//数据适配器
     /**
@@ -46,8 +49,15 @@ class TaskPageFragment : LoadRefreshListFragment(), OnRefreshListener, OnLoadmor
         setSwipeBackEnable(false)//关闭滑动
         bindRefreshWithLoadMoreListener(refreshGroup)
         bindDataWithSetShowType(swipe_target, LinearLayoutManager(mContext), taskAdapter)//绑定数据
+        taskAdapter.onItemClickListener = this//item点击监听
     }
 
+    /**
+     * item点击监听
+     */
+    override fun onItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
+        ShowHint.hint(mContext,"$position")
+    }
     /**
      * 入场动画结束调用该方法
      */
@@ -87,12 +97,12 @@ class TaskPageFragment : LoadRefreshListFragment(), OnRefreshListener, OnLoadmor
             val taskCount = bodyEntity.taskCount?.taskCount
             //加载数据
             loadDataToListView(refreshGroup, taskCount, tag,
-                    { taskDataList.clear() },
-                    {
+                    Refresh = { taskDataList.clear() },//刷新界面后调用（在数据返回后）
+                    LoadData = {//加载数据时调用
                         parseResult(taskCount!!, result, object : TypeToken<TradingResponse<WaitDoTaskRsp.WaitDoTaskEntity>>() {},
                                 object : TypeToken<TradingResponse<WaitDoTaskRsp.WaitDoTaskArray>>() {},
-                                { entityBody -> taskDataList.add(entityBody.taskInfo!!) },
-                                { arrayBody -> taskDataList.addAll(arrayBody.taskInfo!!) })
+                                EntityBody = { entityBody -> taskDataList.add(entityBody.taskInfo!!) },//按对象解析
+                                ArrayBody = { arrayBody -> taskDataList.addAll(arrayBody.taskInfo!!) })//按数组解析
                         //根据任务名称设置显示类型
                         taskDataList.forEach {
                             when (it.taskName) {
@@ -105,7 +115,7 @@ class TaskPageFragment : LoadRefreshListFragment(), OnRefreshListener, OnLoadmor
                             }
                         }
                         taskAdapter.notifyDataSetChanged()
-                    }, { --page })
+                    }, NoLoadMore = { --page })//加载更多失败时调用
         })
     }
 }

@@ -2,6 +2,7 @@ package com.c3.pcust30.fragment.child.manage
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import com.c3.library.weight.toast.ShowHint
 import com.c3.pcust30.R
 import com.c3.pcust30.adapter.ClientListAdapter
 import com.c3.pcust30.base.frag.LoadRefreshListFragment
@@ -13,6 +14,7 @@ import com.c3.pcust30.data.net.rsp.body.ClientDataListRsp
 import com.c3.pcust30.http.config.CLIENT_DATA_LIST_CODE
 import com.c3.pcust30.http.config.CLIENT_DATA_LIST_LEVEL_CODE
 import com.c3.pcust30.http.tool.TradingTool
+import com.c3.pcust30.top.LOAD_REFRESH
 import com.c3.pcust30.top.bindDataWithSetShowType
 import com.google.gson.reflect.TypeToken
 import com.orhanobut.logger.Logger
@@ -38,6 +40,7 @@ class ClientManagementFragment : LoadRefreshListFragment() {
         filter1 = arguments.getString("type")
         filter10 = arguments.getString("label")
         clientInfoLevelFilter = arguments.getString("level")
+        clientDataAdapter.setOnItemClickListener { _, _, position -> ShowHint.hint(mContext,"$position") }
     }
 
     override fun onEnterAnimationEnd(savedInstanceState: Bundle?) {

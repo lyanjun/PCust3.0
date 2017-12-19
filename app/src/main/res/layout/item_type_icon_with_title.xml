@@ -6,7 +6,7 @@
     android:layout_marginTop="@dimen/dp_5"
     android:layout_height="@dimen/dp_50"
     android:id="@+id/itemChild"
-    android:background="@color/white">
+    android:background="@drawable/item_white_bg_selector">
     <!-- 图标 -->
     <ImageView
         android:id="@+id/classIcon"

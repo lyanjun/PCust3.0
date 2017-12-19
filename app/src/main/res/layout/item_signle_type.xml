@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/dp_63"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white">
+    android:background="@drawable/item_white_bg_selector">
     <!-- 分割线 -->
     <ImageView
         android:id="@+id/cutLine"

@@ -150,4 +150,9 @@ class ClientClassifyFragment : BaseFragment() {
     private fun addTypeToDataList(typeInfo: ClientClassTypeRsp.TypeInfo, title: String): ClientTypeModel =
             ClientTypeModel(ClientTypeModel.ClientType(title, typeInfo.count ?: "0", "type",
                     typeInfo.status!!, getDrawableResId("filter_${typeInfo.status}", mContext)))
+
+    /**
+     * 刷新界面
+     */
+    override fun onRefreshView() = downLoadClientClassifyData()
 }

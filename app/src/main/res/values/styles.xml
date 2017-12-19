@@ -82,7 +82,7 @@
     </style>
     <!-- 列表item样式(适用于任务列表) -->
     <style name="TaskItemStyle">
-        <item name="android:background">@color/white</item>
+        <item name="android:background">@drawable/item_white_bg_selector</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/dp_80</item>
         <item name="android:layout_marginTop">@dimen/dp_3</item>

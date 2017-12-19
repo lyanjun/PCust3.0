@@ -124,7 +124,14 @@ class MainActivity : EventActivity(), OnTabItemSelectedListener, OnEventListener
     }
 
     /**
-     * 重复点击
+     * 重复点击(回到没一个模块的起始页)
      */
-    override fun onRepeat(index: Int) {}
+    override fun onRepeat(index: Int) {
+        when(index){
+            FRAG_HOME -> (mFragments.get(index)).popToChild(HomePageFragment::class.java,false)
+            FRAG_TASK -> (mFragments.get(index)).popToChild(TaskPageFragment::class.java,false)
+            FRAG_MANAGE -> (mFragments.get(index)).popToChild(ManagePageFragment::class.java,false)
+            FRAG_ADD -> (mFragments.get(index)).popToChild(AddPageFragment::class.java,false)
+        }
+    }
 }

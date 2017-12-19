@@ -115,4 +115,40 @@ public abstract class ChildFragment extends BaseFragment {
         startActivityForResult(intent, requestCode);
         mineActivity.setSceneType(sceneType);
     }
+    /**
+     * ***************************************************************************************************
+     *
+     * ************************************** 增加界面显示是刷新的功能 **************************************
+     *
+     * ***************************************************************************************************
+     */
+    private boolean isNotFirst;//是否初始化
+    protected boolean isRefresh;//是否刷新
+    @Override
+    public void onPause() {
+        super.onPause();
+        isRefresh = false;
+    }
+
+    @Override
+    public void onSupportVisible() {
+        super.onSupportVisible();
+        if (isNotFirst && isRefresh) onRefreshView();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        isRefresh = true;
+    }
+    @Override
+    public void onEnterAnimationEnd(Bundle savedInstanceState) {
+        super.onEnterAnimationEnd(savedInstanceState);
+        isNotFirst = true;
+    }
+
+    /**
+     * 刷新
+     */
+    protected void onRefreshView(){}
 }
