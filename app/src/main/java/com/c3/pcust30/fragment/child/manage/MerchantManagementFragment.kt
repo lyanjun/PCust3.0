@@ -3,7 +3,8 @@ package com.c3.pcust30.fragment.child.manage
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
-import com.c3.library.weight.toast.ShowHint
+import com.c3.library.weight.overlay.dialog.BottomMenuDialog
+import com.c3.library.weight.overlay.model.MenuModel
 import com.c3.pcust30.R
 import com.c3.pcust30.adapter.MerchantListAdapter
 import com.c3.pcust30.base.frag.LoadRefreshListFragment
@@ -34,6 +35,8 @@ class MerchantManagementFragment : LoadRefreshListFragment(), OnRefreshListener,
 
     private val merChantList: MutableList<MerchantDataListRsp.MerchantInfo> by lazy { mutableListOf<MerchantDataListRsp.MerchantInfo>() }//数据
     private val merChantAdapter: MerchantListAdapter by lazy { MerchantListAdapter(merChantList) }
+    //菜单选项
+    private var menuDialog: BottomMenuDialog? = null
 
     override fun setFragmentView(): Int = R.layout.fragment_merchant_management
 
@@ -52,7 +55,13 @@ class MerchantManagementFragment : LoadRefreshListFragment(), OnRefreshListener,
      * item点击事件
      */
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
-        ShowHint.hint(mContext,"$position")
+//        ShowHint.hint(mContext,"$position")
+        menuDialog = BottomMenuDialog(mContext, listOf(
+                MenuModel("详情", R.drawable.menu_info_icon),
+                MenuModel("修改", R.drawable.menu_change_icon),
+                MenuModel("电话", R.drawable.menu_call_icon),
+                MenuModel("会面", R.drawable.menu_meet_icon)))
+        menuDialog!!.show()
     }
     /**
      * 动画结束后

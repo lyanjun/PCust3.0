@@ -34,12 +34,7 @@ class ClientManagementFragment : LoadRefreshListFragment(), BaseQuickAdapter.OnI
     private val clientList: MutableList<ClientDataListRsp.ClientInfo> by lazy { mutableListOf<ClientDataListRsp.ClientInfo>() }
     private val clientDataAdapter: ClientListAdapter by lazy { ClientListAdapter(clientList) }
     //菜单选项
-    private val menuDialog: BottomMenuDialog by lazy {
-        BottomMenuDialog(mContext, listOf(
-                MenuModel("修改", R.drawable.menu_change_icon),
-                MenuModel("电话", R.drawable.menu_call_icon),
-                MenuModel("会面", R.drawable.menu_meet_icon)))
-    }
+    private var menuDialog: BottomMenuDialog? = null
 
     override fun setFragmentView(): Int = R.layout.fragment_client_management
 
@@ -59,8 +54,12 @@ class ClientManagementFragment : LoadRefreshListFragment(), BaseQuickAdapter.OnI
      * 点击事件
      */
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
-        ShowHint.hint(mContext, "$position")
-        menuDialog.show()
+//        ShowHint.hint(mContext, "$position")
+        menuDialog = BottomMenuDialog(mContext, listOf(
+                MenuModel("修改", R.drawable.menu_change_icon),
+                MenuModel("电话", R.drawable.menu_call_icon),
+                MenuModel("会面", R.drawable.menu_meet_icon)))
+        menuDialog!!.show()
     }
 
     override fun onEnterAnimationEnd(savedInstanceState: Bundle?) {
