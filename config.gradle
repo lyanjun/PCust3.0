@@ -44,6 +44,8 @@ ext {
             overscroll             : '1.0.4',//惯性滑动
             MPAndroidChart         : 'v3.0.2',//图标工具
             RecyclerViewAdapter    : '2.9.33',//RecyclerView适配器创建帮助工具
-            SmartRefreshLayout     : '1.0.4-1'//刷新加载框架
+            SmartRefreshLayout     : '1.0.4-1',//刷新加载框架
+            utilcode               : "1.9.12",//工具类
+            rebound                : "0.3.8"//摩擦动画
     ]
 }

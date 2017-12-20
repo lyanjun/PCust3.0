@@ -7,8 +7,8 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.KeyEvent
 import android.view.View
+import com.blankj.utilcode.util.EncryptUtils
 import com.c3.library.constant.SceneType
-import com.c3.library.utils.MD5Utils
 import com.c3.library.weight.toast.ShowHint
 import com.c3.pcust30.R
 import com.c3.pcust30.base.act.EventActivity
@@ -22,7 +22,6 @@ import com.c3.pcust30.data.net.rsp.body.LoginRsp
 import com.c3.pcust30.http.config.LOGIN_TRADING_CODE
 import com.c3.pcust30.http.tool.TradingTool
 import com.c3.pcust30.top.*
-import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.orhanobut.hawk.Hawk
 import com.orhanobut.logger.Logger
@@ -74,7 +73,8 @@ class LoginActivity : EventActivity(), View.OnClickListener, OnFinishEventListen
         if (loginHintMessage(passwordStr, getString(R.string.input_warn_password))) return
         loadHelper.showDialog()//展示加载弹窗
         //MD5加密
-        passwordStr = MD5Utils.MD5Encode(passwordStr + userCodeStr)
+//        passwordStr = MD5Utils.MD5Encode(passwordStr + userCodeStr)
+        passwordStr = EncryptUtils.encryptMD5ToString(passwordStr + userCodeStr)
         Hawk.put(USER_PASSWORD, passwordStr)//保存新密码
         Logger.t(TAG).i("账号：$userCodeStr\n密码：$passwordStr")
         val tradingJson = getJson(TradingRequest().addHeader(SERVICE_CODE, LOGIN_TRADING_CODE)//交易号

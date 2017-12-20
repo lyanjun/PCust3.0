@@ -4,14 +4,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.KeyEvent
+import com.blankj.utilcode.util.EncryptUtils
 import com.c3.library.constant.SceneType
-import com.c3.library.utils.MD5Utils
 import com.c3.library.weight.hint.listener.OnConfirmListener
 import com.c3.library.weight.toast.ShowHint
 import com.c3.pcust30.R
-import com.c3.pcust30.data.event.receiver.OnFinishEventListener
 import com.c3.pcust30.base.act.EventActivity
 import com.c3.pcust30.data.event.MineEvents
+import com.c3.pcust30.data.event.receiver.OnFinishEventListener
 import com.c3.pcust30.data.info.ORG_CODE
 import com.c3.pcust30.data.info.USER_CODE
 import com.c3.pcust30.data.info.USER_PASSWORD
@@ -22,7 +22,6 @@ import com.c3.pcust30.data.net.rsp.body.ResetPasswordRsp
 import com.c3.pcust30.http.config.RESET_PASSWORD_TRADING_CODE
 import com.c3.pcust30.http.tool.TradingTool
 import com.c3.pcust30.tools.hintWithConfirmBtn
-import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.orhanobut.hawk.Hawk
 import com.orhanobut.logger.Logger
@@ -92,8 +91,10 @@ class ResetPasswordActivity : EventActivity(), OnFinishEventListener {
 
         //提交修改密码的请求
         loadHelper.showDialog()//显示等待弹窗
-        oldPassword = MD5Utils.MD5Encode(oldPassword + userCode)
-        newPassword = MD5Utils.MD5Encode(newPassword + userCode)
+//        oldPassword = MD5Utils.MD5Encode(oldPassword + userCode)
+//        newPassword = MD5Utils.MD5Encode(newPassword + userCode)
+        oldPassword = EncryptUtils.encryptMD5ToString(oldPassword + userCode)
+        newPassword = EncryptUtils.encryptMD5ToString(newPassword + userCode)
         //请求数据（json）
         val tradingJson = getJson(TradingRequest().addHeader(SERVICE_CODE, RESET_PASSWORD_TRADING_CODE)
                 .addBody(LOGIN_USER_NAME, userCode)

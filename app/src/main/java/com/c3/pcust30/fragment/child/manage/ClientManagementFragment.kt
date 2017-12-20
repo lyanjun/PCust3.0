@@ -2,6 +2,9 @@ package com.c3.pcust30.fragment.child.manage
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.view.View
+import com.c3.library.weight.overlay.dialog.BottomMenuDialog
+import com.c3.library.weight.overlay.model.MenuModel
 import com.c3.library.weight.toast.ShowHint
 import com.c3.pcust30.R
 import com.c3.pcust30.adapter.ClientListAdapter
@@ -14,8 +17,8 @@ import com.c3.pcust30.data.net.rsp.body.ClientDataListRsp
 import com.c3.pcust30.http.config.CLIENT_DATA_LIST_CODE
 import com.c3.pcust30.http.config.CLIENT_DATA_LIST_LEVEL_CODE
 import com.c3.pcust30.http.tool.TradingTool
-import com.c3.pcust30.top.LOAD_REFRESH
 import com.c3.pcust30.top.bindDataWithSetShowType
+import com.chad.library.adapter.base.BaseQuickAdapter
 import com.google.gson.reflect.TypeToken
 import com.orhanobut.logger.Logger
 import com.trello.rxlifecycle2.kotlin.bindToLifecycle
@@ -26,9 +29,18 @@ import kotlinx.android.synthetic.main.view_date_list_with_search.*
  * 功能： 客户管理界面
  * 创建日期： 2017/12/9
  */
-class ClientManagementFragment : LoadRefreshListFragment() {
+class ClientManagementFragment : LoadRefreshListFragment(), BaseQuickAdapter.OnItemClickListener {
+
     private val clientList: MutableList<ClientDataListRsp.ClientInfo> by lazy { mutableListOf<ClientDataListRsp.ClientInfo>() }
     private val clientDataAdapter: ClientListAdapter by lazy { ClientListAdapter(clientList) }
+    //菜单选项
+    private val menuDialog: BottomMenuDialog by lazy {
+        BottomMenuDialog(mContext, listOf(
+                MenuModel("修改", R.drawable.menu_change_icon),
+                MenuModel("电话", R.drawable.menu_call_icon),
+                MenuModel("会面", R.drawable.menu_meet_icon)))
+    }
+
     override fun setFragmentView(): Int = R.layout.fragment_client_management
 
     override fun setTitleText(): CharSequence = resources.getString(R.string.frag_title_client)
@@ -40,7 +52,15 @@ class ClientManagementFragment : LoadRefreshListFragment() {
         filter1 = arguments.getString("type")
         filter10 = arguments.getString("label")
         clientInfoLevelFilter = arguments.getString("level")
-        clientDataAdapter.setOnItemClickListener { _, _, position -> ShowHint.hint(mContext,"$position") }
+        clientDataAdapter.onItemClickListener = this//设置item点击事件
+    }
+
+    /**
+     * 点击事件
+     */
+    override fun onItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
+        ShowHint.hint(mContext, "$position")
+        menuDialog.show()
     }
 
     override fun onEnterAnimationEnd(savedInstanceState: Bundle?) {

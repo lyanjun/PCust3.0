@@ -9,9 +9,9 @@ import com.c3.library.view.title.IsTitleChildView
 import com.c3.library.weight.hint.listener.OnConfirmListener
 import com.c3.library.weight.toast.ShowHint
 import com.c3.pcust30.R
-import com.c3.pcust30.data.event.receiver.OnFinishEventListener
 import com.c3.pcust30.base.act.EventActivity
 import com.c3.pcust30.data.event.MineEvents
+import com.c3.pcust30.data.event.receiver.OnFinishEventListener
 import com.c3.pcust30.data.info.USER_NAME
 import com.c3.pcust30.tools.hintWithConfirmBtn
 import com.c3.pcust30.top.*
@@ -27,7 +27,7 @@ import org.greenrobot.eventbus.ThreadMode
  * 功能： 手势密码界面(设置和解锁都在这个界面中)
  * 创建日期： 2017/11/7
  */
-class GesturePasswordActivity : EventActivity(), Lock9View.CallBack , OnFinishEventListener {
+class GesturePasswordActivity : EventActivity(), Lock9View.CallBack, OnFinishEventListener {
     private var gestureFunctionType: String? = null//用来区分功能的标识
     private var firstSetGesturePwd: String? = null//首次设置手势密码
     private var gestureSkipType: String? = null//跳转类型（判断跳转到那个界面）
@@ -51,14 +51,14 @@ class GesturePasswordActivity : EventActivity(), Lock9View.CallBack , OnFinishEv
                 //设置手势密码成功
                 Hawk.put(GESTURE_PASSWORD, password)//保存手势密码(用来作为下次登录的验证信息)
                 Hawk.put(GESTURE_LOGIN_STATUS, true)//设置手势登录未开启状态
-                hintWithConfirmBtn(getString(R.string.gesture_hint_set_pwd_success), OnConfirmListener {
+                hintWithConfirmBtn(getString(R.string.dialog_title_default_hint), getString(R.string.gesture_hint_set_pwd_success), OnConfirmListener {
                     //todo 判断是修改（从主页开启该界面）还是设置（从登陆界面启动该界面）
                     when (gestureSkipType) {//判断跳转到哪个界面
                         GESTURE_SKIP_TO_MAIN -> {//跳转到主界面
-                            startActivity(Intent(this,MainActivity::class.java), SceneType.NONE_TYPE)
+                            startActivity(Intent(this, MainActivity::class.java), SceneType.NONE_TYPE)
                         }
                         GESTURE_SKIP_TO_SET_PWD -> {//跳转到重置密码界面
-                            startActivity(Intent(this,ResetPasswordActivity::class.java), SceneType.CUSTOM_TYPE)
+                            startActivity(Intent(this, ResetPasswordActivity::class.java), SceneType.CUSTOM_TYPE)
                         }
                     }
                 }).show().setCancelable(false)
@@ -70,8 +70,8 @@ class GesturePasswordActivity : EventActivity(), Lock9View.CallBack , OnFinishEv
         } else {//使用手势密码登录
             if (TextUtils.equals(Hawk.get<String>(GESTURE_PASSWORD), password)) {
                 gestureHintTv.text = getString(R.string.gesture_hint_verify_success)
-                hintWithConfirmBtn(getString(R.string.gesture_hint_verify_title),getString(R.string.gesture_hint_verify_success), OnConfirmListener {
-                    startActivity(Intent(this,MainActivity::class.java), SceneType.NONE_TYPE)
+                hintWithConfirmBtn(getString(R.string.gesture_hint_verify_title), getString(R.string.gesture_hint_verify_success), OnConfirmListener {
+                    startActivity(Intent(this, MainActivity::class.java), SceneType.NONE_TYPE)
                 }).show().setCancelable(false)
             } else {
                 gestureHintTv.text = getString(R.string.gesture_hint_verify_failure)
@@ -100,6 +100,7 @@ class GesturePasswordActivity : EventActivity(), Lock9View.CallBack , OnFinishEv
         if (isSetGesturePwd()) return null
         return super.setTitleLeftChildView()
     }
+
     /**
      * 根据功能初始化视图显示效果
      */
