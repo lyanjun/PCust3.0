@@ -17,8 +17,8 @@ import android.view.WindowManager;
 import com.blankj.utilcode.util.ScreenUtils;
 import com.c3.library.R;
 import com.c3.library.weight.overlay.adapter.BottomMenuAdapter;
+import com.c3.library.weight.overlay.listener.OnMenuSelectedListener;
 import com.c3.library.weight.overlay.model.MenuModel;
-import com.c3.library.weight.toast.ShowHint;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseQuickAdapter.OnItemClickListener;
 
@@ -38,6 +38,7 @@ public class BottomMenuDialog extends Dialog implements OnItemClickListener, Vie
 
     private BottomMenuAdapter bottomMenuAdapter;
     private List<MenuModel> menuModels;
+    private OnMenuSelectedListener onMenuSelectedListener;
 
     public BottomMenuDialog(@NonNull Context context, List<MenuModel> menuModels) {
         this(context, R.style.Custom_Dialog_Theme_Background_DimEnabled_True);
@@ -90,25 +91,35 @@ public class BottomMenuDialog extends Dialog implements OnItemClickListener, Vie
 
     @Override
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-        ShowHint.hint(getContext(), position + "");
+        dismissMineDialog(menuModels.get(position).getMenuType());
     }
+
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        dismissMineDialog();
+        dismissMineDialog(null);
         return false;
     }
 
     @Override
     public boolean onTouchEvent(@NonNull MotionEvent event) {
-        dismissMineDialog();
+        dismissMineDialog(null);
         return super.onTouchEvent(event);
     }
 
-    private void dismissMineDialog(){
+    private void dismissMineDialog(String callBackType) {
         bottomMenuAdapter.dismissAnimation();
         Observable.timer(800, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(aLong -> dismiss());
+                .subscribe(aLong -> {
+                    dismiss();
+                    if (null != onMenuSelectedListener && null != callBackType) {
+                        onMenuSelectedListener.onMenuSelected(callBackType);
+                    }
+                });
+    }
+
+    public void setOnMenuSelectedListener(OnMenuSelectedListener onMenuSelectedListener) {
+        this.onMenuSelectedListener = onMenuSelectedListener;
     }
 }

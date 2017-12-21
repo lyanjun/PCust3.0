@@ -4,7 +4,8 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.c3.library.weight.overlay.dialog.BottomMenuDialog
-import com.c3.library.weight.overlay.model.MenuModel
+import com.c3.library.weight.overlay.listener.OnMenuSelectedListener
+import com.c3.library.weight.toast.ShowHint
 import com.c3.pcust30.R
 import com.c3.pcust30.adapter.MerchantListAdapter
 import com.c3.pcust30.base.frag.LoadRefreshListFragment
@@ -13,6 +14,7 @@ import com.c3.pcust30.data.net.*
 import com.c3.pcust30.data.net.rep.TradingRequest
 import com.c3.pcust30.data.net.rsp.TradingResponse
 import com.c3.pcust30.data.net.rsp.body.MerchantDataListRsp
+import com.c3.pcust30.data.other.MERCHANT_MENU
 import com.c3.pcust30.http.config.MERCHANT_DATA_LIST_CODE
 import com.c3.pcust30.http.tool.TradingTool
 import com.c3.pcust30.top.bindDataWithSetShowType
@@ -30,7 +32,8 @@ import kotlinx.android.synthetic.main.view_date_list_with_search.*
  * 功能： 商户管理界面
  * 创建日期： 2017/12/5
  */
-class MerchantManagementFragment : LoadRefreshListFragment(), OnRefreshListener, OnLoadmoreListener,BaseQuickAdapter.OnItemClickListener {
+class MerchantManagementFragment : LoadRefreshListFragment(), OnRefreshListener, OnLoadmoreListener,
+        BaseQuickAdapter.OnItemClickListener, OnMenuSelectedListener {
 
 
     private val merChantList: MutableList<MerchantDataListRsp.MerchantInfo> by lazy { mutableListOf<MerchantDataListRsp.MerchantInfo>() }//数据
@@ -56,13 +59,18 @@ class MerchantManagementFragment : LoadRefreshListFragment(), OnRefreshListener,
      */
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
 //        ShowHint.hint(mContext,"$position")
-        menuDialog = BottomMenuDialog(mContext, listOf(
-                MenuModel("详情", R.drawable.menu_info_icon),
-                MenuModel("修改", R.drawable.menu_change_icon),
-                MenuModel("电话", R.drawable.menu_call_icon),
-                MenuModel("会面", R.drawable.menu_meet_icon)))
+        menuDialog = BottomMenuDialog(mContext, MERCHANT_MENU)
+        menuDialog!!.setOnMenuSelectedListener(this)
         menuDialog!!.show()
     }
+
+    /**
+     * 菜单选择结果
+     */
+    override fun onMenuSelected(menuType: String) {
+        ShowHint.warn(mContext, menuType)
+    }
+
     /**
      * 动画结束后
      */

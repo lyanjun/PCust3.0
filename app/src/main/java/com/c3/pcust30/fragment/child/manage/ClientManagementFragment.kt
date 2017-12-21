@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.c3.library.weight.overlay.dialog.BottomMenuDialog
-import com.c3.library.weight.overlay.model.MenuModel
+import com.c3.library.weight.overlay.listener.OnMenuSelectedListener
 import com.c3.library.weight.toast.ShowHint
 import com.c3.pcust30.R
 import com.c3.pcust30.adapter.ClientListAdapter
@@ -14,6 +14,7 @@ import com.c3.pcust30.data.net.*
 import com.c3.pcust30.data.net.rep.TradingRequest
 import com.c3.pcust30.data.net.rsp.TradingResponse
 import com.c3.pcust30.data.net.rsp.body.ClientDataListRsp
+import com.c3.pcust30.data.other.CLIENT_MENU
 import com.c3.pcust30.http.config.CLIENT_DATA_LIST_CODE
 import com.c3.pcust30.http.config.CLIENT_DATA_LIST_LEVEL_CODE
 import com.c3.pcust30.http.tool.TradingTool
@@ -29,7 +30,7 @@ import kotlinx.android.synthetic.main.view_date_list_with_search.*
  * 功能： 客户管理界面
  * 创建日期： 2017/12/9
  */
-class ClientManagementFragment : LoadRefreshListFragment(), BaseQuickAdapter.OnItemClickListener {
+class ClientManagementFragment : LoadRefreshListFragment(), BaseQuickAdapter.OnItemClickListener, OnMenuSelectedListener {
 
     private val clientList: MutableList<ClientDataListRsp.ClientInfo> by lazy { mutableListOf<ClientDataListRsp.ClientInfo>() }
     private val clientDataAdapter: ClientListAdapter by lazy { ClientListAdapter(clientList) }
@@ -55,13 +56,21 @@ class ClientManagementFragment : LoadRefreshListFragment(), BaseQuickAdapter.OnI
      */
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
 //        ShowHint.hint(mContext, "$position")
-        menuDialog = BottomMenuDialog(mContext, listOf(
-                MenuModel("修改", R.drawable.menu_change_icon),
-                MenuModel("电话", R.drawable.menu_call_icon),
-                MenuModel("会面", R.drawable.menu_meet_icon)))
+        menuDialog = BottomMenuDialog(mContext, CLIENT_MENU)
+        menuDialog!!.setOnMenuSelectedListener(this)
         menuDialog!!.show()
     }
 
+    /**
+     * 菜单选择结果
+     */
+    override fun onMenuSelected(menuType: String) {
+        ShowHint.warn(mContext, menuType)
+    }
+
+    /**
+     * 入场动画结束
+     */
     override fun onEnterAnimationEnd(savedInstanceState: Bundle?) {
         super.onEnterAnimationEnd(savedInstanceState)
         getDataFromServer()//获取客户列表数据
