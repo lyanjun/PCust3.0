@@ -6,7 +6,34 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <!-- 震动权限 -->
     <uses-permission android:name="android.permission.VIBRATE" />
-
+    <!--获取设备网络状态，禁用后无法获取网络状态-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!--读取设备硬件信息，统计数据-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!--读取系统信息，包含系统版本等信息，用作统计-->
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+    <!--获取设备的网络状态，鉴权所需网络代理-->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!--允许sd卡写权限，需写入地图数据，禁用后无法显示地图-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!--获取统计数据-->
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <!--使用步行AR导航，配置Camera权限-->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <!-- 这个权限用于进行网络定位-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <!-- 这个权限用于访问GPS定位-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <!-- 获取运营商信息，用于支持提供运营商信息相关的接口-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <!-- 用于读取手机当前的状态-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <!-- SD卡读取权限，用户写入离线定位数据-->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
     <application
         android:name=".app.InitApplication"
         android:allowBackup="true"
@@ -15,7 +42,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <!-- 百度地图 -->
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="gdIdkpFZP3uaGcnqGKc6IOKkRtTQ2XiV" />
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" />
         <!-- 主界面 -->
         <activity
             android:name=".activity.MainActivity"
@@ -41,9 +75,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppSwipeBackTheme" />
         <!-- 忘记密码界面 -->
-        <activity android:name=".activity.ForgetPasswordActivity"
+        <activity
+            android:name=".activity.ForgetPasswordActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppSwipeBackTheme"/>
+            android:theme="@style/AppSwipeBackTheme" />
     </application>
 
 </manifest>

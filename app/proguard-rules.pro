@@ -23,3 +23,7 @@
 -keep class com.blankj.utilcode.** { *; }
 -keepclassmembers class com.blankj.utilcode.** { *; }
 -dontwarn com.blankj.utilcode.**
+#百度地图的混淆设置
+-keep class com.baidu.** {*;}
+-keep class vi.com.** {*;}
+-dontwarn com.baidu.**

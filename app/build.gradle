@@ -14,11 +14,19 @@ android {
         versionCode config.versionCode
         versionName config.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    sourceSets {
+        main {
+            //说明so的路径为该libs路径，关联所有地图SDK的so文件
+            jniLibs.srcDir 'libs'
+
         }
     }
 }
@@ -32,6 +40,7 @@ dependencies {
     androidTestImplementation "com.android.support.test:runner:$library.runner"
     implementation project(':library')
     kapt "org.greenrobot:eventbus-annotation-processor:$library.eventbus"
+    implementation files('libs/BaiduLBS_Android.jar')
 }
 
 kapt {

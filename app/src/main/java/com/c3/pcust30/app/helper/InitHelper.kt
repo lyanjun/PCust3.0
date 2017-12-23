@@ -1,9 +1,11 @@
 package com.c3.pcust30.app.helper
 
 import android.content.Context
+import com.baidu.mapapi.SDKInitializer
 import com.c3.library.weight.hint.PromptTool
 import com.c3.pcust30.BuildConfig
 import com.c3.pcust30.R
+import com.c3.pcust30.tools.LocationTool
 import com.hss01248.dialog.StyledDialog
 import com.orhanobut.hawk.Hawk
 import com.orhanobut.logger.AndroidLogAdapter
@@ -28,6 +30,8 @@ class InitHelper {
             Hawk.init(applicationContext).build()//初始化轻量级储存框架（以键值对形式）
             StyledDialog.init(applicationContext)//设置弹窗工具类
             initHintDialogShowStyle(applicationContext)//弹窗效果
+            SDKInitializer.initialize(applicationContext)//初始化百度地图
+            LocationTool.initContext(applicationContext)//定位工具
         }
 
         /**
@@ -45,10 +49,11 @@ class InitHelper {
             //为日志增加配置
             Logger.addLogAdapter(logAdapter)
         }
+
         /**
          * 配置弹窗效果
          */
-        private fun initHintDialogShowStyle(context: Context){
+        private fun initHintDialogShowStyle(context: Context) {
             PromptTool.config()//配置
                     .setBtnTxtSize(16)
                     .setMessageTxtSize(15)

@@ -9,6 +9,7 @@ import com.c3.pcust30.R
 import com.c3.pcust30.adapter.EasyItemTypeAdapter
 import com.c3.pcust30.base.frag.TopFragment
 import com.c3.pcust30.data.bean.EasyModel
+import com.c3.pcust30.fragment.child.test.MapTestFragment
 import kotlinx.android.synthetic.main.fragment_manage_page.*
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper
 
@@ -38,6 +39,8 @@ class ManagePageFragment : TopFragment(), SmallVerticalAdapter.OnItemClickListen
                 ContextCompat.getColor(mContext, R.color.item_icon_bgd_color_c)))
         items.add(EasyModel("商户客户查询", BitmapFactory.decodeResource(resources, R.drawable.item_type_icon_merchant),
                 ContextCompat.getColor(mContext, R.color.item_icon_bgd_color_m)))
+        items.add(EasyModel("走访商户查询", BitmapFactory.decodeResource(resources, R.drawable.item_type_icon_visit),
+                ContextCompat.getColor(mContext, R.color.item_icon_bgd_color_v)))
         singleItem.setAdapter(EasyItemTypeAdapter(items).setOnItemClickListener(this))
     }
 
@@ -46,12 +49,9 @@ class ManagePageFragment : TopFragment(), SmallVerticalAdapter.OnItemClickListen
      */
     override fun onItemClick(position: Int) {
         when (position) {
-            0 -> {//商户客户查询
-                start(ClientClassifyFragment())
-            }
-            1 -> {//商户客户查询
-                start(MerchantManagementFragment())
-            }
+            0 -> start(ClientClassifyFragment())//商户客户查询
+            1 -> start(MerchantManagementFragment())//商户客户查询
+            2 -> start(MapTestFragment())//地图测试界面
         }
     }
 }

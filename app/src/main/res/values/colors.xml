@@ -23,4 +23,5 @@
     <!-- 简单的选项栏的圆形图标的背景颜色 -->
     <color name="item_icon_bgd_color_c">#31A7BC</color>
     <color name="item_icon_bgd_color_m">#EF6C13</color>
+    <color name="item_icon_bgd_color_v">#1196DB</color>
 </resources>
