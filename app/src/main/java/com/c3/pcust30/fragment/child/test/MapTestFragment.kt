@@ -12,8 +12,10 @@ import com.baidu.mapapi.search.route.RoutePlanSearch
 import com.baidu.mapapi.search.route.WalkingRoutePlanOption
 import com.c3.pcust30.R
 import com.c3.pcust30.base.frag.BaseFragment
+import com.c3.pcust30.tools.hintWithConfirmBtn
 import com.c3.pcust30.tools.map.*
 import com.c3.pcust30.tools.map.overlay.MyWalkPlanOverlay
+import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.fragment_map_test.*
 
 
@@ -49,11 +51,15 @@ class MapTestFragment : BaseFragment() {
             planSearch.setOnGetRoutePlanResultListener(OnRoutePlanResultImpl(Walk = { walkingRouteResult ->
                 //步行路线规划
                 val routeLines = walkingRouteResult.routeLines
-                val walkingRouteOverlay = MyWalkPlanOverlay(mapView.map)
-                walkingRouteOverlay.setData(routeLines[0])
-                walkingRouteOverlay.setPlanLineColor(Color.RED)
-                walkingRouteOverlay.addToMap()
-//                walkingRouteOverlay.zoomToSpan()
+                if (routeLines.size >= 1){
+                    val walkingRouteOverlay = MyWalkPlanOverlay(mapView.map)
+                    walkingRouteOverlay.setData(routeLines[0])
+                    walkingRouteOverlay.setPlanLineColor(Color.RED)
+                    walkingRouteOverlay.addToMap()
+                    walkingRouteOverlay.zoomToSpan()
+                }else{
+                    hintWithConfirmBtn(getString(R.string.dialog_title_default_hint),"无路线规划结果").show()
+                }
                 planSearch.destroy()
             }))
             val startLocation = PlanNode.withLocation(startLatLng)
@@ -78,18 +84,18 @@ class MapTestFragment : BaseFragment() {
      * 获取定位数据
      */
     private fun setFunctionWithLocation(location: BDLocation) {
+        Logger.t("位置").i("${location.latitude}\n${location.longitude}")
         startLatLng = LatLng(location.latitude, location.longitude)
-        moveToLocation(mapView, startLatLng!!)
         val locData = MyLocationData.Builder().latitude(location.latitude).longitude(location.longitude).build()
         mapView.map.setMyLocationData(locData)
-        mapView.map.setMyLocationConfiguration(MyLocationConfiguration(MyLocationConfiguration.LocationMode.FOLLOWING,
+        mapView.map.setMyLocationConfiguration(MyLocationConfiguration(MyLocationConfiguration.LocationMode.NORMAL,
                 true, BitmapDescriptorFactory.fromResource(R.drawable.location_is_mine_icon)))
+        moveToLocation(mapView, startLatLng!!)
         if (17 != mapView.map.mapStatus.zoom.toInt()) {
             scaleTransitionAnimation(mapView.map, mapView.map.mapStatus.zoom.toInt()..17, { hideLoading() })
         } else {
             hideLoading()
         }
-
     }
 
     /**
