@@ -182,7 +182,7 @@ class LoginActivity : EventActivity(), View.OnClickListener, OnFinishEventListen
                     })
         }
         //todo 在最后需要检测出删除掉
-        inputUserCode.setText("111111")
+        inputUserCode.setText("800800")
         inputPassWord.setText("222222")
     }
 

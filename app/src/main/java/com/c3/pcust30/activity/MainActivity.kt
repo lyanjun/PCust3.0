@@ -17,6 +17,7 @@ import com.c3.pcust30.fragment.group.Add
 import com.c3.pcust30.fragment.group.Home
 import com.c3.pcust30.fragment.group.Manage
 import com.c3.pcust30.fragment.group.Task
+import com.c3.pcust30.tools.map.LocationTool
 import com.c3.pcust30.top.FRAG_ADD
 import com.c3.pcust30.top.FRAG_HOME
 import com.c3.pcust30.top.FRAG_MANAGE
@@ -61,6 +62,8 @@ class MainActivity : EventActivity(), OnTabItemSelectedListener, OnEventListener
         navigationController!!.addTabItemSelectedListener(this)
         //添加模块
         initFragment()//初始化模块视图（设置每个模块的一级视图）
+        //获取位置信息
+        LocationTool.toLocation(LocationTool.LocationType.START)
     }
 
     /**
@@ -133,5 +136,13 @@ class MainActivity : EventActivity(), OnTabItemSelectedListener, OnEventListener
             FRAG_MANAGE -> (mFragments.get(index)).popToChild(ManagePageFragment::class.java,false)
             FRAG_ADD -> (mFragments.get(index)).popToChild(AddPageFragment::class.java,false)
         }
+    }
+
+    /**
+     * 界面销毁后定制定位
+     */
+    override fun onDestroy() {
+        LocationTool.toLocation(LocationTool.LocationType.STOP)
+        super.onDestroy()
     }
 }

@@ -15,4 +15,11 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         tools:ignore="KeyboardInaccessibleWidget" />
+    <!-- 步行规划 -->
+    <Button
+        android:id="@+id/walkPathBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="步行规划"
+        tools:ignore="HardcodedText" />
 </android.support.constraint.ConstraintLayout>

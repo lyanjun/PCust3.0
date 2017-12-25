@@ -5,7 +5,7 @@ import com.baidu.mapapi.SDKInitializer
 import com.c3.library.weight.hint.PromptTool
 import com.c3.pcust30.BuildConfig
 import com.c3.pcust30.R
-import com.c3.pcust30.tools.LocationTool
+import com.c3.pcust30.tools.map.LocationTool
 import com.hss01248.dialog.StyledDialog
 import com.orhanobut.hawk.Hawk
 import com.orhanobut.logger.AndroidLogAdapter

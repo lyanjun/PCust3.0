@@ -1,7 +1,8 @@
-package com.c3.pcust30.tools
+package com.c3.pcust30.tools.map
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.text.TextUtils
 import com.baidu.location.BDAbstractLocationListener
 import com.baidu.location.BDLocation
 import com.baidu.location.LocationClient
@@ -9,7 +10,7 @@ import com.baidu.location.LocationClientOption
 import com.baidu.mapapi.model.LatLng
 import com.baidu.mapapi.search.core.SearchResult
 import com.baidu.mapapi.search.geocode.*
-import com.orhanobut.logger.Logger
+import com.orhanobut.hawk.Hawk
 
 /**
  * 作者： LYJ
@@ -23,8 +24,8 @@ object LocationTool : BDAbstractLocationListener(), OnGetGeoCoderResultListener 
     private var locationClient: LocationClient? = null
     private var scanSpan = 0//默认定位一次
     private var resultListener: ((location: BDLocation) -> Unit)? = null
-    var nowCityLaLng: LatLng? = null//当前城市位置坐标
-    var nowCityName: String? = null//当前城市名称
+    var nowCityLaLng: LatLng? = Hawk.get<LatLng>("now_city_loc_info") //当前城市位置坐标
+    var nowCityName: String? = Hawk.get<String>("now_city_name")//当前城市名称
     private var geoCoder: GeoCoder? = null//地理编码实例
 
     /**
@@ -58,19 +59,30 @@ object LocationTool : BDAbstractLocationListener(), OnGetGeoCoderResultListener 
      * 定位回调
      */
     override fun onReceiveLocation(locationInfo: BDLocation) {
-        locationClient!!.stop()
+        if (scanSpan == 0) locationClient!!.stop()
         resultListener?.invoke(locationInfo)
         /**
          * 获取当前城市的位置信息
          */
+        if (locationResultType(locationInfo.locType) == LocationResultType.SUCCESS && !TextUtils.equals(locationInfo.city, nowCityName)) {
+            nowCityName = locationInfo.city
+            geoCodeOfCityName()
+            return
+        }
         if (locationResultType(locationInfo.locType) == LocationResultType.SUCCESS && nowCityLaLng == null) {
             nowCityName = locationInfo.city
-            Logger.t("获取城市信息").i("所在城市$nowCityName")
-            //进行地理编码获取当前城市经纬度坐标
-            geoCoder = GeoCoder.newInstance()
-            geoCoder?.setOnGetGeoCodeResultListener(this)
-            geoCoder?.geocode(GeoCodeOption().city(nowCityName).address(nowCityName))
+            geoCodeOfCityName()
         }
+    }
+
+    /**
+     * 通过地理编码获取当前城市中西坐标
+     */
+    private fun geoCodeOfCityName() {
+        //进行地理编码获取当前城市经纬度坐标
+        geoCoder = GeoCoder.newInstance()
+        geoCoder?.setOnGetGeoCodeResultListener(this)
+        geoCoder?.geocode(GeoCodeOption().city(nowCityName).address(nowCityName))
     }
 
     /**
@@ -89,7 +101,7 @@ object LocationTool : BDAbstractLocationListener(), OnGetGeoCoderResultListener 
      * 获取定位结果
      */
     fun setLocationResultListener(resultListener: (location: BDLocation) -> Unit) {
-        this.resultListener = resultListener
+        LocationTool.resultListener = resultListener
     }
 
     /**
@@ -101,7 +113,7 @@ object LocationTool : BDAbstractLocationListener(), OnGetGeoCoderResultListener 
             LocationType.RESTART -> if (!locationClient!!.isStarted) locationClient?.restart()//再次开启定位
             LocationType.STOP -> if (locationClient!!.isStarted) locationClient?.stop()//停止定位
         }
-        this.scanSpan = interval
+        scanSpan = interval
     }
 
     /**
@@ -125,6 +137,8 @@ object LocationTool : BDAbstractLocationListener(), OnGetGeoCoderResultListener 
         //获取地理编码成功
         if (result != null && result.error == SearchResult.ERRORNO.NO_ERROR) {
             nowCityLaLng = result.location//获取当前城市中心点经纬度坐标
+            Hawk.put("now_city_loc_info", nowCityLaLng)
+            Hawk.put("now_city_name", nowCityName)
         }
         geoCoder?.destroy()
     }
